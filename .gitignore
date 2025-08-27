@@ -1,0 +1,44 @@
+# Python
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environments
+venv/
+.venv/
+.env
+*.env
+.envrc
+
+# Local config
+ruff.toml
+.idea/
+.vscode/
+*.log
+
+# Cache
+**/*.swp
+.cache/
+.mypy_cache/
+pytest_cache/
+
+# Local dependencies
+*.egg-info/
+dist/
+build/
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Local Integration Tests
+link/
+soget/
+app/instance.py
+generate_yaml_documentation.py
+link-integration.yaml
+
+# Coverage
+.coverage
+/htmlcov
