@@ -98,7 +98,7 @@ def login_user(
 
 
 @router.post("/forgotten-password", status_code=status.HTTP_200_OK)
-def request_password_reset(
+async def request_password_reset(
         email_data: ForgottenPassword,
         database_session: Session = Depends(get_database)
 ) -> dict:
@@ -133,7 +133,7 @@ def request_password_reset(
 
     # Envoyer l'email
     try:
-        send_forgotten_password_email(user.email, user.username, reset_token)
+        await send_forgotten_password_email(user.email, user.username, reset_token)
         return {"message": "Password reset email sent"}
     except Exception as e:
         raise HTTPException(

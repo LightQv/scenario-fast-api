@@ -1,0 +1,8 @@
+[MASTER]
+ignore-paths=app/db/migrations/.*, tests/.*
+
+[MESSAGES CONTROL]
+disable=import-error,R0903,R0801,fixme,not-callable
+
+[FORMAT]
+max-line-length=120

@@ -1,29 +1,25 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
+from app.core.exception_handlers import register_exception_handlers
+from app.core.middleware import setup_cors
 from app.core.settings import settings
-from app.api.v1.router import api_router
+from app.api.v1.router import main_router
 
 # Créer l'application FastAPI
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
-    description="API pour l'application Scenario - Que regarder ce soir ?",
     debug=settings.debug
 )
 
 # Configuration CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[settings.frontend_url] + settings.allowed_origins,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE"],
-    allow_headers=["*"],
-)
+setup_cors(app=app)
 
 # Inclure les routes API
-app.include_router(api_router, prefix="/api/v1")
+app.include_router(main_router, prefix="/api/v1")
 
+# Exception handlers
+register_exception_handlers(app)
 
 @app.get("/")
 def read_root():

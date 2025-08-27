@@ -1,8 +1,15 @@
-from pydantic_settings import BaseSettings
-from typing import Optional
+"""
+Global settings from .env.
+"""
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    """
+    Global settings from .env.
+    """
+
     # App settings
     app_name: str = "Scenario API"
     app_version: str = "2.0.0"
@@ -15,6 +22,9 @@ class Settings(BaseSettings):
 
     # Database settings
     database_url: str
+    postgres_db: str
+    postgres_user: str
+    postgres_password: str
 
     # JWT settings
     jwt_secret_key: str
@@ -34,9 +44,11 @@ class Settings(BaseSettings):
     username_min_length: int = 5
     username_max_length: int = 30
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="allow",
+    )
 
 
 # Instance globale des settings

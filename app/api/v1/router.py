@@ -1,12 +1,22 @@
+"""
+This file contains the main router that includes all the other routers.
+It automatically imports all the routers in the `/routes` directory.
+"""
+import pkgutil
+import importlib
 from fastapi import APIRouter
 
-from app.api.v1 import auth, users, watchlists, medias, views, statistics
+from app.api.v1 import __name__ as route_package_name
 
-api_router = APIRouter()
+main_router = APIRouter()
 
-api_router.include_router(auth.router, prefix="/auth", tags=["authentication"])
-api_router.include_router(users.router, prefix="/users", tags=["users"])
-api_router.include_router(watchlists.router, prefix="/watchlists", tags=["watchlists"])
-api_router.include_router(medias.router, prefix="/medias", tags=["medias"])
-api_router.include_router(views.router, prefix="/views", tags=["views"])
-api_router.include_router(statistics.router, prefix="/stats", tags=["statistics"])
+package = importlib.import_module(route_package_name)
+
+for _, module_name, _ in pkgutil.iter_modules(package.__path__):
+    module = importlib.import_module(f"{route_package_name}.{module_name}")
+    if hasattr(module, "router"):
+        main_router.include_router(
+            module.router,
+            prefix=f"/{module_name.replace('_', '-')}",
+            tags=[module_name.capitalize()]
+        )
