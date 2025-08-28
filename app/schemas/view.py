@@ -20,8 +20,6 @@ class ViewCreate(ViewBase):
 
 
 class ViewResponse(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
     id: UUID
     tmdb_id: int
     genre_ids: List[int]
@@ -34,6 +32,11 @@ class ViewResponse(BaseModel):
     media_type: str
     viewer_id: UUID
 
+    model_config = ConfigDict(
+        from_attributes=True,
+        populate_by_name=True,
+        str_strip_whitespace=True
+    )
 
 class ViewCountByType(BaseModel):
     media_type: str

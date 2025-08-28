@@ -2,6 +2,8 @@ from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional
 from uuid import UUID
 
+from app.schemas.media import MediaResponse
+
 
 class WatchlistBase(BaseModel):
     title: str = Field(..., max_length=255)
@@ -16,25 +18,37 @@ class WatchlistUpdate(BaseModel):
 
 
 class MediaInWatchlist(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
     id: UUID
     tmdb_id: int
 
+    model_config = ConfigDict(
+        from_attributes=True,
+        populate_by_name=True,
+        str_strip_whitespace=True
+    )
+
 
 class WatchlistResponse(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
     id: UUID
     title: str
     author_id: UUID
     medias: List[MediaInWatchlist] = []
     medias_count: int = 0
 
+    model_config = ConfigDict(
+        from_attributes=True,
+        populate_by_name=True,
+        str_strip_whitespace=True
+    )
+
 
 class WatchlistDetail(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
     title: str
     medias: List["MediaResponse"] = []
     medias_count: int = 0
+
+    model_config = ConfigDict(
+        from_attributes=True,
+        populate_by_name=True,
+        str_strip_whitespace=True
+    )

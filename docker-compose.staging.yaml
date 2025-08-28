@@ -1,3 +1,5 @@
+name: "scenario-fast-api-staging"
+
 services:
   scenario-postgres:
     image: postgres:16-alpine
@@ -22,7 +24,7 @@ services:
   scenario-api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     container_name: scenario-api-staging
     restart: unless-stopped
     env_file:

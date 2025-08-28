@@ -60,7 +60,7 @@ def get_password_reset_template(username: str, reset_token: str) -> str:
           </h2>
         </section>
         <a
-          href="{settings.frontend_url}/reset-password/{reset_token}"
+          href="{settings.FRONTEND_URL}/reset-password/{reset_token}"
           style="
             border: 1px solid #eab208;
             border-radius: 0.375rem;
@@ -82,7 +82,7 @@ def get_password_reset_template(username: str, reset_token: str) -> str:
         <p style="text-align: center; font-size: 1rem">
           If you did not initiate this request, please contact us immediately at
           <a
-            href="mailto:{settings.smtp_user}"
+            href="mailto:{settings.SMTP_USER}"
             style="
               text-decoration-line: underline;
               text-underline-offset: 4px;
@@ -90,7 +90,7 @@ def get_password_reset_template(username: str, reset_token: str) -> str:
               text-decoration-color: #eab208;
               color: black;
             "
-            >{settings.smtp_user}</a
+            >{settings.SMTP_USER}</a
           >.
         </p>
         <p style="text-align: center; font-size: 1rem">

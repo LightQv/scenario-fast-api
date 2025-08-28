@@ -7,12 +7,12 @@ from pydantic import EmailStr
 from app.core.settings import settings
 
 config = ConnectionConfig(
-    MAIL_USERNAME=settings.smtp_user,
-    MAIL_PASSWORD=settings.smtp_password,
-    MAIL_FROM=settings.smtp_user,
-    MAIL_PORT=settings.smtp_port,
-    MAIL_SERVER=settings.smtp_host,
-    MAIL_STARTTLS=settings.smtp_use_tls,
+    MAIL_USERNAME=settings.SMTP_USER,
+    MAIL_PASSWORD=settings.SMTP_PASSWORD,
+    MAIL_FROM=settings.SMTP_USER,
+    MAIL_PORT=settings.SMTP_PORT,
+    MAIL_SERVER=settings.SMTP_HOST,
+    MAIL_STARTTLS=settings.SMTP_USE_TLS,
     MAIL_SSL_TLS=False,
     USE_CREDENTIALS=True,
     VALIDATE_CERTS=True

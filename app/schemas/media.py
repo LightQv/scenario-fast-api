@@ -23,8 +23,6 @@ class MediaUpdate(BaseModel):
 
 
 class MediaResponse(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
     id: UUID
     tmdb_id: int
     genre_ids: List[int]
@@ -35,3 +33,9 @@ class MediaResponse(BaseModel):
     title: str
     media_type: str
     watchlist_id: UUID
+
+    model_config = ConfigDict(
+        from_attributes=True,
+        populate_by_name=True,
+        str_strip_whitespace=True
+    )

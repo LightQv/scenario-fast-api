@@ -1,11 +1,12 @@
 from datetime import datetime, timedelta
 from typing import Any, Union, Optional
 import jwt
-from jwt.exceptions import JWTError
 import bcrypt
 import uuid
 
+from app.core.exceptions.custom_exception import CustomExceptionError
 from app.core.settings import settings
+from app.services.constant.response_constant import EXPIRED_TOKEN_ERROR, INVALID_TOKEN_ERROR
 
 
 def create_access_token(
@@ -25,12 +26,12 @@ def create_access_token(
         expire = datetime.utcnow() + expires_delta
     else:
         expire = datetime.utcnow() + timedelta(
-            minutes=settings.jwt_access_token_expire_minutes
+            minutes=settings.JWT_ACCESS_TOKEN_EXPIRES_IN
         )
 
     to_encode = {"exp": expire, "sub": str(subject)}
     encoded_jwt = jwt.encode(
-        to_encode, settings.jwt_secret_key, algorithm=settings.jwt_algorithm
+        to_encode, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM
     )
     return encoded_jwt
 
@@ -47,15 +48,18 @@ def verify_token(token: str) -> Optional[str]:
     """
     try:
         payload = jwt.decode(
-            token, settings.jwt_secret_key, algorithms=[settings.jwt_algorithm]
+            token, settings.JWT_SECRET_KEY, algorithms=[settings.JWT_ALGORITHM]
         )
         user_id: str = payload.get("sub")
         if user_id is None:
             return None
         return user_id
-    except JWTError:
-        return None
-
+    except jwt.ExpiredSignatureError as error:
+        raise CustomExceptionError(EXPIRED_TOKEN_ERROR) from error
+    except jwt.InvalidTokenError as error:
+        raise CustomExceptionError(INVALID_TOKEN_ERROR) from error
+    except Exception as error:
+        raise error
 
 def hash_password(password: str) -> str:
     """

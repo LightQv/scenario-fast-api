@@ -1,41 +1,39 @@
-# app/schemas/auth.py
-from pydantic import BaseModel, EmailStr, Field, field_validator
-from typing import Optional
-import re
+from pydantic import BaseModel, EmailStr, Field, ConfigDict, field_validator
 
 from app.core.settings import settings
+from app.schemas.validation_types import ValidEmail, ValidPassword
 
 
 class UserRegister(BaseModel):
-    username: str = Field(..., min_length=settings.username_min_length, max_length=settings.username_max_length)
-    email: EmailStr = Field(..., max_length=255)
-    password: str = Field(..., min_length=settings.password_min_length, max_length=settings.password_max_length)
-    confirm_password: str
+    username: str = Field(..., min_length=settings.USERNAME_MIN_LENGTH, max_length=settings.USERNAME_MAX_LENGTH)
+    email: ValidEmail = Field(..., max_length=255)
+    password: ValidPassword = Field(..., min_length=settings.PASSWORD_MIN_LENGTH, max_length=settings.PASSWORD_MAX_LENGTH)
+    confirm_password: ValidPassword
 
     @field_validator('confirm_password')
     @classmethod
-    def passwords_match(cls, v, info):
-        if 'password' in info.data and v != info.data['password']:
+    def passwords_match(cls, value, info) -> str:
+        if 'password' in info.data and value != info.data['password']:
             raise ValueError('Les mots de passe ne correspondent pas')
-        return v
+        return value
 
 
 class UserLogin(BaseModel):
-    email: EmailStr
+    email: ValidEmail
     password: str
 
 
 class PasswordReset(BaseModel):
-    password: str = Field(..., min_length=settings.password_min_length, max_length=settings.password_max_length)
-    confirm_password: str
+    password: ValidPassword = Field(..., min_length=settings.PASSWORD_MIN_LENGTH, max_length=settings.PASSWORD_MAX_LENGTH)
+    confirm_password: ValidPassword
     password_token: str
 
     @field_validator('confirm_password')
     @classmethod
-    def passwords_match(cls, v, info):
-        if 'password' in info.data and v != info.data['password']:
+    def passwords_match(cls, value, info) -> str:
+        if 'password' in info.data and value != info.data['password']:
             raise ValueError('Les mots de passe ne correspondent pas')
-        return v
+        return value
 
 
 class ForgottenPassword(BaseModel):

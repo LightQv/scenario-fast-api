@@ -11,38 +11,38 @@ class Settings(BaseSettings):
     """
 
     # App settings
-    app_name: str = "Scenario API"
-    app_version: str = "2.0.0"
-    app_port: int = 8000
-    debug: bool = False
+    APP_NAME: str = "Scenario API"
+    APP_VERSION: str = "2.0.0"
+    DEBUG: bool = True
 
     # CORS settings
-    frontend_url: str
-    allowed_origins: list[str] = ["http://localhost:3000"]
+    FRONTEND_URL: str
+    ALLOWED_ORIGINS: list[str] = ["http://localhost:3000"]
 
     # Database settings
-    database_url: str
-    postgres_db: str
-    postgres_user: str
-    postgres_password: str
+    DATABASE_URL: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_DB: str
+    POSTGRES_HOST: str
 
     # JWT settings
-    jwt_secret_key: str
-    jwt_algorithm: str = "HS256"
-    jwt_access_token_expire_minutes: int = 43200  # 30 days
+    JWT_SECRET_KEY: str
+    JWT_ALGORITHM: str = "HS256"
+    JWT_ACCESS_TOKEN_EXPIRES_IN: int
 
     # SMTP settings for email
-    smtp_host: str
-    smtp_port: int = 587
-    smtp_user: str
-    smtp_password: str
-    smtp_use_tls: bool = True
+    SMTP_HOST: str
+    SMTP_PORT: int = 587
+    SMTP_USER: str
+    SMTP_PASSWORD: str
+    SMTP_USE_TLS: bool = True
 
     # Security settings
-    password_min_length: int = 7
-    password_max_length: int = 30
-    username_min_length: int = 5
-    username_max_length: int = 30
+    PASSWORD_MIN_LENGTH: int = 7
+    PASSWORD_MAX_LENGTH: int = 30
+    USERNAME_MIN_LENGTH: int = 5
+    USERNAME_MAX_LENGTH: int = 30
 
     model_config = SettingsConfigDict(
         env_file=".env",

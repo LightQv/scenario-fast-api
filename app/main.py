@@ -7,9 +7,9 @@ from app.api.v1.router import main_router
 
 # Créer l'application FastAPI
 app = FastAPI(
-    title=settings.app_name,
-    version=settings.app_version,
-    debug=settings.debug
+    title=settings.APP_NAME,
+    version=settings.APP_VERSION,
+    debug=settings.DEBUG
 )
 
 # Configuration CORS
@@ -26,7 +26,7 @@ def read_root():
     """Point de départ de l'API."""
     return {
         "message": "Welcome to Scenario API",
-        "version": settings.app_version,
+        "version": settings.APP_VERSION,
         "docs": "/docs"
     }
 
@@ -35,13 +35,3 @@ def read_root():
 def health_check():
     """Endpoint de vérification de santé."""
     return {"status": "healthy"}
-
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(
-        "app.main:app",
-        host="0.0.0.0",
-        port=settings.app_port,
-        reload=settings.debug
-    )

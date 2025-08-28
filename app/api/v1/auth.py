@@ -89,8 +89,8 @@ def login_user(
         key="access_token",
         value=access_token,
         httponly=True,
-        secure=not settings.debug,  # HTTPS en production
-        max_age=settings.jwt_access_token_expire_minutes * 60,
+        secure=not settings.DEBUG,  # HTTPS en production
+        max_age=settings.JWT_ACCESS_TOKEN_EXPIRES_IN * 60,
         samesite="lax"
     )
 
@@ -191,7 +191,7 @@ def logout_user(response: Response) -> dict:
     response.delete_cookie(
         key="access_token",
         httponly=True,
-        secure=not settings.debug,
+        secure=not settings.DEBUG,
         samesite="lax"
     )
 
