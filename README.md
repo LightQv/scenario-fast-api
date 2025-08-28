@@ -8,7 +8,7 @@ Bienvenue dans la version FastAPI de l'API Scenario ! Une API moderne pour gére
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![PostgreSQL](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-![Pytest](https://img.shields.io/badge/pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white)
+![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 
 ## 📋 Fonctionnalités
 
@@ -16,8 +16,10 @@ Bienvenue dans la version FastAPI de l'API Scenario ! Une API moderne pour gére
 - 🎬 **Gestion des watchlists** : Créer, modifier, supprimer vos listes de films/séries
 - 👁️ **Historique de visionnage** : Tracker ce que vous avez regardé
 - 📊 **Statistiques** : Analyser vos habitudes de visionnage
-- 🔐 **Sécurité** : JWT avec cookies HTTPOnly, hashage Argon2
-- 📧 **Emails** : Système de réinitialisation par email
+- 🔐 **Sécurité** : JWT avec cookies HTTPOnly, hashage bcrypt
+- 📧 **Emails** : Système de réinitialisation par email avec fastapi-mail
+- 🐳 **Multi-environnements** : Dev, Staging, Production avec Docker
+- 🔍 **Monitoring** : Logging avec Loguru, tracking d'erreurs avec Sentry
 
 ## 🏗️ Architecture
 
@@ -31,225 +33,458 @@ app/
 └── utils/          # Utilitaires (templates email, etc.)
 ```
 
-## 🚀 Installation et Démarrage
+## 🚀 Démarrage Rapide
 
-### Prérequis
+### Avec Makefile (Recommandé)
 
-- Python 3.11+
-- PostgreSQL
-- Docker et Docker Compose (optionnel)
-
-### Installation classique
-
-1. **Cloner le repository**
 ```bash
+# Cloner le repository
 git clone <votre-repo>
 cd scenario-fastapi
+
+# Copier et configurer l'environnement
+cp .env.example .env
+# Éditer le fichier .env
+
+# Démarrer l'environnement de développement
+make dev
+
+# Voir les logs
+make dev-logs
+
+# Arrêter l'environnement
+make dev-stop
 ```
 
-2. **Créer l'environnement virtuel**
+### Installation manuelle
+
+1. **Prérequis**
+   - Python 3.12+
+   - PostgreSQL
+   - Docker et Docker Compose
+
+2. **Installation**
 ```bash
+# Créer l'environnement virtuel
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# ou
-venv\Scripts\activate     # Windows
-```
+# ou venv\Scripts\activate  # Windows
 
-3. **Installer les dépendances**
-```bash
-pip install -r requirements.txt
-```
+# Installer les dépendances
+make install
+# ou pip install -r requirements.txt
 
-4. **Configuration**
-```bash
+# Configuration
 cp .env.example .env
-# Éditer le fichier .env avec vos configurations
 ```
 
-5. **Base de données**
+3. **Base de données**
 ```bash
-# Initialiser Alembic
-alembic init alembic
+# Avec Docker
+make dev
 
-# Créer la migration initiale
-alembic revision --autogenerate -m "Initial migration"
-
-# Appliquer les migrations
+# Ou manuellement
 alembic upgrade head
 ```
 
-6. **Lancer l'API**
+## 🐳 Environnements Docker
+
+### Développement
 ```bash
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+make dev              # Démarrer
+make dev-logs         # Voir les logs  
+make dev-stop         # Arrêter
+```
+- API: http://localhost:8000
+- Adminer: http://localhost:8080
+- Hot reload activé
+
+### Staging
+```bash
+make staging          # Démarrer
+make staging-stop     # Arrêter
+```
+- API avec Nginx: http://localhost:8001
+- Rate limiting activé
+- Sécurité renforcée
+
+### Production
+```bash
+make prod             # Démarrer
+make prod-stop        # Arrêter
+```
+- HTTPS avec SSL
+- Rate limiting agressif
+- Monitoring complet
+
+## 📦 Déploiement avec Images Docker
+
+### Build et Push vers DockerHub
+
+```bash
+# Configuration du registry
+export DOCKER_REGISTRY=your-dockerhub-username
+
+# Build et push
+make push
+
+# Ou avec le script de déploiement
+chmod +x scripts/deploy.sh
+./scripts/deploy.sh --environment prod --registry your-dockerhub-username
 ```
 
-### Installation avec Docker
+### Utilisation des images en production
 
-1. **Lancer avec Docker Compose**
 ```bash
-docker-compose up -d
+# Modifier docker-compose.prod.yaml
+services:
+  scenario-api:
+    image: your-dockerhub-username/scenario-api:latest
+    # ...
 ```
 
-2. **Appliquer les migrations**
-```bash
-docker-compose exec api alembic upgrade head
+## 🔧 Variables d'environnement
+
+### Développement (.env)
+```env
+APP_NAME="Scenario API"
+DEBUG=true
+DATABASE_URL="postgresql://scenario_user:scenario_password@localhost:5432/scenario_db"
+JWT_SECRET_KEY="your_dev_secret"
+FRONTEND_URL="http://localhost:3000"
 ```
 
-L'API sera disponible sur `http://localhost:8000`
+### Production (.env.prod)
+```env
+APP_NAME="Scenario API"
+DEBUG=false
+DATABASE_URL="postgresql://prod_user:strong_password@scenario-postgres:5432/scenario_prod_db"
+JWT_SECRET_KEY="very_long_and_secure_production_key"
+FRONTEND_URL="https://scenario.yourdomain.com"
+SENTRY_DSN="https://your-sentry-dsn@sentry.io/project-id"
+```
 
 ## 📚 Documentation API
 
 - **Swagger UI** : `http://localhost:8000/docs`
 - **ReDoc** : `http://localhost:8000/redoc`
 
-## 🛠️ Endpoints principaux
+## 🛠️ Commandes Utiles
+
+```bash
+# Tests
+make test             # Lancer les tests
+pytest --cov=app     # Tests avec couverture
+
+# Linting
+make lint             # Vérifier le code
+make lint-fix         # Corriger automatiquement
+
+# Base de données
+make migrate          # Appliquer les migrations
+make migrate-create   # Créer une nouvelle migration
+
+# Logs
+make logs-dev         # Logs développement
+make logs-prod        # Logs production
+
+# Debug
+make shell            # Shell dans le container
+make db-shell         # Shell PostgreSQL
+```
+
+## 🔍 Monitoring et Observabilité
+
+### Logs avec Loguru
+```python
+from loguru import logger
+
+logger.info("User logged in", user_id=user.id)
+logger.error("Database connection failed", error=str(e))
+```
+
+### Tracking d'erreurs avec Sentry
+```python
+# Automatique avec l'intégration FastAPI
+# Configuré dans app/main.py
+```
+
+### Métriques Nginx
+- Logs détaillés avec temps de réponse
+- Rate limiting par endpoint
+- Headers de sécurité
+
+## 🚨 Sécurité
+
+### Headers de sécurité (Nginx)
+- `Strict-Transport-Security`
+- `X-Frame-Options`
+- `X-XSS-Protection`
+- `Content-Security-Policy`
+
+### Rate Limiting
+- Auth endpoints: 10 req/s
+- API générale: 30 req/s (prod), 10 req/s (staging)
+- Burst permettant les pics de trafic
 
 ### Authentification
-- `POST /api/v1/auth/register` - Inscription
-- `POST /api/v1/auth/login` - Connexion
-- `GET /api/v1/auth/logout` - Déconnexion
-- `POST /api/v1/auth/forgotten-password` - Mot de passe oublié
-- `POST /api/v1/auth/reset-password` - Réinitialiser le mot de passe
-
-### Utilisateurs
-- `GET /api/v1/users/{user_id}` - Informations utilisateur
-- `PUT /api/v1/users/{user_id}` - Modifier utilisateur
-- `DELETE /api/v1/users/{user_id}` - Supprimer utilisateur
-
-### Watchlists
-- `GET /api/v1/watchlists/{user_id}` - Lister les watchlists
-- `GET /api/v1/watchlists/detail/{watchlist_id}` - Détails d'une watchlist
-- `POST /api/v1/watchlists` - Créer une watchlist
-- `PUT /api/v1/watchlists/{watchlist_id}` - Modifier une watchlist
-- `DELETE /api/v1/watchlists/{watchlist_id}` - Supprimer une watchlist
-
-### Médias
-- `POST /api/v1/medias` - Ajouter un média à une watchlist
-- `PUT /api/v1/medias/{media_id}` - Modifier un média
-- `DELETE /api/v1/medias/{media_id}` - Supprimer un média
-
-### Vues (Historique)
-- `GET /api/v1/views/{user_id}` - Historique complet
-- `GET /api/v1/views/{media_type}/{user_id}` - Historique par type
-- `POST /api/v1/views` - Ajouter une vue
-- `DELETE /api/v1/views/{view_id}` - Supprimer une vue
-
-### Statistiques
-- `GET /api/v1/stats/count/{media_type}/{user_id}` - Nombre par type
-- `GET /api/v1/stats/year/{media_type}/{user_id}` - Répartition par année
-- `GET /api/v1/stats/runtime/{media_type}/{user_id}` - Durées de visionnage
+- JWT avec cookies HTTPOnly
+- Bcrypt pour le hashage des mots de passe
+- Tokens de réinitialisation sécurisés
+- Validation stricte des entrées avec Pydantic
 
 ## 🧪 Tests
 
 ```bash
 # Lancer tous les tests
-pytest
+make test
 
-# Tests avec couverture
-pytest --cov=app
+# Tests avec couverture détaillée
+pytest --cov=app --cov-report=html
+open htmlcov/index.html
 
-# Tests spécifiques
-pytest tests/test_auth.py
+# Tests en mode watch (développement)
+make test-watch
+
+# Tests d'un module spécifique
+pytest tests/test_auth.py -v
 ```
 
-## 🔧 Variables d'environnement
+## 📁 Structure des fichiers Docker
 
-Copiez `.env.example` vers `.env` et configurez :
-
-```env
-# App Configuration
-APP_NAME="Scenario API"
-APP_PORT=8000
-DEBUG=true
-
-# Database
-DATABASE_URL="postgresql://user:password@localhost:5432/scenario_db"
-
-# JWT
-JWT_SECRET_KEY="votre_clé_secrète_super_sécurisée"
-JWT_ACCESS_TOKEN_EXPIRE_MINUTES=43200
-
-# SMTP pour les emails
-SMTP_HOST="smtp.gmail.com"
-SMTP_USER="votre_email@gmail.com"
-SMTP_PASSWORD="votre_mot_de_passe_app"
-
-# Frontend
-FRONTEND_URL="http://localhost:3000"
+```
+├── Dockerfile              # Production
+├── Dockerfile.dev          # Développement
+├── docker-compose.dev.yaml # Environnement dev
+├── docker-compose.staging.yaml # Environnement staging  
+├── docker-compose.prod.yaml # Environnement production
+├── nginx/
+│   ├── nginx.dev.conf      # Config Nginx dev
+│   ├── nginx.staging.conf  # Config Nginx staging
+│   └── nginx.prod.conf     # Config Nginx prod
+├── scripts/
+│   └── deploy.sh           # Script de déploiement
+└── Makefile                # Commandes utiles
 ```
 
-## 🐳 Docker
+## 🔄 Workflow de Déploiement
 
-Le projet inclut un `docker-compose.yml` avec :
-- **API FastAPI** sur le port 8000
-- **PostgreSQL** sur le port 5432
-- **Adminer** sur le port 8080 (interface web pour la DB)
-
+### 1. Développement Local
 ```bash
-# Démarrer les services
-docker-compose up -d
-
-# Voir les logs
-docker-compose logs -f api
-
-# Arrêter les services
-docker-compose down
+# Développer en local avec hot reload
+make dev
 ```
 
-## 📝 Migration depuis Express
+### 2. Tests et Validation
+```bash
+# Tests unitaires
+make test
 
-Si vous migrez depuis votre API Express existante :
+# Vérification du code
+make lint
+```
 
-1. **Données** : Utilisez les mêmes tables PostgreSQL
-2. **Authentification** : Les tokens JWT restent compatibles
-3. **Frontend** : Adaptez les appels API (structure similaire)
+### 3. Déploiement Staging
+```bash
+# Build et déploiement en staging
+./scripts/deploy.sh --environment staging
+```
 
-### Différences principales :
+### 4. Déploiement Production
+```bash
+# Build, push vers DockerHub et déploiement
+./scripts/deploy.sh --environment prod --registry your-dockerhub-username
+```
+
+## 🌐 Configuration SSL/HTTPS (Production)
+
+### 1. Certificats Let's Encrypt
+```bash
+# Créer le dossier des certificats
+mkdir -p certs
+
+# Obtenir les certificats (avec certbot)
+certbot certonly --webroot -w /var/www/certbot -d yourdomain.com
+```
+
+### 2. Renouvellement automatique
+```bash
+# Ajouter au crontab
+0 12 * * * /usr/bin/certbot renew --quiet
+```
+
+## 📊 Monitoring Avancé
+
+### Health Checks
+- Endpoint `/health` pour vérifier l'état de l'API
+- Health checks Docker pour les containers
+- Monitoring de la base de données
+
+### Métriques personnalisées
+```python
+# Dans vos endpoints
+from loguru import logger
+import time
+
+@router.post("/example")
+def example_endpoint():
+    start_time = time.time()
+    # ... logique métier
+    duration = time.time() - start_time
+    logger.info("Endpoint executed", endpoint="example", duration=duration)
+```
+
+## 🔧 Configuration Avancée
+
+### Variables d'environnement par service
+
+#### Base de données
+```env
+POSTGRES_DB=scenario_db
+POSTGRES_USER=scenario_user  
+POSTGRES_PASSWORD=secure_password
+```
+
+#### Email (Gmail avec mot de passe d'application)
+```env
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASSWORD=your_app_specific_password
+SMTP_USE_TLS=true
+```
+
+#### Sentry (Monitoring d'erreurs)
+```env
+SENTRY_DSN=https://your_key@sentry.io/project_id
+```
+
+## 🚀 Optimisations de Performance
+
+### Base de données
+- Indexes sur les colonnes fréquemment requêtées
+- Connection pooling avec SQLAlchemy
+- Requêtes optimisées avec jointures
+
+### Application
+- Réutilisation des connexions HTTP avec `httpx`
+- Mise en cache des sessions de base de données
+- Validation Pydantic optimisée
+
+### Infrastructure
+- Nginx comme reverse proxy
+- Gzip compression
+- Keep-alive connections
+- Buffer optimization
+
+## 🔍 Debugging
+
+### Logs de développement
+```bash
+# Voir les logs en temps réel
+make dev-logs
+
+# Logs d'un service spécifique
+docker-compose -f docker-compose.dev.yaml logs -f scenario-api
+```
+
+### Accès aux containers
+```bash
+# Shell dans le container API
+make shell
+
+# Shell PostgreSQL
+make db-shell
+
+# Inspecter la base de données
+docker-compose -f docker-compose.dev.yaml exec scenario-postgres \
+  psql -U scenario_user -d scenario_db -c "SELECT * FROM user_model LIMIT 5;"
+```
+
+## 📈 Migration depuis Express
+
+### Données existantes
+```bash
+# Les modèles SQLAlchemy sont compatibles avec votre schéma Express
+# Pas besoin de migration de données si vous utilisez la même DB
+```
+
+### Changements d'API
 - Routes préfixées par `/api/v1/`
-- Réponses JSON standardisées
-- Validation automatique avec Pydantic
+- Réponses JSON normalisées
+- Validation automatique des entrées
 - Documentation automatique
 
-## 🔮 Intégration Plex
+### Frontend
+```javascript
+// Ancien (Express)
+const response = await fetch('/auth/login', { ... })
 
-Avec FastAPI, l'intégration Plex sera facilitée :
-
-```python
-# Exemple futur
-from plexapi.server import PlexServer
-
-@router.get("/plex/libraries")
-def get_plex_libraries():
-    plex = PlexServer('http://localhost:32400', token)
-    return plex.library.sections()
+// Nouveau (FastAPI)  
+const response = await fetch('/api/v1/auth/login', { ... })
 ```
-
-## 📱 App Mobile React Native
-
-Votre app React Native fonctionnera parfaitement avec cette API :
-
-1. **Même authentification** : JWT dans cookies
-2. **Endpoints compatibles** : Structure similaire à Express
-3. **Documentation** : Swagger pour référence
 
 ## 🤝 Contribution
 
+### Standards de code
+- PEP 8 pour le style Python
+- Docstrings pour toutes les fonctions publiques
+- Type hints obligatoires
+- Tests unitaires pour les nouvelles fonctionnalités
+
+### Workflow
 1. Fork le projet
-2. Créez votre branche (`git checkout -b feature/amazing-feature`)
-3. Commit vos changements (`git commit -m 'Add amazing feature'`)
-4. Push vers la branche (`git push origin feature/amazing-feature`)
-5. Ouvrez une Pull Request
+2. Créer une branche feature (`git checkout -b feature/amazing-feature`)
+3. Respecter les standards (`make lint`)
+4. Ajouter des tests (`make test`)
+5. Commit avec des messages clairs
+6. Ouvrir une Pull Request
 
 ## 📄 Licence
 
-Ce projet est sous licence ISC.
+Ce projet est sous licence ISC - voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-## 🙋‍♂️ Support
+## 🆘 Support et FAQ
 
-Pour toute question ou problème :
-- Ouvrez une issue sur GitHub
-- Consultez la documentation Swagger à `/docs`
+### Problèmes courants
+
+**Port déjà utilisé**
+```bash
+# Vérifier les ports utilisés
+lsof -i :8000
+
+# Ou changer le port dans .env
+APP_PORT=8001
+```
+
+**Problème de connexion à la DB**
+```bash
+# Vérifier que PostgreSQL est démarré
+make dev-logs
+
+# Recréer les volumes si nécessaire
+docker-compose -f docker-compose.dev.yaml down -v
+make dev
+```
+
+**Erreurs SSL en production**
+```bash
+# Vérifier les certificats
+docker-compose -f docker-compose.prod.yaml exec scenario-nginx \
+  openssl x509 -in /etc/nginx/certs/fullchain.pem -text -noout
+```
+
+### Ressources utiles
+- [Documentation FastAPI](https://fastapi.tiangolo.com/)
+- [Documentation SQLAlchemy](https://docs.sqlalchemy.org/)
+- [Documentation Pydantic](https://docs.pydantic.dev/)
+- [Docker Best Practices](https://docs.docker.com/develop/dev-best-practices/)
 
 ---
 
-**Développé avec ❤️ en FastAPI**
+**Développé avec ❤️ en FastAPI par [Votre Nom]**
+
+🔗 **Liens utiles :**
+- API Docs: `http://localhost:8000/docs`
+- Adminer: `http://localhost:8080` 
+- Monitoring: Configurez Sentry pour le monitoring en production

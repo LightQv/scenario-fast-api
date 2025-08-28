@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
-from app.core.database import Base
+from app.database.base import Base
 
 
 class Media(Base):
@@ -18,6 +18,6 @@ class Media(Base):
     runtime = Column(Integer, nullable=False)
     title = Column(String, nullable=False)
     media_type = Column(String, nullable=False)
-    watchlist_id = Column(UUID(as_uuid=True), ForeignKey("watchlist.id", ondelete="CASCADE"), nullable=False)
+    watchlist_id = Column(UUID(as_uuid=True), ForeignKey("watchlist_model.id", ondelete="CASCADE"), nullable=False)
 
     watchlist = relationship("Watchlist", back_populates="medias")

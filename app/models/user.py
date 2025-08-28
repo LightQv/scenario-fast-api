@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
-from app.core.database import Base
+from app.database.base import Base
 
 
 class User(Base):
@@ -16,5 +16,6 @@ class User(Base):
     password_token = Column(String, nullable=True)
     profile_banner = Column(String, nullable=True)
 
-    watchlist = relationship("Watchlist", back_populates="author", cascade="all, delete-orphan")
+    watchlists = relationship("Watchlist", back_populates="author", cascade="all, delete-orphan")
     views = relationship("View", back_populates="viewer", cascade="all, delete-orphan")
+

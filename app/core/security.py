@@ -1,20 +1,11 @@
 from datetime import datetime, timedelta
 from typing import Any, Union, Optional
-from jose import JWTError, jwt
-from passlib.context import CryptContext
-from passlib.hash import argon2
+import jwt
+from jwt.exceptions import JWTError
+import bcrypt
 import uuid
 
 from app.core.settings import settings
-
-# Configuration Argon2 (même config que ton Express)
-password_context = CryptContext(
-    schemes=["argon2"],
-    deprecated="auto",
-    argon2__memory_cost=65536,  # 2^16
-    argon2__time_cost=5,
-    argon2__parallelism=1,
-)
 
 
 def create_access_token(
@@ -68,7 +59,7 @@ def verify_token(token: str) -> Optional[str]:
 
 def hash_password(password: str) -> str:
     """
-    Hashe un mot de passe avec Argon2.
+    Hashe un mot de passe avec bcrypt.
 
     Args:
         password: Le mot de passe en clair
@@ -76,7 +67,9 @@ def hash_password(password: str) -> str:
     Returns:
         Le mot de passe hashé
     """
-    return password_context.hash(password)
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed.decode('utf-8')
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -90,7 +83,10 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     Returns:
         True si le mot de passe correspond
     """
-    return password_context.verify(plain_password, hashed_password)
+    return bcrypt.checkpw(
+        plain_password.encode('utf-8'),
+        hashed_password.encode('utf-8')
+    )
 
 
 def generate_password_reset_token() -> str:

@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
-from app.core.database import Base
+from app.database.base import Base
 
 
 class Watchlist(Base):
@@ -11,7 +11,7 @@ class Watchlist(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String(255), nullable=False)
-    author_id = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    author_id = Column(UUID(as_uuid=True), ForeignKey("user_model.id", ondelete="CASCADE"), nullable=False)
 
-    author = relationship("User", back_populates="watchlist")
+    author = relationship("User", back_populates="watchlists")
     medias = relationship("Media", back_populates="watchlist", cascade="all, delete-orphan")

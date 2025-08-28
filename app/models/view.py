@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
-from app.core.database import Base
+from app.database.base import Base
 
 
 class View(Base):
@@ -19,6 +19,6 @@ class View(Base):
     runtime = Column(Integer, nullable=False)
     title = Column(String, nullable=False)
     media_type = Column(String, nullable=False)
-    viewer_id = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    viewer_id = Column(UUID(as_uuid=True), ForeignKey("user_model.id", ondelete="CASCADE"), nullable=False)
 
     viewer = relationship("User", back_populates="views")

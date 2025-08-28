@@ -2,7 +2,7 @@ from typing import Generator, Optional
 from fastapi import Depends, HTTPException, status, Cookie
 from sqlalchemy.orm import Session
 
-from app.core.database import get_database_session
+from app.database.session import get_database_session
 from app.core.security import verify_token
 from app.models import User
 

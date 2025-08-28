@@ -3,7 +3,7 @@ from pydantic import BaseModel, EmailStr, Field, field_validator
 from typing import Optional
 import re
 
-from app.core.config import settings
+from app.core.settings import settings
 
 
 class UserRegister(BaseModel):
