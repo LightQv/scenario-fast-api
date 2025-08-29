@@ -42,3 +42,5 @@ link-integration.yaml
 # Coverage
 .coverage
 /htmlcov
+
+.DS_Store
