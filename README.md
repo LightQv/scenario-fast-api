@@ -1,6 +1,6 @@
 # SCENARIO API - FastAPI Version
 
-Bienvenue dans la version FastAPI de l'API Scenario ! Une API moderne pour gérer vos watchlists et suivre votre historique de visionnage de films et séries.
+Welcome to the FastAPI version of the Scenario API! A modern API for managing your watchlists and tracking your movie and TV show viewing history.
 
 ## 🚀 Technologies
 
@@ -10,142 +10,195 @@ Bienvenue dans la version FastAPI de l'API Scenario ! Une API moderne pour gére
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 
-## 📋 Fonctionnalités
+## 📋 Features
 
-- ✅ **Authentification complète** : Inscription, connexion, mot de passe oublié
-- 🎬 **Gestion des watchlists** : Créer, modifier, supprimer vos listes de films/séries
-- 👁️ **Historique de visionnage** : Tracker ce que vous avez regardé
-- 📊 **Statistiques** : Analyser vos habitudes de visionnage
-- 🔐 **Sécurité** : JWT avec cookies HTTPOnly, hashage bcrypt
-- 📧 **Emails** : Système de réinitialisation par email avec fastapi-mail
-- 🐳 **Multi-environnements** : Dev, Staging, Production avec Docker
-- 🔍 **Monitoring** : Logging avec Loguru, tracking d'erreurs avec Sentry
+- ✅ **Complete Authentication**: Registration, login, forgot password
+- 🎬 **Watchlist Management**: Create, edit, delete your movie/TV lists
+- 👁️ **Viewing History**: Track what you've watched
+- 📊 **Statistics**: Analyze your viewing habits
+- 🔐 **Security**: JWT with HTTPOnly cookies, bcrypt hashing
+- 📧 **Email System**: Password reset with fastapi-mail
+- 🐳 **Multi-environments**: Dev, Staging, Production with Docker
+- 🔍 **Monitoring**: Logging with Loguru, error tracking with Sentry
 
 ## 🏗️ Architecture
 
 ```
 app/
-├── core/           # Configuration, database, sécurité
-├── models/         # Modèles SQLAlchemy
-├── schemas/        # Schémas Pydantic
-├── api/v1/         # Routes API
-├── services/       # Logique métier
-└── utils/          # Utilitaires (templates email, etc.)
+├── core/              # Configuration, database, security
+├── models/            # SQLAlchemy models
+├── schemas/           # Pydantic schemas
+├── api/v1/            # API routes
+├── services/          # Business logic
+├── utils/             # Utilities (email templates, etc.)
+└── database/          # Database configuration and tools
+    ├── backup/        # SQL dump files
+    └── restore_data.py # Database restore script
 ```
 
-## 🚀 Démarrage Rapide
+## 🚀 Quick Start
 
-### Avec Makefile (Recommandé)
+### With Makefile (Recommended)
 
 ```bash
-# Cloner le repository
-git clone <votre-repo>
+# Clone the repository
+git clone <your-repo>
 cd scenario-fastapi
 
-# Copier et configurer l'environnement
+# Copy and configure environment
 cp .env.example .env
-# Éditer le fichier .env
+# Edit the .env file
 
-# Démarrer l'environnement de développement
+# Start development environment
 make dev
 
-# Voir les logs
+# View logs
 make dev-logs
 
-# Arrêter l'environnement
+# Stop environment
 make dev-stop
 ```
 
-### Installation manuelle
+### Manual Installation
 
-1. **Prérequis**
+1. **Prerequisites**
    - Python 3.12+
    - PostgreSQL
-   - Docker et Docker Compose
+   - Docker and Docker Compose
 
 2. **Installation**
 ```bash
-# Créer l'environnement virtuel
+# Create virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# ou venv\Scripts\activate  # Windows
+# or venv\Scripts\activate  # Windows
 
-# Installer les dépendances
+# Install dependencies
 make install
-# ou pip install -r requirements.txt
+# or pip install -r requirements.txt
 
 # Configuration
 cp .env.example .env
 ```
 
-3. **Base de données**
+3. **Database**
 ```bash
-# Avec Docker
+# With Docker
 make dev
 
-# Ou manuellement
+# Or manually
 alembic upgrade head
 ```
 
-## 🐳 Environnements Docker
+## 🗄️ Database Management
 
-### Développement
+### Database Restore from Supabase Dump
+
+If you have a SQL dump from Supabase or another PostgreSQL database, you can restore it using our restore tool.
+
+#### Setup
+
+1. **Place your SQL dump file** in `app/database/backup/scenario_dump.sql`
+2. **Make sure PostgreSQL client is installed** (`psql` command must be available)
+
+#### Restore Database
+
+⚠️ **WARNING: This operation will completely replace your current database!**
+
 ```bash
-make dev              # Démarrer
-make dev-logs         # Voir les logs  
-make dev-stop         # Arrêter
+# Restore from default dump file (app/database/backup/scenario_dump.sql)
+make restore-db
+# or
+python app/database/restore_data.py
+
+# Restore from custom dump file
+python app/database/restore_data.py /path/to/your/dump.sql
+```
+
+The script will:
+- Ask for confirmation (this operation is **irreversible**)
+- Drop all existing data
+- Restore from the SQL dump file
+- Show progress and results
+
+#### Example Restore Session
+
+```bash
+$ make restore-db
+
+🔄 Scenario API - Database Restore Tool
+========================================
+⚠️  WARNING: DATABASE RESTORE OPERATION
+==================================================
+This operation will:
+• DROP all existing tables and data
+• RESTORE from the SQL dump file
+• This action is IRREVERSIBLE
+==================================================
+Are you sure you want to continue? (y/N): y
+
+✅ Database restore completed successfully!
+```
+
+## 🐳 Docker Environments
+
+### Development
+```bash
+make dev              # Start
+make dev-logs         # View logs  
+make dev-stop         # Stop
 ```
 - API: http://localhost:8000
 - Adminer: http://localhost:8080
-- Hot reload activé
+- Hot reload enabled
 
 ### Staging
 ```bash
-make staging          # Démarrer
-make staging-stop     # Arrêter
+make staging          # Start
+make staging-stop     # Stop
 ```
-- API avec Nginx: http://localhost:8001
-- Rate limiting activé
-- Sécurité renforcée
+- API with Nginx: http://localhost:8001
+- Rate limiting enabled
+- Enhanced security
 
 ### Production
 ```bash
-make prod             # Démarrer
-make prod-stop        # Arrêter
+make prod             # Start
+make prod-stop        # Stop
 ```
-- HTTPS avec SSL
-- Rate limiting agressif
-- Monitoring complet
+- HTTPS with SSL
+- Aggressive rate limiting
+- Complete monitoring
 
-## 📦 Déploiement avec Images Docker
+## 📦 Deployment with Docker Images
 
-### Build et Push vers DockerHub
+### Build and Push to DockerHub
 
 ```bash
-# Configuration du registry
+# Configure registry
 export DOCKER_REGISTRY=your-dockerhub-username
 
-# Build et push
+# Build and push
 make push
 
-# Ou avec le script de déploiement
+# Or with deployment script
 chmod +x scripts/deploy.sh
 ./scripts/deploy.sh --environment prod --registry your-dockerhub-username
 ```
 
-### Utilisation des images en production
+### Using Images in Production
 
 ```bash
-# Modifier docker-compose.prod.yaml
+# Modify docker-compose.prod.yaml
 services:
   scenario-api:
     image: your-dockerhub-username/scenario-api:latest
     # ...
 ```
 
-## 🔧 Variables d'environnement
+## 🔧 Environment Variables
 
-### Développement (.env)
+### Development (.env)
 ```env
 APP_NAME="Scenario API"
 DEBUG=true
@@ -164,38 +217,39 @@ FRONTEND_URL="https://scenario.yourdomain.com"
 SENTRY_DSN="https://your-sentry-dsn@sentry.io/project-id"
 ```
 
-## 📚 Documentation API
+## 📚 API Documentation
 
 - **Swagger UI** : `http://localhost:8000/docs`
 - **ReDoc** : `http://localhost:8000/redoc`
 
-## 🛠️ Commandes Utiles
+## 🛠️ Useful Commands
 
 ```bash
 # Tests
-make test             # Lancer les tests
-pytest --cov=app     # Tests avec couverture
+make test             # Run tests
+pytest --cov=app     # Tests with coverage
 
 # Linting
-make lint             # Vérifier le code
-make lint-fix         # Corriger automatiquement
+make lint             # Check code
+make lint-fix         # Auto-fix issues
 
-# Base de données
-make migrate          # Appliquer les migrations
-make migrate-create   # Créer une nouvelle migration
+# Database
+make migrate          # Apply migrations
+make migrate-create   # Create new migration
+make restore-db       # Restore from SQL dump
 
 # Logs
-make logs-dev         # Logs développement
-make logs-prod        # Logs production
+make logs-dev         # Development logs
+make logs-prod        # Production logs
 
 # Debug
-make shell            # Shell dans le container
-make db-shell         # Shell PostgreSQL
+make shell            # Shell in container
+make db-shell         # PostgreSQL shell
 ```
 
-## 🔍 Monitoring et Observabilité
+## 🔍 Monitoring and Observability
 
-### Logs avec Loguru
+### Logs with Loguru
 ```python
 from loguru import logger
 
@@ -203,20 +257,20 @@ logger.info("User logged in", user_id=user.id)
 logger.error("Database connection failed", error=str(e))
 ```
 
-### Tracking d'erreurs avec Sentry
+### Error Tracking with Sentry
 ```python
-# Automatique avec l'intégration FastAPI
-# Configuré dans app/main.py
+# Automatic with FastAPI integration
+# Configured in app/main.py
 ```
 
-### Métriques Nginx
-- Logs détaillés avec temps de réponse
-- Rate limiting par endpoint
-- Headers de sécurité
+### Nginx Metrics
+- Detailed logs with response times
+- Rate limiting per endpoint
+- Security headers
 
-## 🚨 Sécurité
+## 🚨 Security
 
-### Headers de sécurité (Nginx)
+### Security Headers (Nginx)
 - `Strict-Transport-Security`
 - `X-Frame-Options`
 - `X-XSS-Protection`
@@ -224,128 +278,128 @@ logger.error("Database connection failed", error=str(e))
 
 ### Rate Limiting
 - Auth endpoints: 10 req/s
-- API générale: 30 req/s (prod), 10 req/s (staging)
-- Burst permettant les pics de trafic
+- General API: 30 req/s (prod), 10 req/s (staging)
+- Burst allowing traffic spikes
 
-### Authentification
-- JWT avec cookies HTTPOnly
-- Bcrypt pour le hashage des mots de passe
-- Tokens de réinitialisation sécurisés
-- Validation stricte des entrées avec Pydantic
+### Authentication
+- JWT with HTTPOnly cookies
+- Bcrypt for password hashing
+- Secure reset tokens
+- Strict input validation with Pydantic
 
 ## 🧪 Tests
 
 ```bash
-# Lancer tous les tests
+# Run all tests
 make test
 
-# Tests avec couverture détaillée
+# Tests with detailed coverage
 pytest --cov=app --cov-report=html
 open htmlcov/index.html
 
-# Tests en mode watch (développement)
+# Tests in watch mode (development)
 make test-watch
 
-# Tests d'un module spécifique
+# Test specific module
 pytest tests/test_auth.py -v
 ```
 
-## 📁 Structure des fichiers Docker
+## 📁 Docker File Structure
 
 ```
-├── Dockerfile              # Production
-├── Dockerfile.dev          # Développement
-├── docker-compose.dev.yaml # Environnement dev
-├── docker-compose.staging.yaml # Environnement staging  
-├── docker-compose.prod.yaml # Environnement production
+├── Dockerfile              # Production (multi-stage)
+├── Dockerfile.dev          # Development
+├── docker-compose.dev.yaml # Dev environment
+├── docker-compose.staging.yaml # Staging environment  
+├── docker-compose.prod.yaml # Production environment
 ├── nginx/
-│   ├── nginx.dev.conf      # Config Nginx dev
-│   ├── nginx.staging.conf  # Config Nginx staging
-│   └── nginx.prod.conf     # Config Nginx prod
+│   ├── nginx.dev.conf      # Nginx dev config
+│   ├── nginx.staging.conf  # Nginx staging config
+│   └── nginx.prod.conf     # Nginx prod config
 ├── scripts/
-│   └── deploy.sh           # Script de déploiement
-└── Makefile                # Commandes utiles
+│   └── deploy.sh           # Deployment script
+└── Makefile                # Useful commands
 ```
 
-## 🔄 Workflow de Déploiement
+## 🔄 Deployment Workflow
 
-### 1. Développement Local
+### 1. Local Development
 ```bash
-# Développer en local avec hot reload
+# Develop locally with hot reload
 make dev
 ```
 
-### 2. Tests et Validation
+### 2. Testing and Validation
 ```bash
-# Tests unitaires
+# Unit tests
 make test
 
-# Vérification du code
+# Code checking
 make lint
 ```
 
-### 3. Déploiement Staging
+### 3. Staging Deployment
 ```bash
-# Build et déploiement en staging
+# Build and deploy to staging
 ./scripts/deploy.sh --environment staging
 ```
 
-### 4. Déploiement Production
+### 4. Production Deployment
 ```bash
-# Build, push vers DockerHub et déploiement
+# Build, push to DockerHub and deploy
 ./scripts/deploy.sh --environment prod --registry your-dockerhub-username
 ```
 
-## 🌐 Configuration SSL/HTTPS (Production)
+## 🌐 SSL/HTTPS Configuration (Production)
 
-### 1. Certificats Let's Encrypt
+### 1. Let's Encrypt Certificates
 ```bash
-# Créer le dossier des certificats
+# Create certificates directory
 mkdir -p certs
 
-# Obtenir les certificats (avec certbot)
+# Get certificates (with certbot)
 certbot certonly --webroot -w /var/www/certbot -d yourdomain.com
 ```
 
-### 2. Renouvellement automatique
+### 2. Automatic Renewal
 ```bash
-# Ajouter au crontab
+# Add to crontab
 0 12 * * * /usr/bin/certbot renew --quiet
 ```
 
-## 📊 Monitoring Avancé
+## 📊 Advanced Monitoring
 
 ### Health Checks
-- Endpoint `/health` pour vérifier l'état de l'API
-- Health checks Docker pour les containers
-- Monitoring de la base de données
+- `/health` endpoint to check API status
+- Docker health checks for containers
+- Database monitoring
 
-### Métriques personnalisées
+### Custom Metrics
 ```python
-# Dans vos endpoints
+# In your endpoints
 from loguru import logger
 import time
 
 @router.post("/example")
 def example_endpoint():
     start_time = time.time()
-    # ... logique métier
+    # ... business logic
     duration = time.time() - start_time
     logger.info("Endpoint executed", endpoint="example", duration=duration)
 ```
 
-## 🔧 Configuration Avancée
+## 🔧 Advanced Configuration
 
-### Variables d'environnement par service
+### Environment Variables by Service
 
-#### Base de données
+#### Database
 ```env
 POSTGRES_DB=scenario_db
 POSTGRES_USER=scenario_user  
 POSTGRES_PASSWORD=secure_password
 ```
 
-#### Email (Gmail avec mot de passe d'application)
+#### Email (Gmail with app password)
 ```env
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
@@ -354,137 +408,149 @@ SMTP_PASSWORD=your_app_specific_password
 SMTP_USE_TLS=true
 ```
 
-#### Sentry (Monitoring d'erreurs)
+#### Sentry (Error Monitoring)
 ```env
 SENTRY_DSN=https://your_key@sentry.io/project_id
 ```
 
-## 🚀 Optimisations de Performance
+## 🚀 Performance Optimizations
 
-### Base de données
-- Indexes sur les colonnes fréquemment requêtées
-- Connection pooling avec SQLAlchemy
-- Requêtes optimisées avec jointures
+### Database
+- Indexes on frequently queried columns
+- Connection pooling with SQLAlchemy
+- Optimized queries with joins
 
 ### Application
-- Réutilisation des connexions HTTP avec `httpx`
-- Mise en cache des sessions de base de données
-- Validation Pydantic optimisée
+- HTTP connection reuse with `httpx`
+- Database session caching
+- Optimized Pydantic validation
 
 ### Infrastructure
-- Nginx comme reverse proxy
+- Nginx as reverse proxy
 - Gzip compression
 - Keep-alive connections
 - Buffer optimization
 
 ## 🔍 Debugging
 
-### Logs de développement
+### Development Logs
 ```bash
-# Voir les logs en temps réel
+# View logs in real-time
 make dev-logs
 
-# Logs d'un service spécifique
+# Logs from specific service
 docker-compose -f docker-compose.dev.yaml logs -f scenario-api
 ```
 
-### Accès aux containers
+### Container Access
 ```bash
-# Shell dans le container API
+# Shell in API container
 make shell
 
-# Shell PostgreSQL
+# PostgreSQL shell
 make db-shell
 
-# Inspecter la base de données
+# Inspect database
 docker-compose -f docker-compose.dev.yaml exec scenario-postgres \
   psql -U scenario_user -d scenario_db -c "SELECT * FROM user_model LIMIT 5;"
 ```
 
-## 📈 Migration depuis Express
+## 📈 Migration from Express
 
-### Données existantes
+### Existing Data
 ```bash
-# Les modèles SQLAlchemy sont compatibles avec votre schéma Express
-# Pas besoin de migration de données si vous utilisez la même DB
+# SQLAlchemy models are compatible with your Express schema
+# No data migration needed if using the same DB
 ```
 
-### Changements d'API
-- Routes préfixées par `/api/v1/`
-- Réponses JSON normalisées
-- Validation automatique des entrées
-- Documentation automatique
+### API Changes
+- Routes prefixed with `/api/v1/`
+- Normalized JSON responses
+- Automatic input validation
+- Automatic documentation
 
 ### Frontend
 ```javascript
-// Ancien (Express)
+// Old (Express)
 const response = await fetch('/auth/login', { ... })
 
-// Nouveau (FastAPI)  
+// New (FastAPI)  
 const response = await fetch('/api/v1/auth/login', { ... })
 ```
 
-## 🤝 Contribution
+## 🤝 Contributing
 
-### Standards de code
-- PEP 8 pour le style Python
-- Docstrings pour toutes les fonctions publiques
-- Type hints obligatoires
-- Tests unitaires pour les nouvelles fonctionnalités
+### Code Standards
+- PEP 8 for Python style
+- Docstrings for all public functions
+- Type hints required
+- Unit tests for new features
 
 ### Workflow
-1. Fork le projet
-2. Créer une branche feature (`git checkout -b feature/amazing-feature`)
-3. Respecter les standards (`make lint`)
-4. Ajouter des tests (`make test`)
-5. Commit avec des messages clairs
-6. Ouvrir une Pull Request
+1. Fork the project
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Follow standards (`make lint`)
+4. Add tests (`make test`)
+5. Commit with clear messages
+6. Open Pull Request
 
-## 📄 Licence
+## 📄 License
 
-Ce projet est sous licence ISC - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support et FAQ
+## 🆘 Support and FAQ
 
-### Problèmes courants
+### Common Issues
 
-**Port déjà utilisé**
+**Port already in use**
 ```bash
-# Vérifier les ports utilisés
+# Check used ports
 lsof -i :8000
 
-# Ou changer le port dans .env
+# Or change port in .env
 APP_PORT=8001
 ```
 
-**Problème de connexion à la DB**
+**Database connection issue**
 ```bash
-# Vérifier que PostgreSQL est démarré
+# Check PostgreSQL is running
 make dev-logs
 
-# Recréer les volumes si nécessaire
+# Recreate volumes if needed
 docker-compose -f docker-compose.dev.yaml down -v
 make dev
 ```
 
-**Erreurs SSL en production**
+**SSL errors in production**
 ```bash
-# Vérifier les certificats
+# Check certificates
 docker-compose -f docker-compose.prod.yaml exec scenario-nginx \
   openssl x509 -in /etc/nginx/certs/fullchain.pem -text -noout
 ```
 
-### Ressources utiles
-- [Documentation FastAPI](https://fastapi.tiangolo.com/)
-- [Documentation SQLAlchemy](https://docs.sqlalchemy.org/)
-- [Documentation Pydantic](https://docs.pydantic.dev/)
+**Database restore fails**
+```bash
+# Check PostgreSQL client is installed
+which psql
+
+# Check dump file format
+head -n 10 app/database/backup/scenario_dump.sql
+
+# Check database connection
+psql $DATABASE_URL -c "SELECT version();"
+```
+
+### Useful Resources
+- [FastAPI Documentation](https://fastapi.tiangolo.com/)
+- [SQLAlchemy Documentation](https://docs.sqlalchemy.org/)
+- [Pydantic Documentation](https://docs.pydantic.dev/)
 - [Docker Best Practices](https://docs.docker.com/develop/dev-best-practices/)
 
 ---
 
-**Développé avec ❤️ en FastAPI par [Votre Nom]**
+**Developed with ❤️ in FastAPI by [Your Name]**
 
-🔗 **Liens utiles :**
+🔗 **Useful Links:**
 - API Docs: `http://localhost:8000/docs`
 - Adminer: `http://localhost:8080` 
-- Monitoring: Configurez Sentry pour le monitoring en production
+- Monitoring: Configure Sentry for production monitoring
