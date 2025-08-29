@@ -13,14 +13,21 @@ def create_access_token(
         subject: Union[str, Any], expires_delta: Optional[timedelta] = None
 ) -> str:
     """
-    Crée un token JWT pour l'authentification.
+    Create a JWT access token for user authentication.
+
+    Generates a JSON Web Token (JWT) with the specified subject (usually user ID)
+    and expiration time. The token is signed with the application's secret key.
 
     Args:
-        subject: L'identifiant du sujet (user_id généralement)
-        expires_delta: Durée de vie du token (optionnel)
+        subject: The subject of the token (typically user ID)
+        expires_delta: Optional custom expiration time delta
 
     Returns:
-        Token JWT encodé
+        str: Encoded JWT access token
+
+    Example:
+        >>> token = create_access_token(subject=user.id)
+        >>> # Returns: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
     """
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -38,13 +45,23 @@ def create_access_token(
 
 def verify_token(token: str) -> Optional[str]:
     """
-    Vérifie et décode un token JWT.
+    Verify and decode a JWT access token.
+
+    Validates the JWT token signature and expiration, then extracts
+    the subject (user ID) from the token payload.
 
     Args:
-        token: Le token JWT à vérifier
+        token: The JWT token string to verify
 
     Returns:
-        L'ID utilisateur si le token est valide, None sinon
+        Optional[str]: User ID if token is valid, None if invalid
+
+    Raises:
+        CustomExceptionError: If token is expired or invalid
+
+    Example:
+        >>> user_id = verify_token("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...")
+        >>> # Returns: "123e4567-e89b-12d3-a456-426614174000"
     """
     try:
         payload = jwt.decode(
@@ -61,15 +78,24 @@ def verify_token(token: str) -> Optional[str]:
     except Exception as error:
         raise error
 
+
 def hash_password(password: str) -> str:
     """
-    Hashe un mot de passe avec bcrypt.
+    Hash a password using bcrypt with salt.
+
+    Securely hashes a plain text password using the bcrypt algorithm
+    with a randomly generated salt. This is the standard approach for
+    storing user passwords securely.
 
     Args:
-        password: Le mot de passe en clair
+        password: Plain text password to hash
 
     Returns:
-        Le mot de passe hashé
+        str: Bcrypt hashed password as a string
+
+    Example:
+        >>> hashed = hash_password("mySecurePassword123!")
+        >>> # Returns: "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/RVSg2/CPK"
     """
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
@@ -78,14 +104,21 @@ def hash_password(password: str) -> str:
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """
-    Vérifie un mot de passe contre son hash.
+    Verify a password against its bcrypt hash.
+
+    Compares a plain text password with a stored bcrypt hash to determine
+    if they match. Used during user authentication to verify credentials.
 
     Args:
-        plain_password: Le mot de passe en clair
-        hashed_password: Le hash à vérifier
+        plain_password: Plain text password to verify
+        hashed_password: Stored bcrypt hash to compare against
 
     Returns:
-        True si le mot de passe correspond
+        bool: True if password matches the hash, False otherwise
+
+    Example:
+        >>> is_valid = verify_password("myPassword123", stored_hash)
+        >>> # Returns: True or False
     """
     return bcrypt.checkpw(
         plain_password.encode('utf-8'),
@@ -95,9 +128,17 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def generate_password_reset_token() -> str:
     """
-    Génère un token unique pour la réinitialisation de mot de passe.
+    Generate a unique token for password reset functionality.
+
+    Creates a cryptographically secure random UUID4 token that can be
+    used for password reset links sent via email. The token should be
+    stored in the database and have a reasonable expiration time.
 
     Returns:
-        Un UUID4 sous forme de string
+        str: UUID4 token as a string
+
+    Example:
+        >>> reset_token = generate_password_reset_token()
+        >>> # Returns: "123e4567-e89b-12d3-a456-426614174000"
     """
     return str(uuid.uuid4())

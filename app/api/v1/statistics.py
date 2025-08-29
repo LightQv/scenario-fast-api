@@ -8,25 +8,39 @@ from app.api.dependencies import get_database
 from app.models import View
 from app.schemas import ViewCountByType, ViewCountByYear, ViewRuntime
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/statistics",
+    tags=["Statistics"],
+    responses={
+        404: {"description": "No statistics found"}
+    }
+)
 
 
-@router.get("/count/{media_type}/{user_id}", response_model=List[ViewCountByType])
+@router.get(
+    "/count/{media_type}/{user_id}",
+    response_model=List[ViewCountByType],
+    summary="Get viewing count by media type",
+    description="Get the number of movies or TV shows watched by a user"
+)
 def get_view_count_by_type(
         media_type: str,
         user_id: UUID,
         database_session: Session = Depends(get_database)
 ) -> List[ViewCountByType]:
     """
-    Récupère le nombre de vues par type de média pour un utilisateur.
+    Get viewing statistics by media type for a user.
+
+    Returns the total count of movies or TV shows watched by the specified user.
+    This helps understand user viewing preferences between different media types.
 
     Args:
-        media_type: Type de média (movie, tv)
-        user_id: ID de l'utilisateur
-        database_session: Session de base de données
+        media_type: Type of media to count ('movie' or 'tv')
+        user_id: UUID of the user whose statistics to retrieve
+        database_session: Database session dependency
 
     Returns:
-        Statistiques de vues par type
+        List[ViewCountByType]: Statistics showing count by media type
     """
     results = database_session.query(
         View.media_type,
@@ -42,22 +56,30 @@ def get_view_count_by_type(
     ]
 
 
-@router.get("/year/{media_type}/{user_id}", response_model=List[ViewCountByYear])
+@router.get(
+    "/year/{media_type}/{user_id}",
+    response_model=List[ViewCountByYear],
+    summary="Get viewing count by release year",
+    description="Get viewing statistics grouped by media release year"
+)
 def get_view_count_by_year(
         media_type: str,
         user_id: UUID,
         database_session: Session = Depends(get_database)
 ) -> List[ViewCountByYear]:
     """
-    Récupère le nombre de vues par année de sortie pour un utilisateur.
+    Get viewing statistics by release year for a user.
+
+    Returns viewing statistics grouped by the release year of watched content.
+    This helps identify user preferences for content from different time periods.
 
     Args:
-        media_type: Type de média (movie, tv)
-        user_id: ID de l'utilisateur
-        database_session: Session de base de données
+        media_type: Type of media to analyze ('movie' or 'tv')
+        user_id: UUID of the user whose statistics to retrieve
+        database_session: Database session dependency
 
     Returns:
-        Statistiques de vues par année
+        List[ViewCountByYear]: Statistics showing count by release year, ordered chronologically
     """
     results = database_session.query(
         View.release_year,
@@ -73,22 +95,31 @@ def get_view_count_by_year(
     ]
 
 
-@router.get("/runtime/{media_type}/{user_id}", response_model=List[ViewRuntime])
+@router.get(
+    "/runtime/{media_type}/{user_id}",
+    response_model=List[ViewRuntime],
+    summary="Get runtime statistics",
+    description="Get runtime information for all media watched by a user"
+)
 def get_runtime_by_user(
         media_type: str,
         user_id: UUID,
         database_session: Session = Depends(get_database)
 ) -> List[ViewRuntime]:
     """
-    Récupère les durées de tous les médias vus par un utilisateur.
+    Get runtime statistics for all media watched by a user.
+
+    Returns the runtime (duration) of all movies or TV show episodes
+    watched by the user. This can be used to calculate total watch time
+    or analyze viewing duration preferences.
 
     Args:
-        media_type: Type de média (movie, tv)
-        user_id: ID de l'utilisateur
-        database_session: Session de base de données
+        media_type: Type of media to analyze ('movie' or 'tv')
+        user_id: UUID of the user whose statistics to retrieve
+        database_session: Database session dependency
 
     Returns:
-        Liste des durées des médias vus
+        List[ViewRuntime]: List of runtime values for all watched media
     """
     results = database_session.query(View.runtime).filter(
         View.viewer_id == user_id,

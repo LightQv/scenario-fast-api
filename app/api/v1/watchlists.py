@@ -8,23 +8,38 @@ from app.api.dependencies import get_database, get_current_user
 from app.models import User, Watchlist, Media
 from app.schemas import WatchlistCreate, WatchlistUpdate, WatchlistResponse, WatchlistDetail, MediaResponse
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/watchlists",
+    tags=["Watchlists"],
+    responses={
+        404: {"description": "Watchlist not found"},
+        403: {"description": "Access forbidden"}
+    }
+)
 
 
-@router.get("/{user_id}", response_model=List[WatchlistResponse])
+@router.get(
+    "/{user_id}",
+    response_model=List[WatchlistResponse],
+    summary="Get user watchlists",
+    description="Retrieve all watchlists created by a specific user with media counts"
+)
 def get_user_watchlists(
         user_id: UUID,
         database_session: Session = Depends(get_database)
 ) -> List[WatchlistResponse]:
     """
-    Récupère toutes les watchlists d'un utilisateur.
+    Get all watchlists for a specific user.
+
+    Retrieves all watchlists created by the specified user, including
+    the count of media items in each watchlist and a summary of media IDs.
 
     Args:
-        user_id: ID de l'utilisateur
-        database_session: Session de base de données
+        user_id: UUID of the user whose watchlists to retrieve
+        database_session: Database session dependency
 
     Returns:
-        Liste des watchlists de l'utilisateur
+        List[WatchlistResponse]: List of user's watchlists with media counts
     """
     watchlists = database_session.query(
         Watchlist.id,
@@ -41,7 +56,7 @@ def get_user_watchlists(
 
     result = []
     for watchlist_data in watchlists:
-        # Récupérer les médias pour chaque watchlist
+        # Get media items for each watchlist
         medias = database_session.query(Media.id, Media.tmdb_id).filter(
             Media.watchlist_id == watchlist_data.id
         ).all()
@@ -58,25 +73,33 @@ def get_user_watchlists(
     return result
 
 
-@router.get("/detail/{watchlist_id}", response_model=WatchlistDetail)
+@router.get(
+    "/detail/{watchlist_id}",
+    response_model=WatchlistDetail,
+    summary="Get watchlist details",
+    description="Retrieve detailed information about a watchlist including all media items"
+)
 def get_watchlist_details(
         watchlist_id: UUID,
-        genre: Optional[int] = Query(None, description="Filtrer par genre"),
+        genre: Optional[int] = Query(None, description="Filter media by genre ID"),
         database_session: Session = Depends(get_database)
 ) -> WatchlistDetail:
     """
-    Récupère les détails d'une watchlist avec ses médias.
+    Get detailed watchlist information with all media items.
+
+    Retrieves complete watchlist details including all media items.
+    Optionally filters media by genre for more targeted results.
 
     Args:
-        watchlist_id: ID de la watchlist
-        genre: Genre pour filtrer les médias (optionnel)
-        database_session: Session de base de données
+        watchlist_id: UUID of the watchlist to retrieve
+        genre: Optional genre ID to filter media items
+        database_session: Database session dependency
 
     Returns:
-        Détails de la watchlist
+        WatchlistDetail: Complete watchlist information with media items
 
     Raises:
-        HTTPException: Si la watchlist n'existe pas
+        HTTPException: 404 if watchlist doesn't exist
     """
     watchlist = database_session.query(Watchlist).filter(Watchlist.id == watchlist_id).first()
 
@@ -86,16 +109,16 @@ def get_watchlist_details(
             detail="Watchlist not found"
         )
 
-    # Construire la requête pour les médias
+    # Build media query
     media_query = database_session.query(Media).filter(Media.watchlist_id == watchlist_id)
 
-    # Filtrer par genre si spécifié
+    # Apply genre filter if specified
     if genre is not None:
         media_query = media_query.filter(Media.genre_ids.any(genre))
 
     medias = media_query.all()
 
-    # Compter le nombre total de médias
+    # Count total media items (without genre filter)
     total_medias_count = database_session.query(func.count(Media.id)).filter(
         Media.watchlist_id == watchlist_id
     ).scalar()
@@ -107,22 +130,30 @@ def get_watchlist_details(
     )
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/",
+    status_code=status.HTTP_201_CREATED,
+    summary="Create new watchlist",
+    description="Create a new watchlist for the authenticated user"
+)
 def create_watchlist(
         watchlist_data: WatchlistCreate,
         current_user: User = Depends(get_current_user),
         database_session: Session = Depends(get_database)
 ) -> dict:
     """
-    Crée une nouvelle watchlist.
+    Create a new watchlist for the authenticated user.
+
+    Creates a new empty watchlist owned by the currently authenticated user.
+    Media items can be added to the watchlist using the media endpoints.
 
     Args:
-        watchlist_data: Données de la nouvelle watchlist
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        watchlist_data: Watchlist creation data (title)
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Returns:
-        Message de confirmation
+        dict: Success message confirming watchlist creation
     """
     new_watchlist = Watchlist(
         title=watchlist_data.title,
@@ -135,7 +166,12 @@ def create_watchlist(
     return {"message": "Watchlist created successfully"}
 
 
-@router.put("/{watchlist_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put(
+    "/{watchlist_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Update watchlist",
+    description="Update watchlist information (requires ownership)"
+)
 def update_watchlist(
         watchlist_id: UUID,
         watchlist_data: WatchlistUpdate,
@@ -143,16 +179,21 @@ def update_watchlist(
         database_session: Session = Depends(get_database)
 ):
     """
-    Met à jour une watchlist.
+    Update watchlist information.
+
+    Allows the watchlist owner to update watchlist properties such as title.
+    Only the watchlist owner can perform this action.
 
     Args:
-        watchlist_id: ID de la watchlist à modifier
-        watchlist_data: Nouvelles données de la watchlist
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        watchlist_id: UUID of the watchlist to update
+        watchlist_data: Updated watchlist data
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Raises:
-        HTTPException: Si la watchlist n'existe pas ou si l'utilisateur n'a pas les droits
+        HTTPException:
+            - 404 if watchlist doesn't exist
+            - 403 if user doesn't own the watchlist
     """
     watchlist = database_session.query(Watchlist).filter(Watchlist.id == watchlist_id).first()
 
@@ -162,14 +203,14 @@ def update_watchlist(
             detail="Watchlist not found"
         )
 
-    # Vérifier que l'utilisateur est propriétaire de la watchlist
+    # Verify watchlist ownership
     if str(watchlist.author_id) != str(current_user.id):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not authorized to modify this watchlist"
         )
 
-    # Mettre à jour les champs fournis
+    # Update provided fields
     update_data = watchlist_data.model_dump(exclude_unset=True)
     for field, value in update_data.items():
         setattr(watchlist, field, value)
@@ -177,22 +218,32 @@ def update_watchlist(
     database_session.commit()
 
 
-@router.delete("/{watchlist_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(
+    "/{watchlist_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Delete watchlist",
+    description="Permanently delete watchlist and all associated media (requires ownership)"
+)
 def delete_watchlist(
         watchlist_id: UUID,
         current_user: User = Depends(get_current_user),
         database_session: Session = Depends(get_database)
 ):
     """
-    Supprime une watchlist et tous ses médias associés.
+    Delete watchlist and all associated media items.
+
+    Permanently deletes the watchlist and all media items contained within it.
+    This action is irreversible and can only be performed by the watchlist owner.
 
     Args:
-        watchlist_id: ID de la watchlist à supprimer
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        watchlist_id: UUID of the watchlist to delete
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Raises:
-        HTTPException: Si la watchlist n'existe pas ou si l'utilisateur n'a pas les droits
+        HTTPException:
+            - 404 if watchlist doesn't exist
+            - 403 if user doesn't own the watchlist
     """
     watchlist = database_session.query(Watchlist).filter(Watchlist.id == watchlist_id).first()
 
@@ -202,7 +253,7 @@ def delete_watchlist(
             detail="Watchlist not found"
         )
 
-    # Vérifier que l'utilisateur est propriétaire de la watchlist
+    # Verify watchlist ownership
     if str(watchlist.author_id) != str(current_user.id):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
