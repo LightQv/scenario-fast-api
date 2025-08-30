@@ -9,31 +9,46 @@ from app.schemas import UserRegister, UserLogin, ForgottenPassword, PasswordRese
 from app.services.email_service import send_forgotten_password_email
 from app.core.settings import settings
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/auth",
+    tags=["Authentication"],
+    responses={
+        401: {"description": "Authentication failed"},
+        403: {"description": "Access forbidden"}
+    }
+)
 
 
-@router.post("/register", status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/register",
+    status_code=status.HTTP_201_CREATED,
+    summary="Register a new user account",
+    description="Create a new user account with username, email, and password validation"
+)
 def register_user(
         user_data: UserRegister,
         database_session: Session = Depends(get_database)
 ) -> dict:
     """
-    Crée un nouveau compte utilisateur.
+    Register a new user account.
+
+    Creates a new user account after validating the input data and ensuring
+    the username and email are unique. The password is securely hashed using bcrypt.
 
     Args:
-        user_data: Données d'inscription de l'utilisateur
-        database_session: Session de base de données
+        user_data: User registration data including username, email, and passwords
+        database_session: Database session dependency
 
     Returns:
-        Message de confirmation
+        dict: Success message confirming user creation
 
     Raises:
-        HTTPException: Si l'email ou le nom d'utilisateur existe déjà
+        HTTPException: 400 if username or email already exists
     """
-    # Hasher le mot de passe
+    # Hash the password securely
     hashed_password = hash_password(user_data.password)
 
-    # Créer l'utilisateur
+    # Create the new user
     new_user = User(
         username=user_data.username,
         email=user_data.email,
@@ -52,27 +67,35 @@ def register_user(
         )
 
 
-@router.post("/login", response_model=UserResponse)
+@router.post(
+    "/login",
+    response_model=UserResponse,
+    summary="Authenticate user login",
+    description="Authenticate user with email and password, returns user data and sets authentication cookie"
+)
 def login_user(
         user_credentials: UserLogin,
         response: Response,
         database_session: Session = Depends(get_database)
 ) -> UserResponse:
     """
-    Connecte un utilisateur et définit le cookie d'authentification.
+    Authenticate user login and set authentication cookie.
+
+    Validates user credentials against the database and creates a JWT token
+    stored in an HTTP-only cookie for secure authentication.
 
     Args:
-        user_credentials: Identifiants de connexion
-        response: Objet response FastAPI pour définir le cookie
-        database_session: Session de base de données
+        user_credentials: Login credentials (email and password)
+        response: FastAPI response object to set authentication cookie
+        database_session: Database session dependency
 
     Returns:
-        Données publiques de l'utilisateur
+        UserResponse: Public user data (excluding sensitive information)
 
     Raises:
-        HTTPException: Si les identifiants sont invalides
+        HTTPException: 401 if credentials are invalid
     """
-    # Chercher l'utilisateur par email
+    # Find user by email
     user = database_session.query(User).filter(User.email == user_credentials.email).first()
 
     if not user or not verify_password(user_credentials.password, user.hashed_password):
@@ -81,15 +104,15 @@ def login_user(
             detail="Invalid credentials"
         )
 
-    # Créer le token JWT
+    # Create JWT token
     access_token = create_access_token(subject=user.id)
 
-    # Définir le cookie d'authentification
+    # Set authentication cookie
     response.set_cookie(
         key="access_token",
         value=access_token,
         httponly=True,
-        secure=not settings.DEBUG,  # HTTPS en production
+        secure=not settings.DEBUG,  # HTTPS in production
         max_age=settings.JWT_ACCESS_TOKEN_EXPIRES_IN * 60,
         samesite="lax"
     )
@@ -97,25 +120,33 @@ def login_user(
     return UserResponse.model_validate(user)
 
 
-@router.post("/forgotten-password", status_code=status.HTTP_200_OK)
+@router.post(
+    "/forgotten-password",
+    status_code=status.HTTP_200_OK,
+    summary="Request password reset",
+    description="Send password reset email to user's registered email address"
+)
 async def request_password_reset(
         email_data: ForgottenPassword,
         database_session: Session = Depends(get_database)
 ) -> dict:
     """
-    Envoie un email de réinitialisation de mot de passe.
+    Send password reset email to user.
+
+    Generates a unique reset token and sends it to the user's email address.
+    The token is stored in the database for later validation.
 
     Args:
-        email_data: Email de l'utilisateur
-        database_session: Session de base de données
+        email_data: Email address of the user requesting reset
+        database_session: Database session dependency
 
     Returns:
-        Message de confirmation
+        dict: Confirmation message that email was sent
 
     Raises:
-        HTTPException: Si l'utilisateur n'existe pas
+        HTTPException: 401 if user not found, 500 if email sending fails
     """
-    # Chercher l'utilisateur par email
+    # Find user by email
     user = database_session.query(User).filter(User.email == email_data.email).first()
 
     if not user:
@@ -124,14 +155,14 @@ async def request_password_reset(
             detail="User not found"
         )
 
-    # Générer un token de réinitialisation
+    # Generate reset token
     reset_token = generate_password_reset_token()
 
-    # Sauvegarder le token en base
+    # Save token in database
     user.password_token = reset_token
     database_session.commit()
 
-    # Envoyer l'email
+    # Send email
     try:
         await send_forgotten_password_email(user.email, user.username, reset_token)
         return {"message": "Password reset email sent"}
@@ -142,25 +173,33 @@ async def request_password_reset(
         )
 
 
-@router.post("/reset-password", status_code=status.HTTP_200_OK)
+@router.post(
+    "/reset-password",
+    status_code=status.HTTP_200_OK,
+    summary="Reset user password",
+    description="Reset password using the token received via email"
+)
 def reset_password(
         reset_data: PasswordReset,
         database_session: Session = Depends(get_database)
 ) -> dict:
     """
-    Réinitialise le mot de passe avec le token reçu par email.
+    Reset user password using email token.
+
+    Validates the reset token and updates the user's password with the new
+    securely hashed password. The token is invalidated after successful reset.
 
     Args:
-        reset_data: Données de réinitialisation
-        database_session: Session de base de données
+        reset_data: Password reset data including new password and token
+        database_session: Database session dependency
 
     Returns:
-        Message de confirmation
+        dict: Success message confirming password reset
 
     Raises:
-        HTTPException: Si le token est invalide
+        HTTPException: 400 if reset token is invalid
     """
-    # Chercher l'utilisateur par token
+    # Find user by token
     user = database_session.query(User).filter(User.password_token == reset_data.password_token).first()
 
     if not user:
@@ -169,24 +208,32 @@ def reset_password(
             detail="Invalid reset token"
         )
 
-    # Mettre à jour le mot de passe
+    # Update password and invalidate token
     user.hashed_password = hash_password(reset_data.password)
-    user.password_token = None  # Invalider le token
+    user.password_token = None
     database_session.commit()
 
     return {"message": "Password reset successfully"}
 
 
-@router.get("/logout", status_code=status.HTTP_200_OK)
+@router.get(
+    "/logout",
+    status_code=status.HTTP_200_OK,
+    summary="Logout user",
+    description="Clear authentication cookie to log out the user"
+)
 def logout_user(response: Response) -> dict:
     """
-    Déconnecte l'utilisateur en supprimant le cookie d'authentification.
+    Log out user by clearing authentication cookie.
+
+    Removes the authentication cookie from the user's browser,
+    effectively logging them out of the application.
 
     Args:
-        response: Objet response FastAPI pour supprimer le cookie
+        response: FastAPI response object to delete the cookie
 
     Returns:
-        Message de confirmation
+        dict: Success message confirming logout
     """
     response.delete_cookie(
         key="access_token",

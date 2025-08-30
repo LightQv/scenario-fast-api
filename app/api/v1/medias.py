@@ -6,30 +6,48 @@ from app.api.dependencies import get_database, get_current_user
 from app.models import User, Media, Watchlist
 from app.schemas import MediaCreate, MediaUpdate, MediaResponse
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/medias",
+    tags=["Media"],
+    responses={
+        404: {"description": "Media or watchlist not found"},
+        403: {"description": "Access forbidden"}
+    }
+)
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/",
+    status_code=status.HTTP_201_CREATED,
+    summary="Add media to watchlist",
+    description="Add a movie or TV show to a specific watchlist (requires ownership)"
+)
 def add_media_to_watchlist(
         media_data: MediaCreate,
         current_user: User = Depends(get_current_user),
         database_session: Session = Depends(get_database)
 ) -> dict:
     """
-    Ajoute un média à une watchlist.
+    Add a media item to a watchlist.
+
+    Adds a movie or TV show to the specified watchlist. The user must own
+    the target watchlist to perform this action. Media data includes
+    information from TMDB (The Movie Database).
 
     Args:
-        media_data: Données du média à ajouter
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        media_data: Media information including TMDB ID, title, and metadata
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Returns:
-        Message de confirmation
+        dict: Success message confirming media addition
 
     Raises:
-        HTTPException: Si la watchlist n'existe pas ou si l'utilisateur n'a pas les droits
+        HTTPException:
+            - 404 if watchlist doesn't exist
+            - 403 if user doesn't own the watchlist
     """
-    # Vérifier que la watchlist existe et appartient à l'utilisateur
+    # Verify watchlist exists and belongs to user
     watchlist = database_session.query(Watchlist).filter(
         Watchlist.id == media_data.watchlist_id
     ).first()
@@ -64,7 +82,12 @@ def add_media_to_watchlist(
     return {"message": "Media added successfully"}
 
 
-@router.put("/{media_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put(
+    "/{media_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Update media",
+    description="Update media information or move it to another watchlist"
+)
 def update_media(
         media_id: UUID,
         media_data: MediaUpdate,
@@ -72,16 +95,21 @@ def update_media(
         database_session: Session = Depends(get_database)
 ):
     """
-    Met à jour un média (par exemple changer de watchlist).
+    Update media item or move it to another watchlist.
+
+    Allows updating media information or moving it between watchlists.
+    The user must own both the current and target watchlists.
 
     Args:
-        media_id: ID du média à modifier
-        media_data: Nouvelles données du média
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        media_id: UUID of the media item to update
+        media_data: Updated media information (e.g., new watchlist_id)
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Raises:
-        HTTPException: Si le média n'existe pas ou si l'utilisateur n'a pas les droits
+        HTTPException:
+            - 404 if media doesn't exist
+            - 403 if user doesn't own the current or target watchlist
     """
     media = database_session.query(Media).filter(Media.id == media_id).first()
 
@@ -91,7 +119,7 @@ def update_media(
             detail="Media not found"
         )
 
-    # Vérifier que l'utilisateur possède la watchlist actuelle
+    # Verify user owns the current watchlist
     current_watchlist = database_session.query(Watchlist).filter(
         Watchlist.id == media.watchlist_id
     ).first()
@@ -102,7 +130,7 @@ def update_media(
             detail="Not authorized to modify this media"
         )
 
-    # Si on change de watchlist, vérifier les droits sur la nouvelle
+    # If moving to a new watchlist, verify ownership of target watchlist
     if media_data.watchlist_id:
         new_watchlist = database_session.query(Watchlist).filter(
             Watchlist.id == media_data.watchlist_id
@@ -119,22 +147,32 @@ def update_media(
     database_session.commit()
 
 
-@router.delete("/{media_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(
+    "/{media_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Delete media from watchlist",
+    description="Remove a media item from its watchlist permanently"
+)
 def delete_media(
         media_id: UUID,
         current_user: User = Depends(get_current_user),
         database_session: Session = Depends(get_database)
 ):
     """
-    Supprime un média d'une watchlist.
+    Delete media item from watchlist.
+
+    Permanently removes a media item from its watchlist. The user must own
+    the watchlist containing the media item to perform this action.
 
     Args:
-        media_id: ID du média à supprimer
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        media_id: UUID of the media item to delete
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Raises:
-        HTTPException: Si le média n'existe pas ou si l'utilisateur n'a pas les droits
+        HTTPException:
+            - 404 if media doesn't exist
+            - 403 if user doesn't own the watchlist containing the media
     """
     media = database_session.query(Media).filter(Media.id == media_id).first()
 
@@ -144,7 +182,7 @@ def delete_media(
             detail="Media not found"
         )
 
-    # Vérifier que l'utilisateur possède la watchlist
+    # Verify user owns the watchlist
     watchlist = database_session.query(Watchlist).filter(
         Watchlist.id == media.watchlist_id
     ).first()

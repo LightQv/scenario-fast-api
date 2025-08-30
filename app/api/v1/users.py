@@ -7,30 +7,46 @@ from app.api.dependencies import get_database, get_current_user
 from app.core.security import hash_password
 from app.models import User
 from app.schemas import (
-    UserResponse, UserPublic, UserBanner, UserUpdate, UserUpdateEmail,
+    UserPublic, UserBanner, UserUpdate, UserUpdateEmail,
     UserUpdatePassword, UserUpdateBanner
 )
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/users",
+    tags=["Users"],
+    responses={
+        404: {"description": "User not found"},
+        403: {"description": "Access forbidden"}
+    }
+)
 
 
-@router.get("/{user_id}", response_model=UserPublic)
+@router.get(
+    "/{user_id}",
+    response_model=UserPublic,
+    summary="Get user public information",
+    description="Retrieve public profile information for any user by their ID"
+)
 def get_user(
         user_id: UUID,
         database_session: Session = Depends(get_database)
 ) -> UserPublic:
     """
-    Récupère les informations publiques d'un utilisateur.
+    Get public user information by user ID.
+
+    Retrieves publicly visible user profile information including username,
+    email, and profile banner. This endpoint doesn't require authentication
+    and only returns non-sensitive user data.
 
     Args:
-        user_id: ID de l'utilisateur
-        database_session: Session de base de données
+        user_id: UUID of the user to retrieve
+        database_session: Database session dependency
 
     Returns:
-        Informations publiques de l'utilisateur
+        UserPublic: Public user profile information
 
     Raises:
-        HTTPException: Si l'utilisateur n'existe pas
+        HTTPException: 404 if user doesn't exist
     """
     user = database_session.query(User).filter(User.id == user_id).first()
 
@@ -43,23 +59,31 @@ def get_user(
     return UserPublic.model_validate(user)
 
 
-@router.get("/banner/{user_id}", response_model=UserBanner)
+@router.get(
+    "/banner/{user_id}",
+    response_model=UserBanner,
+    summary="Get user profile banner",
+    description="Retrieve only the profile banner URL for a specific user"
+)
 def get_user_banner(
         user_id: UUID,
         database_session: Session = Depends(get_database)
 ) -> UserBanner:
     """
-    Récupère la bannière de profil d'un utilisateur.
+    Get user profile banner by user ID.
+
+    Retrieves only the profile banner URL for the specified user.
+    Useful for displaying user avatars/banners without fetching full profile.
 
     Args:
-        user_id: ID de l'utilisateur
-        database_session: Session de base de données
+        user_id: UUID of the user whose banner to retrieve
+        database_session: Database session dependency
 
     Returns:
-        Bannière de profil de l'utilisateur
+        UserBanner: User profile banner information
 
     Raises:
-        HTTPException: Si l'utilisateur n'existe pas
+        HTTPException: 404 if user doesn't exist
     """
     user = database_session.query(User).filter(User.id == user_id).first()
 
@@ -72,7 +96,12 @@ def get_user_banner(
     return UserBanner.model_validate(user)
 
 
-@router.put("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put(
+    "/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Update user profile",
+    description="Update complete user profile information (requires authentication)"
+)
 def update_user(
         user_id: UUID,
         user_data: UserUpdate,
@@ -80,18 +109,24 @@ def update_user(
         database_session: Session = Depends(get_database)
 ):
     """
-    Met à jour les informations complètes d'un utilisateur.
+    Update complete user profile information.
+
+    Allows authenticated users to update their complete profile including
+    username, email, and password. Users can only update their own profile.
 
     Args:
-        user_id: ID de l'utilisateur à modifier
-        user_data: Nouvelles données utilisateur
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        user_id: UUID of the user to update
+        user_data: Updated user profile data
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Raises:
-        HTTPException: Si l'utilisateur n'a pas les droits ou si l'utilisateur n'existe pas
+        HTTPException:
+            - 403 if user tries to update someone else's profile
+            - 404 if user doesn't exist
+            - 400 if username or email already taken
     """
-    # Vérifier que l'utilisateur modifie ses propres données
+    # Verify user is updating their own profile
     if str(current_user.id) != str(user_id):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -105,7 +140,7 @@ def update_user(
             detail="User not found"
         )
 
-    # Mettre à jour les champs fournis
+    # Update provided fields
     update_data = user_data.model_dump(exclude_unset=True)
 
     if "password" in update_data:
@@ -123,7 +158,12 @@ def update_user(
         )
 
 
-@router.put("/email/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put(
+    "/email/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Update user email",
+    description="Update only the user's email address (requires authentication)"
+)
 def update_user_email(
         user_id: UUID,
         email_data: UserUpdateEmail,
@@ -131,16 +171,22 @@ def update_user_email(
         database_session: Session = Depends(get_database)
 ):
     """
-    Met à jour uniquement l'email d'un utilisateur.
+    Update user email address only.
+
+    Allows authenticated users to update only their email address.
+    The new email must be unique across the platform.
 
     Args:
-        user_id: ID de l'utilisateur à modifier
-        email_data: Nouvel email
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        user_id: UUID of the user to update
+        email_data: New email address data
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Raises:
-        HTTPException: Si l'utilisateur n'a pas les droits ou si l'utilisateur n'existe pas
+        HTTPException:
+            - 403 if user tries to update someone else's email
+            - 404 if user doesn't exist
+            - 400 if email already exists
     """
     if str(current_user.id) != str(user_id):
         raise HTTPException(
@@ -166,7 +212,12 @@ def update_user_email(
         )
 
 
-@router.put("/password/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put(
+    "/password/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Update user password",
+    description="Update only the user's password (requires authentication)"
+)
 def update_user_password(
         user_id: UUID,
         password_data: UserUpdatePassword,
@@ -174,16 +225,21 @@ def update_user_password(
         database_session: Session = Depends(get_database)
 ):
     """
-    Met à jour uniquement le mot de passe d'un utilisateur.
+    Update user password only.
+
+    Allows authenticated users to change their password. The new password
+    is securely hashed and any existing reset tokens are invalidated.
 
     Args:
-        user_id: ID de l'utilisateur à modifier
-        password_data: Nouveau mot de passe
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        user_id: UUID of the user to update
+        password_data: New password data
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Raises:
-        HTTPException: Si l'utilisateur n'a pas les droits ou si l'utilisateur n'existe pas
+        HTTPException:
+            - 403 if user tries to update someone else's password
+            - 404 if user doesn't exist
     """
     if str(current_user.id) != str(user_id):
         raise HTTPException(
@@ -199,11 +255,16 @@ def update_user_password(
         )
 
     user.hashed_password = hash_password(password_data.password)
-    user.password_token = None  # Invalider tout token de réinitialisation
+    user.password_token = None  # Invalidate any reset tokens
     database_session.commit()
 
 
-@router.put("/banner/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put(
+    "/banner/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Update user profile banner",
+    description="Update only the user's profile banner image URL"
+)
 def update_user_banner(
         user_id: UUID,
         banner_data: UserUpdateBanner,
@@ -211,16 +272,21 @@ def update_user_banner(
         database_session: Session = Depends(get_database)
 ):
     """
-    Met à jour la bannière de profil d'un utilisateur.
+    Update user profile banner only.
+
+    Allows authenticated users to update their profile banner image URL.
+    The banner URL should point to a publicly accessible image.
 
     Args:
-        user_id: ID de l'utilisateur à modifier
-        banner_data: Nouvelle URL de bannière
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        user_id: UUID of the user to update
+        banner_data: New banner URL data
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Raises:
-        HTTPException: Si l'utilisateur n'a pas les droits ou si l'utilisateur n'existe pas
+        HTTPException:
+            - 403 if user tries to update someone else's banner
+            - 404 if user doesn't exist
     """
     if str(current_user.id) != str(user_id):
         raise HTTPException(
@@ -239,22 +305,32 @@ def update_user_banner(
     database_session.commit()
 
 
-@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(
+    "/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Delete user account",
+    description="Permanently delete user account and all associated data"
+)
 def delete_user(
         user_id: UUID,
         current_user: User = Depends(get_current_user),
         database_session: Session = Depends(get_database)
 ):
     """
-    Supprime un utilisateur et toutes ses données associées.
+    Delete user account permanently.
+
+    Permanently deletes the user account and all associated data including
+    watchlists, media, and viewing history. This action is irreversible.
 
     Args:
-        user_id: ID de l'utilisateur à supprimer
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        user_id: UUID of the user to delete
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Raises:
-        HTTPException: Si l'utilisateur n'a pas les droits ou si l'utilisateur n'existe pas
+        HTTPException:
+            - 403 if user tries to delete someone else's account
+            - 404 if user doesn't exist
     """
     if str(current_user.id) != str(user_id):
         raise HTTPException(

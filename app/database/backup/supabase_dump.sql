@@ -1,0 +1,952 @@
+SET session_replication_role = replica;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.8
+-- Dumped by pg_dump version 17.4
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Data for Name: audit_log_entries; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: flow_state; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: identities; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: instances; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: sessions; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: mfa_amr_claims; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: mfa_factors; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: mfa_challenges; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: one_time_tokens; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: refresh_tokens; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: sso_providers; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: saml_providers; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: saml_relay_states; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: sso_domains; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+
+
+--
+-- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."User" ("id", "username", "email", "hashedPassword", "passwordToken", "profileBanner") VALUES
+	('1e00d23c-47e4-465e-8dae-8650a9440c29', 'Lubelle', 'jane.vantassel@outlook.fr', '$argon2id$v=19$m=65536,t=5,p=1$+QnRGLnw10DpXhpOq0V7BA$e4LiBK2S6jffFOhBabVUTMO5fNVQrrmXIv5QUqJPSmw', NULL, NULL),
+	('ad629edd-3bc1-4caf-81e0-b45284c65041', 'LightQv', 'QVivian23@gmail.com', '$argon2id$v=19$m=65536,t=5,p=1$eZsPi9tukp0sENKD1EAdQg$mw8DccuhvHt7d8rJO4qRgEBHc7a0+FxOu6Ez9T3mcBc', NULL, 'https://firebasestorage.googleapis.com/v0/b/scenario-f57d7.appspot.com/o/profile_banner%2F54384362-485d-4616-bfb3-df3803d32874_lightqv?alt=media&token=bc9daa86-3b2a-4b63-9aa4-d99c17007eac');
+
+
+--
+-- Data for Name: Watchlist; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."Watchlist" ("id", "title", "authorId") VALUES
+	('b64e733a-e49d-4a7c-bf31-d23ee8fcf971', 'À voir', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('94638ad4-ac13-4f92-8954-a95e8d2103b6', 'Cinéma', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a839fcc6-0842-47a8-a55a-a8b29b933638', 'A montrer', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('c5f17db2-a4b2-481a-8a77-371de43ed979', 'A voir', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('4f6b19c7-f313-41c5-ac57-0299c0d9781a', 'Discovery Channel', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('10b8043f-1fe3-49f5-92d9-8f16c6f6d8f0', 'Finish it !', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f56e7c63-9050-40a6-bff6-fb6810f5fbee', 'Stranger Things', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d509d934-4d3c-46ee-a1e0-b6e5de17818d', 'Big Mess', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c467111e-6bea-407c-afa9-84c67f132d2b', 'Proust', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('49dea39c-0fe3-4260-86b4-cdfb700c4121', 'Golden Experience', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2d093e05-c184-4614-98c1-a158ca3da149', 'Serie regarder ', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('ddfb72cd-f80f-4e8e-9497-e614f623221e', 'série à voir', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('a571f4f5-e301-4a7f-94ee-145da01beb69', 'Alien', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('4c64487a-d5c3-4452-9fde-5fc78c4b562d', 'romcom', '1e00d23c-47e4-465e-8dae-8650a9440c29');
+
+
+--
+-- Data for Name: Media; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."Media" ("id", "tmdb_id", "genre_ids", "poster_path", "backdrop_path", "release_date", "runtime", "title", "media_type", "watchlistId") VALUES
+	('bf66c0a7-e773-4236-86d7-68f1c7e2f18e', 466420, '{0,80,36,18}', '/t51ReMWxWcAOqKrGKw29OK2WhNz.jpg', '/1X7vow16X7CnCoexXh4H4F2yDJv.jpg', '2023-10-18', 206, 'Killers of the Flower Moon', 'movie', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('2022545f-612d-4310-a2d5-59661836b47b', 88803, '{0,16,10768}', '/ySPYLN1sHmgRdqdfLOE092JlNTp.jpg', '/9sIjJIHGSOYaAqU7pe2TSSNRmS0.jpg', '2019-07-08', 48, 'VINLAND SAGA', 'tv', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('1e319f24-3b90-40a8-8def-b8c48279342e', 6145, '{0,53}', '/svCEllDaXbt3eNlbf4HZLA5kKjJ.jpg', '/mujUrk2diGe5vRCb3kdpHZeobRs.jpg', '2007-04-19', 108, 'La Faille', 'movie', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('76f8f31d-62d3-43a9-9b40-795152bd1743', 593643, '{0,35,53,27}', '/z9KjjwNcY6WhhA2HGCOzNOa0Lg6.jpg', '/mSyQoValhBsJdq3JNGXJww2Q5yL.jpg', '2022-11-17', 106, 'Le Menu', 'movie', 'f56e7c63-9050-40a6-bff6-fb6810f5fbee'),
+	('0e1bc630-b304-447f-bcef-f3cdedc3f1ac', 882598, '{0,27,9648,53}', '/3kbtoJw6ZN0UUQhSuiRbAatr2kV.jpg', '/kMZIMqEXO5MFd5Y1Ha2jZZF4pvF.jpg', '2022-09-23', 115, 'Sourire', 'movie', 'f56e7c63-9050-40a6-bff6-fb6810f5fbee'),
+	('3563eaf6-cf66-42e2-af77-2a848c74659b', 855, '{0,28,10752,36}', '/8PbLgvdfcdBad3sie9cfIBHq2Xz.jpg', '/7jaNOECZG8uS1tlq69HsY5xY8P9.jpg', '2001-12-28', 143, 'La Chute du faucon noir', 'movie', 'd509d934-4d3c-46ee-a1e0-b6e5de17818d'),
+	('12d2e433-d3ef-4f40-91fd-99c06b043583', 530915, '{0,10752,28,18}', '/zppHKKEkHg9ZGzOdzZwW8lZYYqy.jpg', '/2WgieNR1tGHlpJUsolbVzbUbE1O.jpg', '2019-12-25', 115, '1917', 'movie', 'd509d934-4d3c-46ee-a1e0-b6e5de17818d'),
+	('74fc4350-25ff-445f-a41c-1876e6835f27', 857, '{0,18,36,10752}', '/uLbBoC6QzfKibKf7Y5u78DR62Rz.jpg', '/bdD39MpSVhKjxarTxLSfX6baoMP.jpg', '1998-07-24', 163, 'Il faut sauver le soldat Ryan', 'movie', 'd509d934-4d3c-46ee-a1e0-b6e5de17818d'),
+	('45073876-64c8-48a0-8a5c-b94df36e2856', 324786, '{0,18,36,10752}', '/zyxSZvaA7mU7mwnO1lR2cXUdQdV.jpg', '/yQIBS8B9l2qXoPoPtxSXvH7CfoT.jpg', '2016-10-07', 139, 'Tu ne tueras point', 'movie', 'd509d934-4d3c-46ee-a1e0-b6e5de17818d'),
+	('8327626f-2ee4-4d3d-8224-33514fa75415', 16869, '{0,18,53,10752}', '/3yOfQLerEO2Qnb1VkSJ8WG3c0Jx.jpg', '/hg0MTIFs49ef179C9Y1HRtzqbbK.jpg', '2009-08-02', 153, 'Inglourious Basterds', 'movie', 'd509d934-4d3c-46ee-a1e0-b6e5de17818d'),
+	('1711a167-95df-4c37-a1c4-94437889f1ba', 1417, '{0,14,18,10752}', '/pRUZ15Z6UWPdxYjyN9paQdefDaK.jpg', '/o0IWa75BXyXryNDVqw0xoXZzy1J.jpg', '2006-10-10', 113, 'Le Labyrinthe de Pan', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('e9b97d0a-af0e-4ac2-af8c-d570f562e120', 1576, '{0,27,28,878}', '/yUXSFovaoJMrwbIhUrZi3lcT6cl.jpg', '/5pGWjnM62Zs0S1xRf3TDL1Xizr.jpg', '2002-03-15', 101, 'Resident Evil', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('bcadd8e0-6d44-460f-91ad-99d9da5c877c', 168259, '{0,28,53,80}', '/wjVn1Qng8B3ySvfJr4ovuehI141.jpg', '/cHkhb5A4gQRK6zs6Pv7zorHs8Nk.jpg', '2015-04-01', 137, 'Fast & Furious 7', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('8aa4a912-831d-44c6-add1-2ed507ecf86b', 9615, '{0,28,80,18,53}', '/gGATiiEgoemoQuHNRjiULxpSR6.jpg', '/dMARcKLrv0T7kVJ4iQR3vqTTdtT.jpg', '2006-06-03', 104, 'Fast & Furious : Tokyo drift', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('718a6f70-c461-413c-a3cc-c147ac6678cb', 1893, '{0,12,28,878}', '/fpEC910v5DrMvZteRNlKzXeHiHY.jpg', '/sQUiouw94zhoG6LDEj9h8cPb61N.jpg', '1999-05-19', 133, 'Star Wars, épisode I - La Menace fantôme', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('0f6ab6e4-2826-4ce5-b341-414e4c872f81', 1894, '{0,12,28,878}', '/3nqpcTkODCBhuKuDQJ1dtRhgTqZ.jpg', '/abwxHfymXGAbbH3lo9PDEJEfvtW.jpg', '2002-05-15', 132, 'Star Wars, épisode II - L''Attaque des clones', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('a6ced8db-5209-432d-a974-e09e8970dd87', 1895, '{0,12,28,878}', '/2RcBuU8cdxFxCJibbiYCGNLApfz.jpg', '/5vDuLrjJXFS9PTF7Q1xzobmYKR9.jpg', '2005-05-17', 140, 'Star Wars, épisode III - La Revanche des Sith', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('77f29957-0bd7-4d0d-acb5-1c44469dbc95', 9023, '{0,16,12,35,10751,18,37}', '/lHMC9oF3aNUs4tSvX5rc91Pqy0v.jpg', '/tCG6iC6xTY7FfKlWxvbr40EHI9S.jpg', '2002-05-24', 77, 'Spirit, l''étalon des plaines', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('bd8e1eec-9714-4e75-9c5f-6485e5c88baa', 10386, '{0,10751,16,878,12}', '/1Z1Gn2bbyOygv8R2qE2uLjwualf.jpg', '/wfClZdRb1x4LZ8B73Y9RSn8XAPa.jpg', '1999-08-06', 85, 'Le Géant de fer', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('f8336897-9539-4924-b97a-ebd0075e2dee', 920, '{0,16,12,35,10751}', '/hvHw7ASXEK8x3EawlOtwYXrovdo.jpg', '/sd4xN5xi8tKRPrJOWwNiZEile7f.jpg', '2006-06-08', 111, 'Cars : Quatre roues', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('772fdb09-460e-47ab-bf53-00bb86520912', 260514, '{0,16,12,35,10751}', '/nouuVzN51YSBsjwJt5WwSVXOuv6.jpg', '/86TlYSntBzD4pxLNM6U3GoOfGdD.jpg', '2017-06-15', 109, 'Cars 3', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('7e0b6167-4c3c-41af-a47c-c5cd2917eef8', 862, '{0,16,12,10751,35}', '/4cWLRhub0yY9VJpdw0nqoTPYyiN.jpg', '/lxD5ak7BOoinRNehOCA85CQ8ubr.jpg', '1995-10-30', 81, 'Toy Story', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('fd15d32b-5478-486d-b5c1-28be39f80987', 1429, '{0,16,10765,10759}', '/nviphz0Nt9KSn0jNBE8lmp3ZCbI.jpg', '/rqbCbjB19amtOtFQbb3K2lgm2zv.jpg', '2013-04-07', 87, 'L''Attaque des Titans', 'tv', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('26c24281-bfa8-4350-9bad-087914dea321', 1063879, '{0,27}', '/3IIUFhjZuz4dsE6M7rCpLeDyAFB.jpg', '/iffxYLxII1xe7jBRR1kbPGpjlt8.jpg', '2023-12-27', 103, 'Vermines', 'movie', 'f56e7c63-9050-40a6-bff6-fb6810f5fbee'),
+	('cf976a28-71ef-4d46-8382-9b05b5eb4079', 863, '{0,16,35,10751}', '/lDOSztEvyOUdrDO5NVoq4CQ28AL.jpg', '/91qfG6VaxRsCh1SbIi1w2vxknsL.jpg', '1999-10-30', 92, 'Toy Story 2', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('de83c0ae-324c-4dff-b34e-1f61f3cba206', 120, '{0,12,14,28}', '/5OPg6M0yHr21Ovs1fni2H1xpKuF.jpg', '/x2RS3uTcsJJ9IfjNPcgDmukoEcQ.jpg', '2001-12-18', 179, 'Le Seigneur des anneaux : La Communauté de l''anneau', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('355a4198-35c4-46e0-88b6-0bc233c66105', 74, '{0,12,53,878}', '/b2GIYpfFuO43ailnUFGER9LDa2Q.jpg', '/nH6hPhJq3EEv9CnBZgXU3IQnpJo.jpg', '2005-06-28', 116, 'La Guerre des mondes', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('a5a7355e-411e-4bd9-8783-e7048eb71568', 121, '{0,12,14,28}', '/qVHBqQYLDRs7ESjP9q6o9iPHLWj.jpg', '/6G73mNyooWAEQTpckPSnFxFoNmc.jpg', '2002-12-18', 180, 'Le Seigneur des anneaux : Les Deux Tours', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('0e8a6db9-5a14-4979-81a1-e4fb57a88145', 122, '{0,12,14,28}', '/ypUCFOvOf07bcHy81jng9LyMUfi.jpg', '/2u7zbn8EudG6kLlBzUYqP8RyFU4.jpg', '2003-12-01', 201, 'Le Seigneur des anneaux : Le Retour du roi', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('f5e31597-d190-434a-97e4-c77d1395313c', 15137, '{0,16,878,28,18}', '/l6dBAi72490P4oOERO9W1y0258b.jpg', '/c4L5nFbs72Cfe4Q4hF0T99USa1I.jpg', '2007-09-01', 101, 'Evangelion: 1.0 You Are (Not) Alone', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('eb063554-07ca-4905-aedf-a15d41d81b60', 283566, '{0,16,28,878,18}', '/m4pgO8iyafIrbjN1hJ7hAOsQfjo.jpg', '/1EAxNqdkVnp48a7NUuNBHGflowM.jpg', '2021-03-08', 154, 'Evangelion : 3.0+1.0 Thrice Upon a Time', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('57bea414-2ebb-451d-a880-85ecc8df16da', 78, '{0,878,18,53}', '/zHKWxyG4j404HVeSYHNH4niUpkW.jpg', '/eIi3klFf7mp3oL5EEF4mLIDs26r.jpg', '1982-06-25', 117, 'Blade Runner', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('d210c124-ad83-496c-8f18-2280b32c7dd1', 45790, '{0,16,10759,10765}', '/oSH24anb0NVDe1jb12u5ITZa7V8.jpg', '/mLKN1dsimKPiXCZ48KED0X8a02t.jpg', '2012-10-06', 190, 'JoJo''s Bizarre Adventure', 'tv', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('d63ae402-0f7f-48aa-8d46-33ddc24f2f17', 890, '{0,10765,16,18}', '/AhtWPHqIT1cWdrKTZVDMZD4Ca4F.jpg', '/fGXhmKyqRmx6NN3gQHeWNmiEryl.jpg', '1995-10-04', 26, 'Neon Genesis Evangelion', 'tv', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('c824523c-d464-4ad8-9d95-f6ba5326bfb7', 22843, '{0,16,878,28,18}', '/7o2JoenPNslllUBtJkrVZcLKzWE.jpg', '/y7L6LQKiZPlPZYSXqFkxqfB1Te0.jpg', '2009-06-26', 112, 'Evangelion: 2.0 You Can (Not) Advance', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('e605dd94-ff95-4707-afba-e927a8c6c1f2', 40424, '{0,16}', '/7C1PMnV0uMrMNcfws5J7aLNxe3Q.jpg', '/zBIIyH8yfdlfvvpEiG9PLwoVXc6.jpg', '1998-04-18', 81, 'Initial D', 'tv', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('c2f9ce9e-d11b-4a27-9b3e-b5925b1eeeae', 75629, '{0,16,878,28,18}', '/5yrUdX3fFU44uGYEAcROoI0F7Q7.jpg', '/c5WUWudgykIpxb3TchaRnAcsu5y.jpg', '2012-11-17', 96, 'Evangelion : 3.0 You Can (Not) Redo', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('5d37b160-9a32-4599-b8f2-dcd5ef6372ed', 348, '{0,27,878}', '/l8CES84JndFlNfBNMxdLRYaLvI6.jpg', '/AmR3JG1VQVxU8TfAvljUhfSFUOx.jpg', '1979-05-25', 117, 'Alien, le huitième passager', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('1315ba44-735c-4236-9481-d6881352df6d', 335984, '{0,878,18}', '/baCC3v1wLnmoBbr2aH0e7P312gv.jpg', '/ilRyazdMJwN05exqhwK4tMKBYZs.jpg', '2017-10-04', 164, 'Blade Runner 2049', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('8232ea55-462d-4863-bf45-2b3b7e6d95c8', 105248, '{0,10759,16,10765}', '/74Oo4hRy9xadpDZGqsWu2XqoNje.jpg', '/qHYdWT5NYqtlYpvQKOqZaq2mTrk.jpg', '2022-09-13', 10, 'Cyberpunk: Edgerunners', 'tv', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('8ca280a8-ded3-4418-8e5f-4156f9c2dc42', 584, '{0,28,80,53}', '/mXvf5WlNWdakezsXFvAVrf6Ubuj.jpg', '/xWf5Mjtv2HfIB9FyPYbbaSDdfCW.jpg', '2003-06-05', 107, '2 Fast 2 Furious', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('e4d4b8d1-7d95-4595-9de6-8991ef53cf2e', 124905, '{0,28,18,878}', '/ArTbq30YnbzTjuJ1gNlx17C08si.jpg', '/zCjZfevPFBbOh2SAx2syIBHSqEI.jpg', '2014-05-14', 116, 'Godzilla', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('d0791d1d-9c0c-4ed2-82c0-b3a735ab4423', 68726, '{0,28,878,12}', '/d2rxCDKSQB1WyBkdgbIhIuhQ1CM.jpg', '/k4MHkC13lxkwX8rHuhtgQ2qKtbn.jpg', '2013-07-11', 130, 'Pacific Rim', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('b63ec9bd-d43a-4901-a569-472c162d0836', 205775, '{0,53,18,12,28,36}', '/dRQPhD7RUMa290dzQtmu0NFobvR.jpg', '/xnuy6CYEoBmXKhTjKDSbzLe1dB5.jpg', '2015-12-03', 122, 'Au cœur de l''océan', 'movie', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('7ec89da1-fdf3-4435-a54e-c3673841d8cb', 384680, '{0,37,18,36}', '/kp2pBw3BHvWzjzLheuDtPUYe3Fv.jpg', '/rZTj8AVUD8IKlsVF0XFoZzPG2dv.jpg', '2017-12-22', 127, 'Hostiles', 'movie', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('cb27ef06-586d-4278-a5e7-e00ba3a0e517', 1409, '{0,80,18}', '/yPLkf4EiCkR0NOvMfmpHMA2zfN3.jpg', '/mcgZDwhMlrFsfpbvCeg5RY5mhiu.jpg', '2008-09-03', 92, 'Sons of Anarchy', 'tv', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('f0569f69-b5d5-46dd-9051-78ab8a990973', 4629, '{0,10765,10759,9648}', '/qpLbAe2eTHxtv6CxcyB9vgrgsq1.jpg', '/5mXZ0sdVPfj4bSkhPSWwTX2LcM5.jpg', '1997-07-27', 214, 'Stargate SG-1', 'tv', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('81e6672a-497d-47ae-833c-033d3fc1eb18', 882569, '{0,10752,28,53}', '/kVG8zFFYrpyYLoHChuEeOGAd6Ru.jpg', '/eTvN54pd83TrSEOz6wbsXEJktCV.jpg', '2023-04-19', 123, 'The Covenant', 'movie', 'd509d934-4d3c-46ee-a1e0-b6e5de17818d'),
+	('b0c27034-c55c-4a72-8f13-4d952441d773', 616, '{0,18,28,10752}', '/dJDLjVmBNMb13wZ6lXYwe6uscel.jpg', '/piXBj3FKEGNb6XCfAM7w5s4BI7O.jpg', '2003-12-05', 154, 'Le Dernier Samouraï', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('d43ed874-8993-44ab-a017-53b9d472fc90', 1579, '{0,28,18,36}', '/5xR5OjvGQfaRZNL7GTuPAZy8tdr.jpg', '/hMl124Go2Ed9Qu8VsPLiA3nBSMk.jpg', '2006-12-07', 132, 'Apocalypto', 'movie', 'd509d934-4d3c-46ee-a1e0-b6e5de17818d'),
+	('f0bfeb31-a83d-4ac9-b38e-650178a7384b', 458156, '{0,28,53,80}', '/8gd71hpzHIF3gCkmJBwV5egtu3k.jpg', '/vVpEOvdxVBP2aV166j5Xlvb5Cdc.jpg', '2019-05-15', 130, 'John Wick : Parabellum', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('755db362-bff4-4610-a0d6-a6ce7418f497', 193756, '{0,10752,28,18}', '/atwcaRuv8EUHmi5EFcEwg3MEJS6.jpg', '/g6QPI70Kzt91Q0lGyLfsVqZAwlJ.jpg', '2013-12-24', 121, 'Du Sang et des Larmes', 'movie', 'd509d934-4d3c-46ee-a1e0-b6e5de17818d'),
+	('be5cada3-1f0e-4fa2-8be6-9e85ae621410', 940721, '{0,878,27,28}', '/tBzOqSc51CiUeOlxW2unvYVBU8v.jpg', '/bWIIWhnaoWx3FTVXv6GkYDv3djL.jpg', '2023-11-03', 125, 'Godzilla Minus One', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('8da24723-9b29-44be-8f8e-40ece1418337', 60059, '{0,80,18}', '/7KyuCBjxsr4sNQga16DcN9ccEyf.jpg', '/hPea3Qy5Gd6z4kJLUruBbwAH8Rm.jpg', '2015-02-08', 63, 'Better Call Saul', 'tv', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('68070464-d0b5-41c6-87c8-f4ac97ea8e6b', 1426, '{0,80,18,9648}', '/hDxOMX8zzH1FiqKWVBzNaYGBkle.jpg', '/A2qdFRq9oJDC5E7fbgSS4POUMDF.jpg', '2010-05-04', 20, 'Luther', 'tv', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('ffa9e92e-a352-4251-90d6-ce5310f5ae53', 16997, '{0,18,10759,10768}', '/tmjca0r0Wam21385kHDjudhDgIW.jpg', '/nWfpVLgioDXQsAbfL6UJxYz6d3d.jpg', '2010-03-14', 10, 'Band of Brothers : l''enfer du Pacifique', 'tv', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('64b6a861-6362-4060-b286-33b3d071fbdb', 126308, '{0,18,10768}', '/7O4iVfOMQmdCSxhOg1WnzG1AgYT.jpg', '/5zmiBoMzeeVdQ62no55JOJMY498.jpg', '2024-02-27', 10, 'Shōgun', 'tv', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('02017704-cdf5-4892-b888-3ca5d86ceb37', 438631, '{0,878,12}', '/qpyaW4xUPeIiYA5ckg5zAZFHvsb.jpg', '/lzWHmYdfeFiMIY4JaMmtR7GEli3.jpg', '2021-09-15', 155, 'Dune - Première partie', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('6da4efed-a1a9-4c88-b4dc-6079b57667cf', 202284, '{0,16,10759}', '/3dl7QFrpvtu9My4L6K7KtUMP8p1.jpg', '/3nmDXGCDcHbtP3Rw4vi9RD3cmmX.jpg', '2024-02-11', 12, 'Ninja Kamui', 'tv', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('8bed93a1-7935-435b-99a5-ff3347103482', 332562, '{0,10402,18,10749}', '/uoq8DobPxciPEJ5EuBeqDt8av76.jpg', '/dDYpjrwh1wNVQk0rEpc9P81wQt4.jpg', '2018-10-03', 135, 'A star is born', 'movie', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('44eccef0-305a-4ddb-b6db-2d76c251645d', 228194, '{0,18,35}', '/4Py8jKbDzaxeZngjT63AF0qUrGy.jpg', '/7O9Gni6xoyyHi2FaYAD23ROSnHH.jpg', '2014-08-06', 123, 'Les Recettes du bonheur', 'movie', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('f09e4b58-86cd-4a9b-b0ef-3bcd32a24c13', 6279, '{0,10402,35}', '/x195QLkSpAPzGa76vkK7FIpZ16x.jpg', '/vgVzQyOVU5QDSbEPkilPVg8IS41.jpg', '1993-12-09', 107, 'Sister Act : Acte 2', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('a8f85164-e590-4e31-b175-519fda1727c8', 11687, '{0,14,35}', '/aNBbenF2FXhBzJyFqtcToXuzoMg.jpg', '/fQivZouyhRvK72MWHCMb7XvndMC.jpg', '1993-01-27', 105, 'Les Visiteurs', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('79e95102-5992-4d12-b03d-60349f5c41f8', 529203, '{0,16,10751,12,14,35}', '/nMLI9xkJTbgpZjMSrFiTUDv9WIG.jpg', '/ytTQoYkdpsgtfDWrNFCei8Mfbxu.jpg', '2020-11-25', 88, 'Les Croods 2 : Une nouvelle ère', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('18ffd6e3-bd44-4e50-bff8-b47140b21e4e', 88005, '{0,35,18,10749,12}', '/f5eGE8RRPJP5l3mP0trfetQHmTa.jpg', '/tEJ3nvnp520AvNPbhCegHMo1EfM.jpg', '2012-06-22', 100, 'Jusqu''à ce que la fin du monde nous sépare', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('d62582aa-61d3-4ed6-8799-dce732116cab', 639720, '{0,35,14,18,10751,16}', '/sb97oHEE6hSa8FVQAAsQAbzpE1a.jpg', '/vpWVeIMNi0Np5shuKFE3QkneiTt.jpg', '2024-05-15', 104, 'Blue & Compagnie', 'movie', 'a571f4f5-e301-4a7f-94ee-145da01beb69'),
+	('98097c1e-a7af-43a4-b181-d868955dca1b', 693134, '{0,28,12,878}', '/abx9jgE6bGVnj1UXfieOYs8zu8z.jpg', '/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg', '2024-02-27', 165, 'Dune - Deuxième partie', 'movie', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('59aeb603-9fb7-4b3a-8c39-d49ef511c779', 15097, '{0,35}', '/xaTVWUrPbGM4SgrLOaaWLeUEafI.jpg', '/in3BEuUtRHF5ApG17DtgQsqy3tr.jpg', '1994-03-09', 99, 'La Cité de la peur', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('f4a16ad1-76b4-4d10-88a1-a04ab5522e94', 1164, '{0,18}', '/kM7WbyfQg5eVBXM4mQBvW7GKfCS.jpg', '/9YoLdWeBSxAdR6BqQ5uS88d3FWO.jpg', '2006-10-26', 135, 'Babel', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('8ec5e00b-0065-48c2-aad5-fc26231282f9', 956877, '{0,35,10749}', '/1dqL4mDuueNWg8pNFWE5MBxIX0t.jpg', '/mzVWfELtgYhRQFiSfapihgWuBVO.jpg', '2022-08-31', 100, 'La page blanche', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('0bc0874f-481c-4c98-9cb2-14dc1f826f17', 972230, '{0,35,10749,18}', '/slCQI0qvS7EeGA0RgMN5fpRRM77.jpg', '/h1jF78eKPrqejbXe3OHQ2KxmTJ9.jpg', '2023-01-27', 95, 'Oui, je le veux ?', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('354d8b9e-72a2-4860-8086-1b69af2f55f1', 332210, '{0,12,16,35,10751}', '/uXAA01xLmVOFLXr2uwL6NAwJHh4.jpg', '/3dhuShnYmB0UOQrn8v8gT9DBf0T.jpg', '2016-09-22', 87, 'Cigognes et compagnie', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('365647bd-7a4c-4c14-88a7-507153c2894d', 468224, '{0,10752,18,10749}', '/sA9vfeiGFQDpQDHeEQsKKJKzEgQ.jpg', '/msOjpu9wigi6n1Xa51MeLcBue88.jpg', '2019-05-03', 112, 'Tolkien', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('ced1ab4d-5d59-4f79-a392-0efff548ddb4', 372058, '{0,16,10749,18}', '/zyHjvVRgKOt9wgVx4ikp2kGArGF.jpg', '/dIWwZW7dJJtqC6CgWzYkNVKIUm8.jpg', '2016-08-26', 107, 'Your Name.', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('eb8635a4-821f-4239-9e71-b2c48b91a32a', 645886, '{0,18,80}', '/rZ0SMbxsfNxqRKJloKTMTFrokt1.jpg', '/kbOB9DGl8qwhDRcXOmXfmcmadeD.jpg', '2021-11-24', 112, 'Impardonnable', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('d7026e51-57c3-42df-9cf2-52d7bc1f57d3', 2959, '{0,35}', '/xTCTPmtXRhkFThcx9oPVRfM8qxm.jpg', '/wS8GxF4NBb7Oab452Ecwqx5cMJs.jpg', '2007-07-04', 90, 'Permis de Mariage', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('ee60041b-bc83-4504-bd2b-77f72950336d', 388, '{0,80,18,53}', '/FFmOisKfYgCDzuWC5tf8m98U78.jpg', '/sXQ2hNInMjVnzP7hP5ZqmGvxTWq.jpg', '2006-03-17', 130, 'Inside man - L''homme de l''intérieur', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('8eb5ca2f-1dbc-4572-afe5-52bc08cebced', 800815, '{0,53,80,27,9648}', '/9xkGlFRqrN8btTLU0KQvOfn2PHr.jpg', '/a8e4wgXPPjfOviRYE6L3kAXpvwr.jpg', '2022-12-22', 130, 'The Pale Blue Eye', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('2c58be70-bfea-427b-a550-d41c4cf92a5e', 989596, '{0,18,35}', '/gfqbILnRNUVBGa7fLCgjDVK1J5D.jpg', '/9WOiZAblbxkSRIGTTaRAkziz7LG.jpg', '2023-11-29', 120, 'La Tresse', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('caa7ce7c-c1ea-493a-92eb-2674b29fa698', 281957, '{0,37,18,12}', '/AsDto68FNWNXD15Ov0yMXASJiSB.jpg', '/sGOw65ZmfgGfistCjuNsazjs6j9.jpg', '2015-12-25', 157, 'The Revenant', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('c35c1748-f935-4c27-832d-b291039b9828', 576845, '{0,9648,53,27}', '/v6qAIxWYIUiid71YPWjnVOZ4U6K.jpg', '/brOCMGntRbx9SKzeQk1Aisu6vXz.jpg', '2021-10-21', 116, 'Last Night in Soho', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('b4f08265-1529-4461-8ca7-13568e63433d', 218589, '{0,18}', '/lJDL2KzOvCdHd8YmoT4sRlTE7hR.jpg', '/1Wgda9NdiSfQufSi7FWh0r7UHsG.jpg', '2024-07-18', 10, 'Those About to Die', 'tv', 'ddfb72cd-f80f-4e8e-9497-e614f623221e'),
+	('efaceb1e-a314-48f5-bd6e-838fc46f4903', 90669, '{0,9648,18}', '/j7rfYZdhhIDVu9uLqzHdC9xms7D.jpg', '/s1xnjbOIQtwGObPnydTebp74G2c.jpg', '2022-11-17', 8, '1899', 'tv', 'ddfb72cd-f80f-4e8e-9497-e614f623221e'),
+	('6fc73267-fb0a-470a-b77e-31c7f7524fef', 315011, '{0,28,878,27}', '/8ulwqKiHxz5uH0g0I1BVeNDTWlo.jpg', '/9nyToPG5mhfm4KiPGChu35jH9QZ.jpg', '2016-07-29', 120, 'Godzilla : Resurgence', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('5f29f6e4-3a38-471c-9e4d-20faf947db96', 205, '{0,18,36,10752}', '/agChjHyBvwt3y7D1rgVDiqEiqKd.jpg', '/ljEdpkceJ9b3TEcTVQISS0Goft0.jpg', '2004-12-22', 120, 'Hôtel Rwanda', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('2f539c00-0bd5-4355-8aac-9b44d38e27fa', 228150, '{0,10752,18,28}', '/7V05gBGiE5LCTKzylIva2nG3JVW.jpg', '/kdbLf3aTQsEXqYlH9vA4fzmnSFz.jpg', '2014-10-15', 134, 'Fury', 'movie', 'd509d934-4d3c-46ee-a1e0-b6e5de17818d'),
+	('e103e5ef-a173-402a-ab8f-eb1541fe9708', 12576, '{0,18,27,53,10752}', '/R8qod2CvMi5iH2gfr043dMSM1y.jpg', '/kscbTFqCnRm43yDQVzAVL7N3CUa.jpg', '2002-10-06', 94, 'La Tranchée', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('081fb8e1-0c7c-42de-b331-489594fb8ec7', 109428, '{0,27}', '/bntAvXObNU0cmLLWwHB61DtQZWk.jpg', '/6RDgtEBzjuF7W25DVziXRABchpX.jpg', '2013-04-05', 90, 'Evil Dead', 'movie', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('131fc7ef-d6cf-4539-8137-c4f62036f4e9', 533535, '{0,28,35,878}', '/5DM2wMt9nZUDnbE0zuGt2joigYd.jpg', '/9l1eZiJHmhr5jIlthMdJN5WYoff.jpg', '2024-07-24', 128, 'Deadpool & Wolverine', 'movie', 'c467111e-6bea-407c-afa9-84c67f132d2b'),
+	('92611dac-9056-4823-a661-26c397561d3e', 105864, '{0,12,16,10751}', '/gypSFtR4Atupw8elu3DDHsYaaOU.jpg', '/swP14HRj0byvrXiBsPvYm1saxz4.jpg', '2015-11-14', 94, 'Le Voyage d''Arlo', 'movie', 'a571f4f5-e301-4a7f-94ee-145da01beb69'),
+	('55aebe67-4f40-4a8a-8067-28d268f4e80b', 49519, '{0,16,12,10751,14,35,28}', '/jXJ3zCPtCsZqNTanIOvCgkpo4cI.jpg', '/rmDKJu0IEETUm3tyRwCQTk48MvE.jpg', '2013-03-15', 85, 'Les Croods', 'movie', 'a571f4f5-e301-4a7f-94ee-145da01beb69'),
+	('4661a5b7-53a4-4b22-9af8-2d73ac5d37f4', 10191, '{0,14,12,16,10751}', '/zXl41G6QVSAHzNNKsDUG9TOPJin.jpg', '/59vDC1BuEQvti24OMr0ZvtAK6R1.jpg', '2010-03-18', 86, 'Dragons', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('7d79afd0-df35-493b-a8ed-379881dfcbd9', 493922, '{0,27,9648,53}', '/5Bz0u7xEyOUnGi4ov3rZKqKYCuH.jpg', '/4DUoPZOHdPuROP4nyEIsPaMIiQl.jpg', '2018-06-07', 126, 'Hérédité', 'movie', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('c16c186c-570d-4d5d-9159-33e2c11fbbc5', 64684, '{0,9648,18}', '/hoy3kknRscqn9XJ4Vhvm5IYPWN4.jpg', '/iM6t3rNQNmUJgIzNCF1aPiD6A5j.jpg', '2015-12-26', 3, 'Agatha Christie - Dix petits nègres', 'tv', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('aba0f733-091c-429d-8e61-a509ecfdf569', 1114513, '{0,27,53}', '/ueffCcq485jkEQMY30yCDmGEksQ.jpg', '/uMXm0wv73udV1bJV3cg0hoJYJwm.jpg', '2024-09-11', 110, 'Speak No Evil', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('1dc4e82c-1470-4990-b9e4-0aef7f202e6a', 43016, '{0,37,18}', '/20sdSd2UxKb6286zA87aufliu9M.jpg', '/iKpAp9R2yQbv4OW3U59H38HbSHp.jpg', '2012-05-28', 3, 'Hatfields & McCoys', 'tv', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('9b587617-fb83-4928-a003-2f58b01a5dc7', 932086, '{0,18,37}', '/ioZl7IkWwImfMdHRXN5OD1cqTTj.jpg', '/yKrZcgpMwgGEbxolugcOKFdxjxF.jpg', '2024-06-26', 182, 'Horizon : Une saga Américaine - Chapitre 1', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('3f736310-a473-450d-8547-093b90744dda', 1032823, '{0,80,53}', '/h24NGyo37FI5Ei3BqmmBarkYM3.jpg', '/iAlsYg6dlv1fvOBypM7SldIS1Wl.jpg', '2024-07-31', 105, 'Trap', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('ffaa60a5-c000-457f-80e2-7be579383452', 37735, '{0,35}', '/nLdSvAisVDItlHHg1u667iaHZTj.jpg', '/30rvmoEBqovm723agDJ3QddWXcY.jpg', '2010-09-16', 92, 'Easy Girl', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('3ee0830f-9ca6-446c-a1d7-0ccdf0167f31', 73586, '{0,37,18}', '/peNC0eyc3TQJa6x4TdKcBPNP4t0.jpg', '/2Erj4Oav9EHAtqLI354VM7ULDqu.jpg', '2018-06-20', 48, 'Yellowstone', 'tv', 'ddfb72cd-f80f-4e8e-9497-e614f623221e'),
+	('c3529015-1674-41a1-8e1f-8981ea7263ed', 70785, '{0,18,10751}', '/6P6tXhjT5tK3qOXzxF9OMLlG7iz.jpg', '/70YdbMELM4b8x8VXjlubymb2bQ0.jpg', '2017-03-19', 27, 'Anne', 'tv', 'ddfb72cd-f80f-4e8e-9497-e614f623221e'),
+	('8cbb5c5f-5a0b-483d-bca0-fe67e523e3f1', 14836, '{0,16,10751,14}', '/4jeFXQYytChdZYE9JYO7Un87IlW.jpg', '/hofnlIyF6bePkgQOpcuRWLvzf15.jpg', '2009-02-05', 100, 'Coraline', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('6df3960e-648c-4737-8ef1-1a572b6add8b', 4512, '{0,18,37}', '/wBAj0sxPnl7mQLSPqsWIwASy773.jpg', '/5r2BZajlRZqnOc6s2BS0aiFDcne.jpg', '2007-09-20', 160, 'L''Assassinat de Jesse James par le lâche Robert Ford', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('fdb08a32-ae50-4e97-883b-a39edddcf750', 466420, '{0,80,36,18}', '/t51ReMWxWcAOqKrGKw29OK2WhNz.jpg', '/acvE3RWjDLgvbL2RtcyzkrsAyNV.jpg', '2023-10-18', 206, 'Killers of the Flower Moon', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('94f6bd6d-d027-4b16-80d3-a395ac78b55e', 11466, '{0,35,18}', '/d6P4O0LzE4WFp4GnSkzauUTmC2P.jpg', '/1Tcv90k3MzWKsq1zJbxVlsT7YXr.jpg', '2005-01-03', 458, 'Kaamelott', 'tv', 'ddfb72cd-f80f-4e8e-9497-e614f623221e'),
+	('63868772-3932-4939-8ce8-3367a0554fbe', 945961, '{0,27,878,28}', '/xmDypImhT0OOloQIj3JLslUrBw8.jpg', '/9SSEUrSqhljBMzRe4aBTh17rUaC.jpg', '2024-08-13', 119, 'Alien: Romulus', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('20a29c89-dc44-4bbb-880c-69475d8ac41b', 270303, '{0,27,9648}', '/jh8bol1N8COAGSj4ksrcUNo8xxc.jpg', '/keEWjA5ykLJo851tIBFdmkxPxxh.jpg', '2015-02-04', 100, 'It Follows', 'movie', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('e256d282-1113-4b56-9f42-cd035d592877', 194764, '{0,18,80}', '/eV8TTHJOR8AJqPLm9uSLjnItgiU.jpg', '/VSRmtRlYgd0pBISf7d34TAwWgB.jpg', '2024-09-19', 8, 'The Penguin', 'tv', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('9959f18f-bb58-4c50-b27e-c6c63c23ba16', 64249, '{0,35}', '/7jq8mEHgkOq369vfGsOkoWu4QlZ.jpg', '/xZMmcoR71KC9ejDYgqwbfYkz0o1.jpg', '2015-10-29', 24, 'Au service de la France', 'tv', 'ddfb72cd-f80f-4e8e-9497-e614f623221e'),
+	('2ef9c479-0cec-47c2-9b6d-13d6558a8516', 21766, '{0,10765,18,35}', '/kntWwFhs7m4ldDI2pI5IAb1d1PO.jpg', '/4JStEF7wFa7mTxEoocTGUzg80et.jpg', '2008-10-25', 92, 'Hero Corp', 'tv', 'ddfb72cd-f80f-4e8e-9497-e614f623221e'),
+	('63a4fe06-df16-450a-9431-41cb9b175b0e', 240667, '{0,18}', '/d2hVxcHMknO8axcwhyQ9uRft4Pe.jpg', '/4zP0CfrUBQFWMlWoB4p8aS4D4IA.jpg', '2024-02-08', 14, 'Un jour', 'tv', 'ddfb72cd-f80f-4e8e-9497-e614f623221e'),
+	('52acf481-8739-439e-9d87-db68670cd558', 1824, '{0,35,10749}', '/4Odr5SZBvY6gMQaxmlg72nqVHhI.jpg', '/v8lPo8UWKyP2tIXD8N64HfNP4Pw.jpg', '2004-02-13', 99, 'Amour & Amnésie', 'movie', '4c64487a-d5c3-4452-9fde-5fc78c4b562d'),
+	('3c153abd-d952-4b60-bbfd-b6bb36fd6864', 8390, '{0,35,10749}', '/qBzVq3PJXi1OrzsI35JZDWPxRnj.jpg', '/wid86tR3KvQ8SBzjmlcXMTSRXsy.jpg', '2008-02-08', 112, 'Un jour, peut-être...', 'movie', '4c64487a-d5c3-4452-9fde-5fc78c4b562d'),
+	('cf2e4b98-5f45-43f5-b947-9e83edacbdb9', 634, '{0,35,10749,18}', '/aly5tfDSDciHvqhkbHpPB5mcdq8.jpg', '/9rSpxsMhG1FnFtUDdvSAXdtLtb3.jpg', '2001-04-13', 97, 'Le Journal de Bridget Jones', 'movie', '4c64487a-d5c3-4452-9fde-5fc78c4b562d'),
+	('54c2f34f-6a76-4da4-81f6-dcb66847472a', 3981, '{0,35,10749}', '/j9DfGeDSSvSyDfnhRrO2m7T0re2.jpg', '/xXHtSqFx8mLjzNGX9oCKQEx2yTa.jpg', '2000-12-15', 126, 'Ce que veulent les femmes', 'movie', '4c64487a-d5c3-4452-9fde-5fc78c4b562d'),
+	('82ebdd36-31c7-4c0d-b29f-cfedcdc16a0b', 10201, '{0,35,10749}', '/bLT6DdHf1LWSVIViBufpkSUOnEy.jpg', '/kueBMnoZVmagMfP6ortvkOVuWtI.jpg', '2008-12-09', 104, 'Yes Man', 'movie', '4c64487a-d5c3-4452-9fde-5fc78c4b562d'),
+	('2b3ed4eb-44b0-4f53-91a5-91929d935453', 1079091, '{0,10749,18}', '/o9WutcofxYyxicnoiw1QNNJaDz3.jpg', '/zAqBIeO71BFL7bAtP5TFzVjVamy.jpg', '2024-08-07', 131, 'Jamais plus - It Ends with Us', 'movie', '4c64487a-d5c3-4452-9fde-5fc78c4b562d'),
+	('b8111861-1485-4d00-acad-38d8bb28ace0', 1420, '{0,35}', '/8oCqMlKKomCArVtyOjRzMN6g40Z.jpg', '/7v8kOF9xXdNboYQHucBcAAVz9Ek.jpg', '2011-09-20', 146, 'New Girl', 'tv', '2d093e05-c184-4614-98c1-a158ca3da149'),
+	('56216122-d18d-4b2e-8ed1-1a96ce6e1214', 845781, '{0,28,14,35}', '/4nYSXdxjBwzVZUv1X9YnTQ9ZEhM.jpg', '/cjEcqdRdPQJhYre3HUAc5538Gk8.jpg', '2024-10-31', 124, 'Red One', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('da8317c3-c3e0-4ae0-87ac-ee2815cc4c3d', 1241982, '{0,16,12,10751,35}', '/rWNdpmjCFIQLMDAXLge6vcHTC1.jpg', '/tElnmtQ6yz1PjN1kePNl8yMSb59.jpg', '2024-11-21', 100, 'Vaiana 2', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('3387c7ff-f557-4d28-88d6-8b082623cab9', 454227, '{0,28,36,10752}', '/rT49ousKUWN3dV7UlhaC9onTNdl.jpg', '/f5ZV3PyGVvZUqfcPybAtU76cHnC.jpg', '2018-09-06', 121, 'Outlaw King : Le Roi hors-la-loi', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('0f822111-4167-47c2-8da5-9e5de1799304', 11359, '{0,12,10751,14}', '/eizcHF2ZZeXBIbFT1ff12uzxtyG.jpg', '/zIDwM5vjcBMSeTIlGzubpabRgKt.jpg', '1995-07-14', 96, 'L''indien du placard', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('748dba12-0484-477e-a9e4-cc0eb5d84081', 63492, '{0,35,10749}', '/3aHeNV973dzzS0qajt3vFPw6PhQ.jpg', '/uQznQfz6G99rZ8KydP59UndIPZ.jpg', '2011-09-30', 117, '(S)ex List', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('2fd07a65-c7b9-4b4b-9fa3-6cfbe6cb9992', 760774, '{0,36,18}', '/i66uPRqNC1BuyxPUmbOchxWmMut.jpg', '/7kgDHoXEk0EySTczcmaYpPDBFQS.jpg', '2023-12-21', 110, 'Une vie', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('89791692-b502-45e2-9475-a55034f909f7', 7450, '{0,16,28,878,10751,12}', '/lWyoSh33Nl13avncPwcd0mAFb0D.jpg', '/tBi72ljgqkakpsX7zQo6y5wDxHI.jpg', '2000-06-16', 94, 'Titan A.E.', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('03e38fec-7f2f-4599-a3c5-ecc90d5ee06b', 69555, '{0,35}', '/1TJkVKx7IeLadTFxOpUN3QEGI7Z.jpg', '/mANwSZL2IybGu12l6JT0bImiD7s.jpg', '2017-01-10', 83, 'Workin'' Moms', 'tv', 'ddfb72cd-f80f-4e8e-9497-e614f623221e'),
+	('4588caf1-6801-415e-81e4-a0303b4be514', 125988, '{0,10765,18}', '/uBUawOt99z4vFq2V0ismrzMy8X5.jpg', '/n5FPNMJ0eRoiQrKGfUQQRAZeaxg.jpg', '2023-05-04', 20, 'Silo', 'tv', 'ddfb72cd-f80f-4e8e-9497-e614f623221e'),
+	('c61f1367-6438-423b-9c8f-3b31d258e06a', 93405, '{0,10759,9648,18}', '/heV89pC6pv5fz1plikfyQxYuE4L.jpg', '/cSqUkhWH5seTIwtqUUAEBFjiLyh.jpg', '2021-09-17', 22, 'Squid Game', 'tv', 'ddfb72cd-f80f-4e8e-9497-e614f623221e'),
+	('5607e90f-bd68-440f-92ee-5c8afc817063', 2642, '{0,35,10749}', '/cfAF0Ob6YnL7B7MRdL9TW9tmZPW.jpg', '/owRq5hVmyLv8pNx3Kn1dmE6AQOm.jpg', '2002-12-19', 101, 'L''Amour sans préavis', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('10d0ce7e-c2ab-4226-bd87-5bf4c1e83995', 5590, '{0,14,35,10402,10749}', '/tHzlq0rtW5w0HM5lavOu7m8DxUz.jpg', '/3yZva3ONs7C1kKJ6IVvrZQJCUIj.jpg', '1970-12-20', 90, 'Peau d''âne', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('930fde08-82a0-4755-8856-00210071e087', 294272, '{0,12,10751,14}', '/eEHmkVUDvN5WusDwIvAKSMxzMXI.jpg', '/ct9S0m2U2RTCFAVnq3y0nF0Tgb2.jpg', '2016-08-10', 102, 'Peter et Elliott le Dragon', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('fb6cce0b-cd29-487c-9e77-c91b4df46b38', 11114, '{0,14,16,35,10751}', '/5GdLYwPmtdyTV1TnEZj5smherw0.jpg', '/y6c9KJ7nDOlSAnyKXPKQs3mV3fx.jpg', '1977-11-03', 128, 'Peter et Elliott le dragon', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('1441df92-d8fa-4ec8-9027-4f4cd73e658b', 462, '{0,18}', '/xAVH2hsaKCb7lFU4HGHoFT24GKT.jpg', '/3HmLKhahTxX2ALTWlagr92pZrU7.jpg', '2000-03-17', 131, 'Erin Brockovich, seule contre tous', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('3a802796-0a3e-4472-8366-089ba1a2d8ce', 215092, '{0,35}', '/qnsXhBtZ63L1443CGvaymH9V7Hs.jpg', '/iQFRJfvlxF94B3qz6eMDep5y5yV.jpg', '2022-12-30', 30, 'Machos alfa', 'tv', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('2c5e5666-ca46-4c6d-8acd-06bf3d69e74c', 197373, '{0,35,18}', '/4cjkpkpf9zqpv5PtBiV2q8c07Nf.jpg', '/yVWlvUHX02ARZte4aBep6GPkkck.jpg', '2023-06-08', 16, 'Based on a True Story', 'tv', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('3bb46b82-2ecd-4029-9144-68b65ecbd196', 395993, '{0,18}', '/hSRSRSJA71r2cQA481aRCUHE8T7.jpg', '/8DVFXRzbdZezDS8cxvn2sTAeqqg.jpg', '2017-09-22', 116, 'Stronger', 'movie', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('b61e15fb-965d-48c3-8b89-e1e171f82d1c', 60670, '{0,80,9648,53}', '/l9SQFzGWvTuP3WszpY8HeDYoNqd.jpg', '/3VFQo8gTKXDUx3Jy6xw022KBRA6.jpg', '2000-09-27', 105, 'Les Rivières pourpres', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('8c73940d-7920-4c66-8591-92756e44c5c4', 11639, '{0,12,10751,14}', '/yKY5kUaHTs5bwUIq6E1R2I8yLxj.jpg', '/iXgxhI9k8MqbhM1OqrvV3wdTu7S.jpg', '1982-12-17', 95, 'Dark Crystal', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('4c86c1a2-f471-4242-9c66-d5777eb48f3c', 1427, '{0,80,14,18}', '/lj7MirDUj83gqJtvIsUvRtcyfI1.jpg', '/6oUeNm1esbG3JPiWjARI0lFGujw.jpg', '2006-09-13', 147, 'Le Parfum : Histoire d''un meurtrier', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('1cb014f0-ae57-40d9-b9b0-62fe80c081a8', 11678, '{0,12,28,53}', '/sSC9MEwkCApbEdXsfwmar1FXOJ.jpg', '/gPMYhwogEWMeUWqL0JJkSuwcafk.jpg', '2000-12-08', 125, 'Vertical Limit', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('e566eade-cc2f-4392-9e66-c800d5a3ae42', 421447, '{0,35,10749,12}', '/l7JqOhzH0cWBB9L6imoWRFRFa84.jpg', '/a4bLN32DOZkKiJCky97lfNNX9k5.jpg', '2017-01-25', 103, 'L''Ascension', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('bd6b15ee-2789-420f-841f-822244b67c0b', 8619, '{0,12,18,10752}', '/xgxlMRIrtHqmkUKv9IuMnXINYsE.jpg', '/zMHyNxNt4zhL939XX8QLBW3gWfu.jpg', '2003-11-14', 134, 'Master and Commander : De l''autre côté du monde', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('b92101b7-3f06-41d6-914a-1103f2fd8f6c', 421, '{0,12,35,18}', '/t4tZTv2jvbKUVAmhMNxCUsYKd7i.jpg', '/joOlYI5hPsc7txTRFSR8e1wNniV.jpg', '2004-12-10', 118, 'La Vie aquatique', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638'),
+	('7585e381-586e-42eb-8b65-eefe1e5210bf', 1138194, '{0,27,53}', '/61YrcFVQPO4h15SJiLe0vjiWbjk.jpg', '/ag66gJCiZ06q1GSJuQlhGLi3Udx.jpg', '2024-10-31', 110, 'Heretic', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('050095ab-9402-424f-a41c-5c8ed58aecc5', 8592, '{0,35}', '/dDuzrl9rUIBYieZjqmtNCdncrmZ.jpg', '/v7FPlZuuwJZ6YwJggf3Jx5pZNAz.jpg', '2009-04-09', 122, 'Parks and Recreation', 'tv', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('4f3e0f31-25d5-4de3-bab2-a15d5c638319', 549509, '{0,18}', '/pt8BAyaHiV8NzpjpDag2PMq3Jdg.jpg', '/hmZnqijPaaACjenDkrbWcCmcADI.jpg', '2024-12-20', 215, 'The Brutalist', 'movie', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('cec2ffc7-66ed-410d-9dc5-1d4d5b610266', 1427, '{0,80,14,18}', '/lj7MirDUj83gqJtvIsUvRtcyfI1.jpg', '/6oUeNm1esbG3JPiWjARI0lFGujw.jpg', '2006-09-13', 147, 'Le Parfum : Histoire d''un meurtrier', 'movie', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('18f1c93e-f792-437f-9096-b631b4967ea2', 454227, '{0,28,36,10752}', '/rT49ousKUWN3dV7UlhaC9onTNdl.jpg', '/f5ZV3PyGVvZUqfcPybAtU76cHnC.jpg', '2018-09-06', 121, 'Outlaw King : Le Roi hors-la-loi', 'movie', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('81d2b5da-3c64-4377-bcab-6f18b33b300d', 1184918, '{0,16,878,10751}', '/konfEfTF9jA7GMNCd6mFAKXGzsB.jpg', '/mQZJoIhTEkNhCYAqcHrQqhENLdu.jpg', '2024-09-12', 102, 'Le Robot sauvage', 'movie', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('e3a50214-4553-439c-b1bf-ff4fb534c33f', 421, '{0,12,35,18}', '/t4tZTv2jvbKUVAmhMNxCUsYKd7i.jpg', '/dB70lrXpC5ionE8rhisWd8evQiA.jpg', '2004-12-10', 118, 'La Vie aquatique', 'movie', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('85755031-5480-4cc5-bf2e-f028da73fc4d', 542178, '{0,18,35}', '/6JXR3KJH5roiBCjWFt09xfgxHZc.jpg', '/4XKqxgjRJs3YtH5j1Eli5y6gtno.jpg', '2021-10-21', 107, 'The French Dispatch', 'movie', 'b64e733a-e49d-4a7c-bf31-d23ee8fcf971'),
+	('9c5c4fa9-12e2-4cbf-8579-8b91475eb148', 574475, '{0,27,9648}', '/4uI8C2zcfLWRhZDBgd0oTlZjV9j.jpg', '/uIpJPDNFoeX0TVml9smPrs9KUVx.jpg', '2025-05-14', 110, 'Destination finale : Bloodlines', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('c53043ef-a675-4742-9059-396a1a487355', 1098006, '{0,12,14,9648}', '/yBpFCMnoSZDATvINMnh6PmDB2jU.jpg', '/aESb695wTIF0tB7RTGRebnYrjFK.jpg', '2025-05-19', 126, 'Fountain of Youth', 'movie', 'c5f17db2-a4b2-481a-8a77-371de43ed979'),
+	('aabe30dc-3922-4aac-9a72-a26dc96b7879', 72190, '{0,28,27,878,53}', '/aCnVdvExw6UWSeQfr0tUH3jr4qG.jpg', '/kg2FOT2Oe5PSCgs3L4vLel6B7ck.jpg', '2013-06-19', 116, 'World War Z', 'movie', 'd509d934-4d3c-46ee-a1e0-b6e5de17818d'),
+	('a340bdfe-5b09-41d7-916e-587b5869324a', 1100782, '{0,27,9648}', '/ht8Uv9QPv9y7K0RvUyJIaXOZTfd.jpg', '/iR79ciqhtaZ9BE7YFA1HpCHQgX4.jpg', '2024-10-16', 127, 'Smile 2', 'movie', 'f56e7c63-9050-40a6-bff6-fb6810f5fbee'),
+	('d6902fcd-669f-48ff-aa84-7d72f212f38f', 575265, '{0,28,12,53}', '/z53D72EAOxGRqdr7KXXWp9dJiDe.jpg', '/538U9snNc2fpnOmYXAPUh3zn31H.jpg', '2025-05-17', 170, 'Mission: Impossible - The Final Reckoning', 'movie', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('3dc0abec-13c0-403c-a54a-48a170ee02c6', 423, '{0,18,10752}', '/2hFvxCCWrTmCYwfy7yum0GKRi3Y.jpg', '/1XqIhsqnAozznGhxlGdI0GPcCro.jpg', '2002-09-17', 150, 'The Pianist', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('8dd186c0-1457-4bc4-bf56-637bba152d8f', 508965, '{0,16,10751,12,35,14}', '/q125RHUDgR4gjwh1QkfYuJLYkL.jpg', '/mlxKite1x1PgmIhJgAxNS9eHmH8.jpg', '2019-11-08', 96, 'Klaus', 'movie', 'a571f4f5-e301-4a7f-94ee-145da01beb69'),
+	('814c2dca-7786-49c1-a28f-e1a050413b25', 315162, '{0,16,12,14,35,10751}', '/kuf6dutpsT0vSVehic3EZIqkOBt.jpg', '/jr8tSoJGj33XLgFBy6lmZhpGQNu.jpg', '2022-12-07', 103, 'Puss in Boots: The Last Wish', 'movie', 'a571f4f5-e301-4a7f-94ee-145da01beb69'),
+	('5d29dbc9-f1ee-4107-92d5-e850fbfc63eb', 458220, '{0,18}', '/xSDdRAjxKAGi8fUBLOqSrBhJmF0.jpg', '/mlBmnjDJfsAhvqRVc2aFOjsfh8M.jpg', '2021-01-28', 110, 'Palmer', 'movie', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('c45a3e40-c547-42d6-b71a-52e61150d257', 359724, '{0,18,28,36}', '/dR1Ju50iudrOh3YgfwkAU1g2HZe.jpg', '/2vq5GTJOahE03mNYZGxIynlHcWr.jpg', '2019-11-13', 153, 'Ford v Ferrari', 'movie', '49dea39c-0fe3-4260-86b4-cdfb700c4121'),
+	('54fa9de8-aca5-4eed-aef7-51681eef3258', 1376434, '{0,16,28,878,53}', '/2XDQa6EmFHSA37j1t0w88vpWqj9.jpg', '/a3F9cXjRH488qcOqFmFZwqawBMU.jpg', '2025-06-05', 85, 'Predator: Killer of Killers', 'movie', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('b6fb4f56-9f4b-482f-85b4-152c5c57d529', 35935, '{0,10759,10765,16}', '/zreH0OvbIy9djnV7LOq84UUqTJV.jpg', '/99Y64VK0KwyRWfaW6VdpDfPKNMo.jpg', '1997-10-08', 25, 'Berserk', 'tv', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('9e7fac79-6889-4e18-b64b-2dc890c6f688', 96721, '{0,18,28}', '/cyfncP1YKDNcGb0agE7RQr6UOYr.jpg', '/D3eDUNEzJPBDG3TCJcR7RyRgTA.jpg', '2013-09-02', 123, 'Rush', 'movie', '4f6b19c7-f313-41c5-ac57-0299c0d9781a'),
+	('834895fc-60c9-4915-b1a8-c2a3e80b6754', 11397, '{0,35}', '/9ZaGxvj1mqdKVLpSloq4mzS7SK6.jpg', '/lyf1jjoMD1Pe7KD6KKEqL4Owgeb.jpg', '2001-12-07', 89, 'Not Another Teen Movie', 'movie', 'a839fcc6-0842-47a8-a55a-a8b29b933638');
+
+
+--
+-- Data for Name: View; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."View" ("id", "tmdb_id", "genre_ids", "poster_path", "backdrop_path", "release_date", "release_year", "runtime", "title", "media_type", "viewerId") VALUES
+	('8ccf6e71-ef6b-408f-b67a-7b053a5c08d8', 852445, '{0,18,14}', '/91vF7SNB2tqsSultsmEn8tJYh4l.jpg', '/rzz7TBviOvDgIeujt2h9GwxV0AJ.jpg', '2023-09-20', '2023', 90, 'Acide', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c4202bce-0ecb-427e-9eb0-bb012593a19a', 943134, '{0,878,14,18,12}', '/1gO4SWCdMW0ptIRLQ455Ia5emC.jpg', '/vdADjgSb7akU3H2ELSJ8fpCvQwA.jpg', '2023-10-04', '2023', 130, 'Le règne animal', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0437ded1-5cca-49ae-be98-3197b66c53fb', 530915, '{0,10752,28,18}', '/zppHKKEkHg9ZGzOdzZwW8lZYYqy.jpg', '/2WgieNR1tGHlpJUsolbVzbUbE1O.jpg', '2019-12-25', '2019', 115, '1917', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('aedc77ad-e30f-4321-b7b3-45ec6c40971a', 16869, '{0,18,53,10752}', '/3yOfQLerEO2Qnb1VkSJ8WG3c0Jx.jpg', '/hg0MTIFs49ef179C9Y1HRtzqbbK.jpg', '2009-08-02', '2009', 153, 'Inglourious Basterds', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('969e3c70-d6aa-4dde-8aca-22061ad1e6e7', 1576, '{0,27,28,878}', '/yUXSFovaoJMrwbIhUrZi3lcT6cl.jpg', '/5pGWjnM62Zs0S1xRf3TDL1Xizr.jpg', '2002-03-15', '2002', 101, 'Resident Evil', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3799c00a-b2d8-4d9e-bdf1-197826d2a516', 168259, '{0,28,53,80}', '/wjVn1Qng8B3ySvfJr4ovuehI141.jpg', '/cHkhb5A4gQRK6zs6Pv7zorHs8Nk.jpg', '2015-04-01', '2015', 137, 'Fast & Furious 7', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b07c9ca0-3dde-4694-8631-fc94ebb4eca3', 584, '{0,28,80,53}', '/mXvf5WlNWdakezsXFvAVrf6Ubuj.jpg', '/xWf5Mjtv2HfIB9FyPYbbaSDdfCW.jpg', '2003-06-05', '2003', 107, '2 Fast 2 Furious', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c33a8037-ca95-4b7c-9b06-40990771783b', 260514, '{0,16,12,35,10751}', '/nouuVzN51YSBsjwJt5WwSVXOuv6.jpg', '/86TlYSntBzD4pxLNM6U3GoOfGdD.jpg', '2017-06-15', '2017', 109, 'Cars 3', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1ed021f6-7d9d-4861-b128-5fd799ab4b00', 862, '{0,16,12,10751,35}', '/4cWLRhub0yY9VJpdw0nqoTPYyiN.jpg', '/lxD5ak7BOoinRNehOCA85CQ8ubr.jpg', '1995-10-30', '1995', 81, 'Toy Story', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('310580b5-3da5-42e9-b3df-8b3a9aad7332', 863, '{0,16,35,10751}', '/lDOSztEvyOUdrDO5NVoq4CQ28AL.jpg', '/91qfG6VaxRsCh1SbIi1w2vxknsL.jpg', '1999-10-30', '1999', 92, 'Toy Story 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9008185b-6d1c-49fb-990b-c4486e82f0ab', 45790, '{0,16,10759,10765}', '/oSH24anb0NVDe1jb12u5ITZa7V8.jpg', '/mLKN1dsimKPiXCZ48KED0X8a02t.jpg', '2012-10-06', '2012', 190, 'JoJo''s Bizarre Adventure', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8975c580-8e8b-4e1c-b6c3-5ad191e860c5', 890, '{0,10765,16,18}', '/AhtWPHqIT1cWdrKTZVDMZD4Ca4F.jpg', '/fGXhmKyqRmx6NN3gQHeWNmiEryl.jpg', '1995-10-04', '1995', 26, 'Neon Genesis Evangelion', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a4e0083c-1c68-4930-b2f0-b521bbc66b85', 15137, '{0,16,878,28,18}', '/l6dBAi72490P4oOERO9W1y0258b.jpg', '/c4L5nFbs72Cfe4Q4hF0T99USa1I.jpg', '2007-09-01', '2007', 101, 'Evangelion: 1.0 You Are (Not) Alone', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b51f8cf4-b953-4362-99ad-76f9ba4a8520', 22843, '{0,16,878,28,18}', '/7o2JoenPNslllUBtJkrVZcLKzWE.jpg', '/y7L6LQKiZPlPZYSXqFkxqfB1Te0.jpg', '2009-06-26', '2009', 112, 'Evangelion: 2.0 You Can (Not) Advance', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d92b6ee9-be3f-4ea1-b594-c79f02a5bd1f', 40424, '{0,16}', '/7C1PMnV0uMrMNcfws5J7aLNxe3Q.jpg', '/zBIIyH8yfdlfvvpEiG9PLwoVXc6.jpg', '1998-04-18', '1998', 81, 'Initial D', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a18a8661-e70e-43cb-a744-a800543e5fbc', 75629, '{0,16,878,28,18}', '/5yrUdX3fFU44uGYEAcROoI0F7Q7.jpg', '/c5WUWudgykIpxb3TchaRnAcsu5y.jpg', '2012-11-17', '2012', 96, 'Evangelion : 3.0 You Can (Not) Redo', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f8ee997d-7346-4a3d-a0ad-42ac30327d22', 283566, '{0,16,28,878,18}', '/m4pgO8iyafIrbjN1hJ7hAOsQfjo.jpg', '/1EAxNqdkVnp48a7NUuNBHGflowM.jpg', '2021-03-08', '2021', 154, 'Evangelion : 3.0+1.0 Thrice Upon a Time', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('442ad9d2-3c30-4ea4-9caa-69ae73d213ff', 78, '{0,878,18,53}', '/zHKWxyG4j404HVeSYHNH4niUpkW.jpg', '/eIi3klFf7mp3oL5EEF4mLIDs26r.jpg', '1982-06-25', '1982', 117, 'Blade Runner', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0c397356-e521-49e3-be6e-209af2ff41cb', 335984, '{0,878,18}', '/baCC3v1wLnmoBbr2aH0e7P312gv.jpg', '/ilRyazdMJwN05exqhwK4tMKBYZs.jpg', '2017-10-04', '2017', 164, 'Blade Runner 2049', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7a7bc86e-7d07-4a81-b63e-57224999563f', 105248, '{0,10759,16,10765}', '/74Oo4hRy9xadpDZGqsWu2XqoNje.jpg', '/qHYdWT5NYqtlYpvQKOqZaq2mTrk.jpg', '2022-09-13', '2022', 10, 'Cyberpunk: Edgerunners', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d04bc21d-aef8-4e24-a6b4-9847523e8647', 52814, '{0,10759,10765}', '/yEi8w2euQXREcxaDXaxhp5kGafL.jpg', '/flFggscMhUyA9p7P8SbFyn6HPN1.jpg', '2022-03-24', '2022', 17, 'Halo', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f5a94026-458e-4434-b37e-9b8383f8c29e', 124905, '{0,28,18,878}', '/ArTbq30YnbzTjuJ1gNlx17C08si.jpg', '/zCjZfevPFBbOh2SAx2syIBHSqEI.jpg', '2014-05-14', '2014', 116, 'Godzilla', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b7a3febc-a915-4bb6-ad64-995933320035', 68726, '{0,28,878,12}', '/d2rxCDKSQB1WyBkdgbIhIuhQ1CM.jpg', '/k4MHkC13lxkwX8rHuhtgQ2qKtbn.jpg', '2013-07-11', '2013', 130, 'Pacific Rim', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('04414e24-d08a-4f3b-8188-7d5989a54e90', 1409, '{0,80,18}', '/yPLkf4EiCkR0NOvMfmpHMA2zfN3.jpg', '/mcgZDwhMlrFsfpbvCeg5RY5mhiu.jpg', '2008-09-03', '2008', 92, 'Sons of Anarchy', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a6606446-9167-4212-b771-dca1c1ce31f5', 66402, '{0,10764,99}', '/mJcEyWUXqo83tAQilGEidAHsHO3.jpg', '/oKzXzbRIVfTVQ4z5pyAdLhnq97o.jpg', '2016-06-12', '2016', 34, 'Ride with Norman Reedus', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ce0c8933-6523-443b-9007-a005653b8180', 1413, '{0,18,9648,10765}', '/4nCnsAtM5yWEnK31VO9h2uymKP5.jpg', '/a4doyPOabvQor0RGkWdhVENAR3G.jpg', '2011-10-05', '2011', 132, 'American Horror Story', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d27c2b54-437a-4d1d-b9b6-ab5a7f3477a6', 60625, '{0,16,35,10765,10759}', '/kKsdvIOfWhqw5ZfAepi5EZqhrsP.jpg', '/rBF8wVQN8hTWHspVZBlI3h7HZJ.jpg', '2013-12-02', '2013', 71, 'Rick et Morty', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3a2ca6ca-ef72-471d-8ff1-68fc75390a85', 90296, '{0,80,18}', '/g7yLm6Ttg3qMEfvFP3KurS7kZMj.jpg', '/9xPgJWqKYYlSvfPVuYSoZKVhB1q.jpg', '2022-04-07', '2022', 18, 'Tokyo Vice', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('fe59b640-2698-4ce2-9644-39b7a281deb3', 30984, '{0,10759,16,10765}', '/wU5Igxd38nnojCgfnY6DXccj7v7.jpg', '/qtfMr08KQsWXnCHY0a96N8NpQ2l.jpg', '2004-10-05', '2004', 392, 'Bleach', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0407d8d7-6dbc-4632-a805-d926ddefb790', 2316, '{0,35}', '/2dApsoX4bd98szjrbj5i3syYOh2.jpg', '/eDxBkRZRmbzwCxVqY1oSyTKNIid.jpg', '2005-03-24', '2005', 186, 'The Office', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b1d2932a-5a36-48ca-b442-6fd3c12b64fc', 1399, '{0,10765,18,10759}', '/3YSdxdhhdCDlMs88RhvjhDLX4CA.jpg', '/rIe3PnM6S7IBUmvNwDkBMX0i9EZ.jpg', '2011-04-17', '2011', 73, 'Game of Thrones', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5fe69a0a-095f-483b-843d-f34a07e8df37', 95479, '{0,16,10759,10765}', '/coMNNwjHY4BZTqMIsklanMf2Wp7.jpg', '/gmECX1DvFgdUPjtio2zaL8BPYPu.jpg', '2020-10-03', '2020', 47, 'Jujutsu Kaisen', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d31b85ae-8c6d-4285-92e9-0ee9f154a8da', 76479, '{0,10765,10759}', '/4Tw8TB9ikrcgzJgR0LOvgfnXD74.jpg', '/n6vVs6z8obNbExdD3QHTr4Utu1Z.jpg', '2019-07-25', '2019', 32, 'The Boys', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('52017687-b79e-4251-9a8f-33b1f7c39c6c', 300671, '{0,10752,28,36,18}', '/2Thhpd852zt4wFemw95KMNqQPC7.jpg', '/ayDMYGUNVvXS76wQgFwTiUIDNb5.jpg', '2016-01-14', '2016', 144, '13 Hours', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('417d6ec7-5183-4c35-b88c-0435a942d465', 670292, '{0,28,12,878}', '/pP1cyoXFc5Br1Sg21uORSN49yyu.jpg', '/kjQBrc00fB2RjHZB3PGR4w9ibpz.jpg', '2023-09-27', '2023', 134, 'The Creator', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b20f0373-37f2-4f5f-a147-3a81fb9ac0ba', 980489, '{0,12,28,18}', '/vRIHkkuI6FKqUHPJbABbNLRM3VI.jpg', '/xFYpUmB01nswPgbzi8EOCT1ZYFu.jpg', '2023-08-09', '2023', 134, 'Gran Turismo', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b46ebacb-f597-4a8f-aa53-ca5accd1eac3', 197, '{0,28,18,36,10752}', '/cteCb7HgeNmx8aeu5drpTb7N8fB.jpg', '/8lBcqakI3F19NWkXdqE0M8W76b9.jpg', '1995-05-24', '1995', 178, 'Braveheart', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('63f4cd50-31ae-47d3-ae73-e0ff20b7145a', 882569, '{0,10752,28,53}', '/kVG8zFFYrpyYLoHChuEeOGAd6Ru.jpg', '/eTvN54pd83TrSEOz6wbsXEJktCV.jpg', '2023-04-19', '2023', 123, 'The Covenant', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a8c1aee0-e5db-45ad-928e-aaa74bdf2d75', 1579, '{0,28,18,36}', '/5xR5OjvGQfaRZNL7GTuPAZy8tdr.jpg', '/hMl124Go2Ed9Qu8VsPLiA3nBSMk.jpg', '2006-12-07', '2006', 132, 'Apocalypto', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('74fbeabe-42db-40ac-a8c6-eef6cd17b7f1', 228150, '{0,10752,18,28}', '/q7kgbEjx2BHUDErfU7lH8UqS51R.jpg', '/kdbLf3aTQsEXqYlH9vA4fzmnSFz.jpg', '2014-10-15', '2014', 134, 'Fury', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ead3b070-eccc-4d83-8047-6bd608ac3a99', 106, '{0,878,28,12,53}', '/lXoATMtTK3ZsICCvTtXygASHZd9.jpg', '/YL3GPOiDcNraIJOVDCZsoOBoDy.jpg', '1987-06-12', '1987', 107, 'Predator', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e09fb0de-03b4-45cc-b768-b86045cb55b6', 718930, '{0,28,35,53}', '/uJvMXO1DNEER2lZocNjJy2zXtYs.jpg', '/y2Ca1neKke2mGPMaHzlCNDVZqsK.jpg', '2022-08-03', '2022', 127, 'Bullet Train', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1ddf8504-99d5-4e1d-9a4a-150a7c820acc', 1429, '{0,16,10765,10759}', '/nviphz0Nt9KSn0jNBE8lmp3ZCbI.jpg', '/rqbCbjB19amtOtFQbb3K2lgm2zv.jpg', '2013-04-07', '2013', 87, 'L''Attaque des Titans', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('09c5c66f-9847-4d51-9263-4d8397de2e41', 872585, '{0,18,36}', '/boAUuJBeID7VNp4L7LNMQs8mfQS.jpg', '/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg', '2023-07-19', '2023', 181, 'Oppenheimer', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('00648cb7-bd40-4977-b1d0-3f622cc9ff5b', 293660, '{0,28,12,35}', '/z5VjcCEioj2c2dvxmoqBW0Rj8Xj.jpg', '/en971MEXui9diirXlogOrPKmsEn.jpg', '2016-02-09', '2016', 109, 'Deadpool', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('df9f427a-8ab7-4932-b907-d69e6538ebb7', 298618, '{0,28,12,878}', '/azio74W2qw7bNg7ePqzkWywwK1n.jpg', '/yF1eOkaYvwiORauRCPWznV9xVvi.jpg', '2023-06-13', '2023', 144, 'The Flash', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8eec98d7-0df0-4491-a473-4652ab5fb038', 299536, '{0,12,28,878}', '/amopQYesMdw4wtMMUhsUtvMUyT6.jpg', '/mDfJG3LC3Dqb67AZ52x3Z0jU0uB.jpg', '2018-04-25', '2018', 149, 'Avengers : Infinity War', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bfc96557-3c6c-48e9-8379-681586da05e1', 697843, '{0,28,53}', '/4nRevDnwDYSsJr0X3VOLHOmRoqq.jpg', '/wRxLAw4l17LqiFcPLkobriPTZAw.jpg', '2023-06-09', '2023', 122, 'Tyler Rake 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7a84871d-ea2c-4e3d-a095-15fabc41f6b3', 297802, '{0,28,12,14}', '/ghbBIweVDjTyx983GQmnCPGlE3U.jpg', '/9QusGjxcYvfPD1THg6oW3RLeNn7.jpg', '2018-12-07', '2018', 143, 'Aquaman', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('01226093-6b64-445f-b9ee-40e63f23fe24', 361743, '{0,28,18}', '/kTh1s6I6yUyk2OGiRoGkDTYTS6K.jpg', '/AaV1YIdWKnjAIAOe8UUKBFm327v.jpg', '2022-05-24', '2022', 130, 'Top Gun : Maverick', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a8b70b62-eb49-401d-937e-ac28f885ae6f', 414906, '{0,80,9648,53}', '/t9JGg10CW1DzXEdWL54ewkUko6N.jpg', '/b0PlSFdDwbyK0cf5RxwDpaOJQvQ.jpg', '2022-03-01', '2022', 175, 'The Batman', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0877b9ff-db00-42ee-8d80-78e0f7127694', 157336, '{0,12,18,878}', '/1pnigkWWy8W032o9TKDneBa3eVK.jpg', '/l33oR0mnvf20avWyIMxW02EtQxn.jpg', '2014-11-05', '2014', 169, 'Interstellar', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('80391457-cdcb-4e4d-b98a-54095be9d6c2', 597, '{0,18,10749}', '/tuvoTDlqaLm7hFUROR6u0OUtwCW.jpg', '/tupgjqhWx5oieQrdyesO3aclUX9.jpg', '1997-11-18', '1997', 194, 'Titanic', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('694e6623-8e62-4e1f-ac95-a9cd75eb601a', 299534, '{0,12,878,28}', '/wF7jv3x51hXgkl7t5KHePuRjXc8.jpg', '/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg', '2019-04-24', '2019', 181, 'Avengers : Endgame', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2d533a5c-e8d5-47ba-ab1b-a5d44943a5e5', 453395, '{0,14,28,12}', '/arfzjn1tGvXWwkX7eaGVuXsc0mp.jpg', '/gUNRlH66yNDH3NQblYMIwgZXJ2u.jpg', '2022-05-04', '2022', 126, 'Doctor Strange in the Multiverse of Madness', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b6c15533-0fc5-42d6-8169-933d8fd14730', 536437, '{0,9648,53,28,878}', '/mv362kHXz4Yr33wtQhqfcJWFM8G.jpg', '/s2i9OfFiw0ASCugT8OH8gCPC1NE.jpg', '2023-05-11', '2023', 93, 'Hypnotic', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7682ce6f-8d71-42db-8786-f11585e129f6', 1726, '{0,28,878,12}', '/egEkFOCl87aHJLkIGXGxzNdpQV3.jpg', '/cyecB7godJ6kNHGONFjUyVN9OX5.jpg', '2008-04-30', '2008', 125, 'Iron Man', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('63b0dae7-f65d-43d2-952a-2dc6105d5d9f', 324552, '{0,28,53,80}', '/r687UV1zQ5KDB9AxRokRscWIRvt.jpg', '/r17jFHAemzcWPPtoO0UxjIX0xas.jpg', '2017-02-08', '2017', 122, 'John Wick 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('edace806-1d10-499a-a408-7461b413ec6a', 333339, '{0,12,28,878}', '/832ngDVXhOVp6HBnuMMeeWTrGXN.jpg', '/5a7lMDn3nAj2ByO0X1fg6BhUphR.jpg', '2018-03-28', '2018', 140, 'Ready Player One', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('24f5db7c-a08b-4c3c-ad36-eaede90cff94', 271110, '{0,12,28,878}', '/py8Js6LEl10XhUjkoOj6UGRrSFp.jpg', '/wdwcOBMkt3zmPQuEMxB3FUtMio2.jpg', '2016-04-27', '2016', 148, 'Captain America : Civil War', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6db4033a-faab-4028-88b3-5db2b04bc29a', 436969, '{0,28,35,12}', '/3c8y65VwyFp3pcNtOsrdOoWm8Um.jpg', '/jlGmlFOcfo8n5tURmhC7YVd4Iyy.jpg', '2021-07-28', '2021', 132, 'The Suicide Squad', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a06b830f-be5e-4328-958e-03dd01c14824', 791373, '{0,28,12,14}', '/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg', '/hjypZf7Juayon8emI6HNSyjbqWF.jpg', '2021-03-18', '2021', 242, 'Zack Snyder''s Justice League', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f2a0c891-af67-4782-bb07-4393fa9ace5a', 27205, '{0,28,878,12}', '/aej3LRUga5rhgkmRP6XMFw3ejbl.jpg', '/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg', '2010-07-15', '2010', 148, 'Inception', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b7550851-87ac-43a6-9408-7b73ebd41731', 810693, '{0,16,28,14}', '/jW4OW6ySAtP40BzUWgVmsApqyaS.jpg', '/921vUyXdfIYpaXqu5Lnf3nVb4IJ.jpg', '2021-12-24', '2021', 105, 'Jujutsu Kaisen 0', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3219708d-6c0d-44b4-8d20-7883e5beac67', 399566, '{0,28,878,53}', '/4bTShLVFnVKK31cowgjdAIZV84T.jpg', '/inJjDhCjfhh3RtrJWBmmDqeuSYC.jpg', '2021-03-24', '2021', 113, 'Godzilla vs. Kong', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9a8b863e-ee6b-4903-ac94-1e7ac4bbed93', 10138, '{0,12,28,878}', '/g9DSeSozGi4zpUyeOYZYMNmIv9O.jpg', '/7lmBufEG7P7Y1HClYK3gCxYrkgS.jpg', '2010-04-28', '2010', 117, 'Iron Man 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3445fbfb-489a-4d96-bd84-805eea1b81ed', 141052, '{0,28,12,878}', '/eMlVBnd5NPHDJ3DkhMzokfnymAB.jpg', '/2nyaeISu2xIxIgZYNpX4UayY8PN.jpg', '2017-11-15', '2017', 120, 'Justice League', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('294ff4d9-59dd-470e-b651-f2f109b96f70', 72105, '{0,35,14}', '/zdZKj5nqe3tEwuzEYbxAgMESFe7.jpg', '/wS9TiAS1WckeTS2IrFg5dRN9WQD.jpg', '2012-06-29', '2012', 107, 'Ted', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('91f7b6bc-4ed7-4b28-bf31-71c4c6bb53bc', 466272, '{0,35,18,53}', '/pjWBLYLqQkCbzq3QruyOyLCrznW.jpg', '/oRiUKwDpcqDdoLwPoA4FIRh3hqY.jpg', '2019-07-24', '2019', 162, 'Once Upon a Time… in Hollywood', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bbf170f5-2ead-4b6d-8f8e-02a67d520662', 49013, '{0,16,10751,12,35}', '/qCoaNNfH6lS7qkZDYhWkQpiQpnM.jpg', '/jTx4XlVsLJkDwbEQkFYwpApD556.jpg', '2011-06-11', '2011', 106, 'Cars 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0c9caeaf-2b5c-4e70-9ae7-ba932c003772', 76341, '{0,28,12,878}', '/oLy2V6AWSEfdPgKOtrSGnwB3Q2R.jpg', '/nlCHUWjY9XWbuEUQauCBgnY8ymF.jpg', '2015-05-13', '2015', 120, 'Mad Max : Fury Road', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7fa1616c-6b1a-4797-b4fa-92d3b9c53411', 284054, '{0,28,12,878}', '/g94IcdzPswTYl1ISdgn2EwvaZtt.jpg', '/b6ZJZHUdMEFECvGiDpJjlfUWela.jpg', '2018-02-13', '2018', 134, 'Black Panther', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('44f6a543-80c9-49a0-85c8-8e98c2d3e567', 9502, '{0,28,12,16,10751,35}', '/pxZNY88UWH0uic83QHBSh2yFEYL.jpg', '/d1RHScaZc7I8j0lDke1c4AxI435.jpg', '2008-06-04', '2008', 82, 'Kung Fu Panda', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3855d2a2-2dfa-4e65-a6ee-a67df4fc6953', 496243, '{0,35,53,18}', '/7hLSzZX2jROmEXz2aEoh6JKUFy2.jpg', '/hiKmpZMGZsrkA3cdce8a7Dpos1j.jpg', '2019-05-30', '2019', 135, 'Parasite', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('acec26ce-b1b4-4ba1-a19d-0f51c5fa630c', 526896, '{0,28,878,14}', '/xBoIe0eX9UuSSPe5Qt6KXIQOd3I.jpg', '/gG9fTyDL03fiKnOpf2tr01sncnt.jpg', '2022-03-30', '2022', 104, 'Morbius', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f9294075-8e96-4caa-86eb-c457be00fbd8', 934433, '{0,27,80,53}', '/yQw8BtQedzm5aUo9zQCUMxQBtIJ.jpg', '/44immBwzhDVyjn87b3x3l9mlhAD.jpg', '2023-03-08', '2023', 123, 'Scream VI', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('498dabe5-a7e8-49c4-9006-394667435d67', 293167, '{0,28,12,14}', '/mfbpsBiEu5EM1OAzfxULXC1067r.jpg', '/jks6QgJjsaDC5iT6bxLsSS0eo6L.jpg', '2017-03-08', '2017', 118, 'Kong : Skull Island', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('36875156-176a-485b-8d8b-ca25e1d09e87', 550, '{0,18}', '/t1i10ptOivG4hV7erkX3tmKpiqm.jpg', '/hZkgoQYus5vegHoetLkCJzb17zJ.jpg', '1999-10-15', '1999', 139, 'Fight Club', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('cf3a9484-da25-40a4-89b3-f82dbb244eb5', 147441, '{0,12,18,28}', '/mInbVT9VzQr18yKSvyHGJizZh50.jpg', '/hJ1jUw8irCiWwQk7BElxF92BrlK.jpg', '2014-12-03', '2014', 150, 'Exodus : Gods and Kings', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0eac5a85-fa65-4885-9292-e91db80f4006', 49444, '{0,16,10751,35}', '/wKVBcZn7v7PH7jbjMGtP4Vhd1Rx.jpg', '/7BdxZXbSkUiVeCRXKD3hi9KYeWm.jpg', '2011-05-25', '2011', 95, 'Kung Fu Panda 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('903bc5f4-b747-41df-a929-c8f82a68421a', 210577, '{0,9648,53,18}', '/7xkJ1ACu40BjzLHVPRILWjFvW7.jpg', '/h2JaQWLKhapm7AuSViJwGiv8ngC.jpg', '2014-10-01', '2014', 145, 'Gone Girl', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('adaf8009-0502-40df-a600-41435584f8fa', 263115, '{0,28,18,878}', '/5HB2SsrYNARm4Kom7Amwyb93O4M.jpg', '/9X7YweCJw3q8Mcf6GadxReFEksM.jpg', '2017-02-28', '2017', 138, 'Logan', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ab707687-6583-40e7-a7bb-7c989097b2c3', 190859, '{0,10752,28}', '/9BEN7zRpoLBaBU3t97kPJkHUgnv.jpg', '/rl95VDEP3nsUQmGzE0S1S7y6T0N.jpg', '2014-12-25', '2014', 132, 'American Sniper', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ea3cfb48-75c3-4d9d-817e-6e64e7e11337', 10193, '{0,16,10751,35}', '/hhOQ0FGXs0ux2GNMihx9itfRCm1.jpg', '/uAfhsySkr1UzQg1zdg3dZQRz9Fd.jpg', '2010-06-16', '2010', 103, 'Toy Story 3', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2c0ec34a-69ff-40d6-a762-d73fa9e9ce7e', 11324, '{0,18,53,9648}', '/fQ0vGVTtxjCdAJnxwPZ88O3Wzrh.jpg', '/ecvy2kMxsJ60ej52beZ0F8EOGkL.jpg', '2010-02-14', '2010', 138, 'Shutter Island', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('97eb0940-f7a3-4979-80a2-b3e863fa4a9a', 68721, '{0,28,12,878}', '/nnn7i15De88Lj4jyY3H03P3aUTz.jpg', '/aFTYFqrWp4RS46Twm87l5e0ItYb.jpg', '2013-04-18', '2013', 130, 'Iron Man 3', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7eb21a59-a9d3-4a8e-9971-ab34726fd852', 588228, '{0,28,878,12}', '/au8scCY0oS9RRtgqeJbkIqyBj3U.jpg', '/epsz7OqjwmeK1ehItgz1OVzxOH9.jpg', '2021-09-03', '2021', 138, 'The Tomorrow War', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bec8b840-207c-43dd-b8a6-e229865ffa13', 82693, '{0,18,35,10749}', '/mczjKJY6jO9NcsSFlPcW3nfh8Vi.jpg', '/92Ppi99LkZFHUgpxwYRxcKZVZNH.jpg', '2012-11-16', '2012', 122, 'Happiness Therapy', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('4b3cace9-0f56-4799-848b-2f5959e77928', 67557, '{0,10764,35,10767}', '/4Ac9Wqh5Yf2SHmgQViWBhNX1ZQ1.jpg', '/AvH03Lj5lMYxmlPc7prNQLWw6JY.jpg', '2016-11-17', '2016', 45, 'The Grand Tour', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1f80b19e-aff8-4bb1-96b8-e6dbec6f7b91', 1668, '{0,35}', '/2koX1xLkpTQM4IZebYvKysFW1Nh.jpg', '/l0qVZIpXtIo7km9u5Yqh0nKPOr5.jpg', '1994-09-22', '1994', 228, 'Friends', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8ab155f4-77ff-4805-b688-f51eadf5f06b', 1100, '{0,35}', '/zat4C4cnFYFhFLW922VmcxobD9C.jpg', '/5BMwFwNzSidVYArn561acqtktxv.jpg', '2005-09-19', '2005', 208, 'How I Met Your Mother', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('88d9c7f0-d8df-4ac5-b690-0ca64705bdf4', 1418, '{0,35}', '/kMhMKG3IVJV8HhMGK7GEY6X73bP.jpg', '/7RySzFeK3LPVMXcPtqfZnl6u4p1.jpg', '2007-09-24', '2007', 279, 'The Big Bang Theory', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5bb6e5e3-582e-4444-9333-ae2909b23d28', 456, '{0,10751,16,35}', '/s70jNqYx4OdTTI2rjhI3eDI4HTr.jpg', '/pxeqQX4qFQ0cVxPt5SWZENV5BH3.jpg', '1989-12-17', '1989', 763, 'Les Simpson', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('344cf18d-ae36-4401-ab14-1e85ba4b1eee', 1434, '{0,16,35}', '/7nHl3OHUSTHgslQxJUzNSy9vxqo.jpg', '/wU1y7snEVYiJBpZ2k1DjIpHgJbx.jpg', '1999-01-31', '1999', 421, 'Les Griffin', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('80232849-084f-4d90-bf4a-c995386aea91', 42009, '{0,10765,18,9648}', '/9acfIYfBuB4GFVROipM9YrqxsXd.jpg', '/wZMY9X8jtSS5GXFue2lvhgaJkii.jpg', '2011-12-04', '2011', 26, 'Black Mirror', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9739780e-6ca5-4677-ba0e-8cfda6fca2e3', 44217, '{0,10759,18,10768,99}', '/kF7TkNOil6oihykSEaMoK80iZ31.jpg', '/lHe8iwM4Cdm6RSEiara4PN8ZcBd.jpg', '2013-03-03', '2013', 89, 'Vikings', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a9378a7b-cb8f-4ff7-84ce-d7f5de467de9', 60574, '{0,18,80}', '/vUUqzWa2LnHIVqkaKVlVGkVcZIW.jpg', '/kfUWupX3phYp7AleZA2U1dmVcjX.jpg', '2013-09-12', '2013', 36, 'Peaky Blinders', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('30611549-855e-4351-b3d5-bbda4a2991e8', 1402, '{0,10759,18,10765}', '/bEzRHImvuIS6X00oZy82CqoUeLs.jpg', '/x4salpjB11umlUOltfNvSSrjSXm.jpg', '2010-10-31', '2010', 177, 'The Walking Dead', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6dd704d8-d4e8-4604-8dc6-a0cee3d9598f', 46298, '{0,16,10759,10765}', '/9WxfAQquTun9ATkV6iAeFHMkqxv.jpg', '/bFKKyCI89Xq98Gul8cGox8K3sZa.jpg', '2011-10-02', '2011', 148, 'Hunter x Hunter', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('06100b9a-3967-4507-8873-f294fc7062bb', 1396, '{0,18,80}', '/u1N5AQ0T6Xr28bZGP84AcSJ5M6b.jpg', '/9faGSFi5jam6pDWGNd0p8JcJgXQ.jpg', '2008-01-20', '2008', 62, 'Breaking Bad', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f2ea1b89-d99f-4a38-8381-5576baf88800', 87917, '{0,18,10765,10768}', '/9p3fzJwVzN81mSKuPmMCmAGzGp5.jpg', '/9OQ5BIITkJwRJo9JA6AlCfJIGBQ.jpg', '2019-11-01', '2019', 40, 'For All Mankind', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('abef3ae4-5a10-48e8-b498-ef5ec7d5cca2', 12971, '{0,16,10765,10759}', '/f2zhRLqwRLrKhEMeIM7Z5buJFo3.jpg', '/urj6noDW3OlROu34oy6BCmiQEWQ.jpg', '1989-04-26', '1989', 291, 'Dragon Ball Z', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('06cc75dd-b370-4325-aa42-1f92833f77dd', 1405, '{0,80,18,9648}', '/ptQtKhlJYtPlp5ecvJXvIGyjCjf.jpg', '/aSGSxGMTP893DPMCvMl9AdnEICE.jpg', '2006-10-01', '2006', 96, 'Dexter', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d7e141d7-a516-4155-9348-a9ed8f40232e', 4607, '{0,9648,10759,18}', '/og6S0aTZU6YUJAbqxeKjCa3kY1E.jpg', '/yUOFocKDW7MCC5isx4FK8A68QFp.jpg', '2004-09-22', '2004', 118, 'Lost - Les disparus', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('dbedbcc2-5036-4b2d-aa9f-9813bae6c8d9', 615, '{0,16,35,10765}', '/7RRHbCUtAsVmKI6FEMzZB6Re88P.jpg', '/pMCvRynXABgLBMKHYa2UXjTBMsU.jpg', '1999-03-28', '1999', 134, 'Futurama', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ee9a01cc-c7b8-4f06-8964-ba7fafa83698', 66732, '{0,18,10765,9648}', '/wLQLTdvINL3U2Hs8vsBU8qE7HoB.jpg', '/56v2KjBlU4XaOv9rVYEQypROD7P.jpg', '2016-07-15', '2016', 34, 'Stranger Things', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('59150613-bf0e-44ce-a36a-65681726b1df', 46260, '{0,16,10759,10765}', '/mErFfyQuQ9kkbsR30d8CkZf0Z6s.jpg', '/mpsYIytXhDXjI9yYC1Fp1S3PxsS.jpg', '2002-10-03', '2002', 220, 'Naruto', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('86d073c9-f14f-4e15-a5ec-5ab2e9dc04fe', 99966, '{0,10759,18,10765}', '/d9yefq8dNke4UbuqStBtUcO9TxD.jpg', '/lvq2JYAk6TWS375lt5pfwh2tMZS.jpg', '2022-01-28', '2022', 12, 'All of Us Are Dead', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('fb0c7e8f-dcbf-4767-a228-694161d93a7b', 31910, '{0,16,10759,10765}', '/qOxedwaJzdms2alAmIEHEnDeDzg.jpg', '/9akE8Ql4HFv6piLvk21fcQl6Gsg.jpg', '2007-02-15', '2007', 500, 'Naruto Shippuden', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('de335181-266e-4d27-b619-0b3159ae62f2', 63333, '{0,10759,18,10768}', '/txjqZJp4EMiX8jCHfUK92xHaVth.jpg', '/uCqXSfHymdbDMsFx8t0u0OPSuve.jpg', '2015-10-10', '2015', 46, 'The Last Kingdom', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f76d88fa-8802-414e-8c84-e45ccabb09ee', 82856, '{0,10765,10759,18}', '/s8lHYTNYM919rDFvMs33tOeMbYf.jpg', '/9zcbqSxdsRMZWHYtyCd1nXPr2xq.jpg', '2019-11-12', '2019', 24, 'The Mandalorian', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0b6e358c-3235-46fb-b61b-49d9ac160d3b', 900, '{0,18,35}', '/c7yEYviYpMb9CfOASt3IEhMQ9PB.jpg', '/bm06ncZQxPSEVaoMe6Xt08ul0PG.jpg', '2007-01-25', '2007', 61, 'Skins', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('106bbeb8-5046-4cf3-9c6b-7ecbf269abc8', 85937, '{0,16,10759,10765}', '/7Uj6vqmznWQ3w3hpQ1eIY9mMyMw.jpg', '/nTvM4mhqNlHIvUkI1gVnW6XP7GG.jpg', '2019-04-06', '2019', 55, 'Demon Slayer : Kimetsu no Yaiba', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e4e29981-6530-4d83-a68a-6ec754b6bde6', 87108, '{0,18}', '/z7vcXBWfA3POvroAFRaTvZgX0HY.jpg', '/20eIP9o5ebArmu2HxJutaBjhLf4.jpg', '2019-05-06', '2019', 5, 'Tchernobyl', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e3a7e570-e854-4f7a-8d7d-2e0d4b28792c', 13916, '{0,16,9648,10765}', '/chnG4pYo89weaBjXHJWvW68E35B.jpg', '/mOlEbXcb6ufRJKogI35KqsSlCfB.jpg', '2006-10-04', '2006', 37, 'Death Note', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2df1c594-4958-41cb-9a6f-fee5d941dd5c', 100088, '{0,18}', '/4pMd9VAdqm96KA2W4X8yetgc7EF.jpg', '/uDgy6hyPd82kOHh6I95FLtLnj6p.jpg', '2023-01-15', '2023', 9, 'The Last of Us', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('afcdb25c-9c7b-4a2d-a772-2f36b304243a', 79141, '{0,16,35,10759,10765}', '/rCxPTLTfcNhgD8F6VwKxfCAAbf8.jpg', '/tMY7rx81DtuKIAuPmKEkIl5FFMX.jpg', '2018-04-25', '2018', 40, 'Scissor Seven', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2a7fa10e-19ad-4b1e-8032-c6e3bcb6c6da', 114410, '{0,16,10759,10765}', '/oeNps5WE8umMVcNISI8M2NHk7jg.jpg', '/5DUMPBSnHOZsbBv81GFXZXvDpo6.jpg', '2022-10-12', '2022', 12, 'Chainsaw Man', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('eacb454c-2ee0-4e17-8bcb-7c2db8541b1f', 30991, '{0,16,10759,10765,37}', '/hbLDwYri1pyiEIMpICgftu7s8NE.jpg', '/A4PHx94G7mvM3b8vsDJ5HEaQ6uv.jpg', '1998-04-03', '1998', 26, 'Cowboy Bebop', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5abfc349-1c3b-4f89-9387-5cdf1a2f22d3', 75214, '{0,16,18,10751,10765}', '/mAJwxbgnGYowmvIyr1R2pJlg8ls.jpg', '/uKtyR5VqjefVgYQ64Hy1ch2BVFo.jpg', '2018-01-11', '2018', 13, 'Violet Evergarden', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a53af34a-5425-421a-b91d-a0e1f41258cd', 42444, '{0,16,18,10759,10765}', '/swwtYUGneto1dmngPBDinmx1dez.jpg', '/azRtf0y7TmF4E5b6jrKTchSd6SC.jpg', '1986-10-11', '1986', 114, 'Saint Seiya : Les Chevaliers du Zodiaque', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ecb5c3c0-f295-40b9-be10-052f483dd3ea', 45783, '{0,16,35,18}', '/ftT1qtT6yWO5rfs237a466N8QRr.jpg', '/l4b42IaNVU2ZbdzjlaPmfFjqosV.jpg', '2012-04-08', '2012', 75, 'Kuroko''s Basket', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('655ea53f-5641-4698-9dfe-5d47222fae87', 97546, '{0,35,18}', '/5fhZdwP1DVJ0FyVH6vrFdHwpXIn.jpg', '/wImNeqxKsqmJ5OBw8j3I37GNFN3.jpg', '2020-08-14', '2020', 34, 'Ted Lasso', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9833d5a6-51ba-497e-b49e-0ca9ed1ee84d', 42509, '{0,16,10765,9648,35}', '/ogureH3QhG8Ls349Cf5HLJDiQxA.jpg', '/gDvxT2z6TNxervG97WfpePRZ3aR.jpg', '2011-04-06', '2011', 24, 'Steins;Gate', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('01877082-aac1-4b6e-997e-4daab34832f6', 68267, '{0,10751,16,10759,35,10765}', '/9hMq4s9gldNAmxdW9oafUjjWheZ.jpg', '/mhETUY8XxLewCZb6bKm6FyBlnhh.jpg', '2016-12-23', '2016', 52, 'Chasseurs de Trolls : Les Contes d''Arcadia', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0bda7f2c-2ccb-4099-a0a2-f7252fac1cf4', 62110, '{0,16,35,10759,10765}', '/cvTdUnTqCszLf02R0aYqY3JbnfU.jpg', '/zkc2FkVymJDNXisS1mgpr8Ip2J.jpg', '2015-01-10', '2015', 47, 'Assassination Classroom', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('110e4b47-dbd2-40d6-abe7-d3d2830b0444', 61752, '{0,16,18,10765}', '/3cryMUiLx8VmmSQ5Fsg8QHHj9cO.jpg', '/mz5L2zlZuMlQwVE8Yxvb2YK1wsl.jpg', '2006-02-10', '2006', 10, 'Hellsing Ultimate', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('fb27f1de-7089-4e1f-969f-31f7fb9efcf8', 70523, '{0,80,18,10765,9648}', '/vbG0zu0lIVDZZaUVOZuBIE9kno3.jpg', '/75HgaphatW0PDI3XIHQWZUpbhn6.jpg', '2017-12-01', '2017', 26, 'Dark', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('be38aff9-5676-4a3e-96c3-f35eeab49577', 42671, '{0,10759,16,18,9648,10765}', '/3UnmNPTDMOThd8Oi9L2pEXqfO0D.jpg', '/v0fs6QuCurAFsFC2i3NX39vxrms.jpg', '2004-07-25', '2004', 13, 'Elfen Lied', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('04b9e490-0ac4-47f7-92e2-ec27a5518910', 61374, '{0,10759,16}', '/eKxblpRtHiMHLW5sjq7ZLGsGBOh.jpg', '/6llzd3LLcMqfNSsi5W1HAGlPdeS.jpg', '2014-07-04', '2014', 48, 'Tokyo Ghoul', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c0afb8a1-a8de-499b-8f41-ab310cb271f3', 1063, '{0,10759,16,35,18}', '/t6x0fNlD89oOKDJDfgjYDNGLp5R.jpg', '/aZRGh7ccNAdqQWhHypvlT9UuXjZ.jpg', '2004-05-20', '2004', 26, 'Samurai Champloo', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('aa9b2980-8450-477b-aedb-0b33a7e13805', 81356, '{0,35,18}', '/hVk1hhJjyeTSCk3Fiy6p0W5pPxK.jpg', '/27b1gTpwjZiwGafp8n4XnZRYGEV.jpg', '2019-01-11', '2019', 32, 'Sex Education', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9fcf2936-8884-4b0a-9a21-10f2aa52d71e', 61389, '{0,16,10759,18}', '/ceJVgUzBABmzmBI0B1EoWjXQyMn.jpg', '/nnUIg97ucrcqFgrn39EFgKm1uT7.jpg', '2009-06-24', '2009', 26, 'Saint Seiya: The Lost Canvas', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('13a3e899-733c-4c47-9f0b-9b1e098a5038', 86831, '{0,16,10765}', '/uQMHEsgdhxbRKofDRNsAeWouHlT.jpg', '/nBrkOZyI75artyizuBFeya48KbO.jpg', '2019-03-15', '2019', 35, 'Love, Death & Robots', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d38bd276-add8-464f-bf91-d51c4cb76e29', 902, '{0,16,10762,10759}', '/ra8CKkCHjSok8L9meEP4WuOukNK.jpg', '/gJYZBM200Flldo6im3EEdXslR1j.jpg', '2000-04-18', '2000', 224, 'Yu-Gi-Oh!', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('34a33848-1334-4978-9e87-659f62811f96', 70593, '{0,18,9648}', '/wkuSBTbtj9nSALZLgp3yyjuyoG1.jpg', '/6y8sE6s1sAbARztCuEbGOk6Qcz7.jpg', '2019-01-25', '2019', 12, 'Kingdom', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('af32e7bf-0648-4d34-ae32-96afa6c3db68', 85271, '{0,10765,9648,18}', '/AXnCR7WE8BKlzsabQtUITySChn.jpg', '/1i1N0AVRb54H6ZFPDTwbo9MLxSF.jpg', '2021-01-15', '2021', 9, 'WandaVision', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a01273dd-a51f-47c6-8322-d7c52b4e0353', 12609, '{0,16,10759,10765}', '/ea8VZOfwr7wE2851brvk6g2rLlF.jpg', '/30L49n4Dhn7dzuGG50GV3ybMhC3.jpg', '1986-02-26', '1986', 153, 'Dragon Ball', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c10c3d2e-8d81-424a-9c0f-708b9662dc34', 62560, '{0,80,18}', '/oKIBhzZzDX07SoE2bOLhq2EE8rf.jpg', '/4ceSkV7cmCon4exXaZwuhW1VdE0.jpg', '2015-06-24', '2015', 45, 'Mr. Robot', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('82711295-c444-49c6-98bc-78318f80fad4', 40008, '{0,18,80}', '/pbV2eLnKSIm1epSZt473UYfqaeZ.jpg', '/vlG182ZY2WMzD5bjFZNnhyvv5V4.jpg', '2013-04-04', '2013', 39, 'Hannibal', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a65e98ed-f281-48ef-a7b3-0ef9ddfda648', 37863, '{0,10759,16,10765}', '/jGONaplU8JO2kGMMelXMzgwfFRm.jpg', '/5ex4La3ZBYTK8RGOpmtInGPNBVm.jpg', '2003-10-04', '2003', 51, 'Fullmetal Alchemist', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0254ad7c-d9d6-46c8-9865-b8820a569d22', 62715, '{0,16,10759,10765}', '/eQYgs1sB8zexa0hudsojkdS6dLa.jpg', '/qA2UwUQbj05aeBMCuC0mHSQ4loE.jpg', '2015-07-05', '2015', 131, 'Dragon Ball Super', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('11da7b19-5591-49f4-9ba3-610ba199bf42', 56998, '{0,16,10759,18,10765}', '/wf3bBKp1RgCJjyCBLfEAbZjVr31.jpg', '/ivWNDYPxDMjc82ajeSPuyq70hu9.jpg', '2010-07-05', '2010', 12, 'High School of the Dead', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('37a0385f-1388-44b7-aa9f-cdbea81848ae', 110316, '{0,18,9648,10759}', '/217V9dhelgjELLZGawTmRJ0NNb7.jpg', '/bKxiLRPVWe2nZXCzt6JPr5HNWYm.jpg', '2020-12-10', '2020', 16, 'Alice in Borderland', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c2576ccc-0b91-4ade-9b8c-41732c8969e1', 61889, '{0,80,18,10759}', '/doJ6axLfzLCDaPqFSSHjaSTYKb2.jpg', '/qsnXwGS7KBbX4JLqHvICngtR8qg.jpg', '2015-04-10', '2015', 39, 'Marvel''s Daredevil', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('67b9884a-e2d6-4f37-953c-87713bd8c083', 71578, '{0,18,35}', '/Ai8NXxLzW4QrM4uWGT0LzLyKAlT.jpg', '/1VSwy48zZE5EchorC3ra1entcj6.jpg', '2017-08-11', '2017', 38, 'Atypical', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('57682b59-c49b-468b-850d-c81b22618042', 240, '{0,10759,16,35,10765}', '/by2GTFpd2BQ5uJxWPlfcmfrNrfB.jpg', '/cjvyqIvCKQtUzd3J5TbVnCFbSNZ.jpg', '2000-09-09', '2000', 95, 'Jackie Chan Adventures', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9c7cba62-0825-42b9-9e8f-c9889070822f', 131927, '{0,18,80}', '/9EBKgrFIsCFSV1RZKWhYUdbtGiv.jpg', '/e6v08948EZVvLrx0sWpmglguY9e.jpg', '2021-11-07', '2021', 10, 'Dexter : New Blood', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('165308fe-7086-4a45-9c76-196facaffb57', 74577, '{0,35,18,80}', '/zEXHZU9gFTu7rPAJP8cNPjQyUhJ.jpg', '/vbWfxIva1jabZeZ4v8jVS6Cmab7.jpg', '2017-10-24', '2017', 16, 'The End of the F***ing World', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('78d03d8b-54b0-404f-9122-4fc45cdccf06', 62428, '{0,16}', '/cUi24smFSYKv4KnU1dMyXjT5urr.jpg', '/p1utSjcDm6dLDHtHDYAeE9B7e2C.jpg', '2015-04-11', '2015', 13, 'Saint Seiya: Soul of Gold', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('83392c54-484f-4d69-8c37-d8ddabf7892a', 88329, '{0,18,35,10759}', '/cybZ7FoeBoBJPieKvSp4wh2yCMR.jpg', '/1R68vl3d5s86JsS2NPjl8UoMqIS.jpg', '2021-11-24', '2021', 6, 'Hawkeye', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('dc2cbc1b-e06d-452d-baf5-3d021910e2df', 46261, '{0,16,10759,35,9648,10765}', '/x8yGA9mSeyYfZSD0PQn81amEXIu.jpg', '/oMzQrIwhNNZ0NFVJnFdbkCfZnDT.jpg', '2009-10-12', '2009', 328, 'Fairy Tail', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('102bb454-2c1a-4b8b-abd6-503bb2ee5e89', 70881, '{0,10759,16,35}', '/sYjqnL9z9v6z2sk8An61ZrNxPSt.jpg', '/3XlKckxPEa4lg5w4vHnyE35PUyI.jpg', '2017-04-05', '2017', 293, 'Boruto : Naruto Next Generations', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f93ed986-1e20-47a9-9d51-d2d3c79759bc', 64464, '{0,18,10765}', '/mPH3YmzPHoLt0G8xfdXgX2wz4wW.jpg', '/qVBExiGdG8uiPK9BcWD0881u8uh.jpg', '2016-02-15', '2016', 8, '22.11.63', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8cffc54e-807e-4f55-a3a3-7db6c866cad7', 92749, '{0,10759,10765,9648}', '/xrkDlkL6u26DLeBw2Cao8pYtrYH.jpg', '/iux1vKPT7Vw1AzetZb4Jz6wfYsm.jpg', '2022-03-30', '2022', 6, 'Moon Knight', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('170dfd65-957f-4982-8737-bc850b5151ff', 74204, '{0,35,16}', '/xLlc3pd0EuX6x6aNPL5mZrkjRXb.jpg', '/uM6WJodeCyTp7h7NhE4rgd0RbRZ.jpg', '2017-09-29', '2017', 71, 'Big Mouth', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('435ea356-9dcc-4e54-aa31-1a9cfcb3a232', 73375, '{0,10759,18,10768}', '/vrp6wDIVEpSmdpWrs3jyGJwpocE.jpg', '/mDVIU9Y2TYeK2W29a2HRBiWt3JA.jpg', '2018-08-30', '2018', 30, 'Jack Ryan', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('778c5470-67dc-49ae-93b6-b420b6f27414', 114461, '{0,10765,10759}', '/laCJxobHoPVaLQTKxc14Y2zV64J.jpg', '/31GIcUUcdQPRkVtmdqgQWJMhXj1.jpg', '2023-08-22', '2023', 8, 'Ahsoka', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('dbc09525-c2c2-479d-9acc-1884efff6bfe', 68421, '{0,10765}', '/x3nu0gtOWl10sGLCi5LlHuR1WYC.jpg', '/xETbCo8l06poxFUgbtaUeKmLadz.jpg', '2018-02-02', '2018', 18, 'Altered Carbon', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('76d77218-b508-461b-a8d0-4bffbe3d6ecc', 88396, '{0,10759,18}', '/6NrUwEWDxZI2XffOnw3nuibukmX.jpg', '/aTjbqMONy77fHJrIYu14g1F0d5h.jpg', '2021-03-19', '2021', 6, 'Falcon et le Soldat de l''hiver', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5bfed12e-66d9-4299-871c-7bd55cf1ea65', 67178, '{0,10759,80,18}', '/3OnQslnegPmdsjUsjplfotMAPyk.jpg', '/j5aOOtsJinQtyRaqiB12TTRHdeX.jpg', '2017-11-17', '2017', 26, 'Marvel''s The Punisher', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d0396e55-7c43-41f2-bb6e-3f4cdaa9a686', 46786, '{0,18,80,9648}', '/xXKcfZE7ulYxgjjYv51s0zDG69s.jpg', '/s3pypVJf05ELPCUA6jSW381nLwm.jpg', '2013-03-18', '2013', 50, 'Bates Motel', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bc9a4254-b477-4906-86d0-edee380f1a1d', 67744, '{0,18,80}', '/fbKE87mojpIETWepSbD5Qt741fp.jpg', '/a906PH7CDmSOdS7kmnAgdWk5mhv.jpg', '2017-10-13', '2017', 19, 'MINDHUNTER', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('079113dc-67fa-42ad-8f61-78049ddd78a8', 78191, '{0,18}', '/uv5JlLKpT0FgtmOqWzfEl7eb9bP.jpg', '/2ZNFu0hkSVtAI6LRWGIlCPNd1Tj.jpg', '2018-09-09', '2018', 40, 'You', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('29d11df8-e806-4b36-ac4e-6904fd3e9de4', 65708, '{0,18,9648}', '/om1wVOuEtwH3krHutIWO9sJzkS5.jpg', '/gder6NtVlBIpenWWMOwpbQK05Uc.jpg', '2017-01-07', '2017', 8, 'Taboo', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d8e3054a-ddfd-446d-ad61-4dacbaa9d39d', 54671, '{0,10765,18,9648,10759}', '/hQSdrXBYTbLGHYDIseHkBOPXTgL.jpg', '/32iacqVElB91YZKl9Ky3QEEkXtH.jpg', '2014-05-11', '2014', 27, 'Penny Dreadful', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0d32cb1b-a38a-4196-904b-50060224dd3e', 93405, '{0,10759,9648,18}', '/heV89pC6pv5fz1plikfyQxYuE4L.jpg', '/2meX1nMdScFOoV4370rqHWKmXhY.jpg', '2021-09-17', '2021', 9, 'Squid Game', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1a5281e6-ccb0-4dd5-a1c9-1e6aebd28e5f', 25707, '{0,35,18,16}', '/oQZMXJThPrxFHS35aXj1c9GWFlD.jpg', '/p9F1T7FQwbS9Jppv0QpmI8a575d.jpg', '1983-10-13', '1983', 128, 'Olive et Tom, champions de foot', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('86b1b6fa-1d17-4a92-a7d0-d57a11711566', 110642, '{0,16,18,10759,10765}', '/xCHJq63FrXCJAF7v69Obd24siDF.jpg', '/uPHXbrh9jlq2XgfjjTFlkJfgtOQ.jpg', '2021-07-08', '2021', 4, 'RESIDENT EVIL : Infinite Darkness', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('034d2e0e-0098-4e39-b5d3-73f84765c9f5', 12697, '{0,16,10759,10765}', '/kmO4AHj1xx8wiaBMgwGjXhOQfNt.jpg', '/aJOlYXjxb5IvnTsO4I1tmFpC7GH.jpg', '1996-02-07', '1996', 64, 'Dragon Ball GT', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2b21699b-7ca7-4973-b1cc-bd11ebbc2c8b', 1125978, '{0,99}', '/zRE0oHu3L0AceA80SGgHjic5OZA.jpg', '/5TuYFn7ghjqyUYILiTCTqj1z1qp.jpg', '2023-06-17', '2023', 60, 'Hideo Kojima: Connecting Worlds', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('4981b001-1951-4754-aef0-362e779aa872', 31911, '{0,10759,16,10765,35,18}', '/mfh6zxYIHSlpRYFpzVcWJ8RAiUj.jpg', '/97cicAYWu4cc0TyXJoDQiMmWI2t.jpg', '2009-04-05', '2009', 64, 'Fullmetal Alchemist : Brotherhood', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('655c2bb8-2eed-4309-8c79-470ec850bfc5', 62017, '{0,10765,18}', '/xBNufMEzgTeEW7BQDOwYhl1kRgw.jpg', '/pLio7Lod6YoNMM7ybFVjIJjwIxe.jpg', '2015-01-15', '2015', 40, 'Le Maître du Haut Château', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('cb94ff1c-d42a-4cec-9a6d-650da204c49c', 47640, '{0,10765,18,9648}', '/2BWErT9QcADpf2G4BZ769eSnFTP.jpg', '/4YnAZ1KO9goeS4c06VO7HXiO3oO.jpg', '2014-07-13', '2014', 46, 'The Strain', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6785bc1e-e270-42a8-b764-b3daa3158971', 39852, '{0,80,18}', '/rmibFGdqOe0kKKhPls0jVOdZCWw.jpg', '/o36ITLqVgZZ4hY1V5aPZPqZzVRx.jpg', '2017-08-02', '2017', 32, 'The Sinner', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f4084248-3de9-456b-a3b1-42f27c83592a', 61709, '{0,10765,16,10759,35}', '/yh11eNQyZOgZLMEW7llKYQ0oGcJ.jpg', '/oz5zbMBKCUsb7hsbjdxvK8yagPD.jpg', '2009-04-05', '2009', 158, 'Dragon Ball Z Kaï', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('555720a4-2547-4966-8f5e-347af8f15869', 46331, '{0,18,9648,10765}', '/fwH0ePhd7m3swtCuFeubtR49ZTd.jpg', '/qiDOjpLj2KGDwM5MGx9YZpOrBRX.jpg', '2013-06-24', '2013', 39, 'Under the Dome', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a1deb56e-6e50-45cf-82a5-554dae0e2dcd', 92830, '{0,10765,10759}', '/slX7j56s5gkuuXMYYOMHo47hFp1.jpg', '/vNPm1WG15IJHpsemb9ZRurm4ZC4.jpg', '2022-05-26', '2022', 6, 'Obi-Wan Kenobi', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f128b2e9-88a7-486d-870a-94b8c8a0f47c', 31724, '{0,16,10765,10759,18}', '/1ezIDr2XfHZDAUjga4zaf81WliO.jpg', '/5hS2OIuZSKGkR8R5l3bY5zh04Ce.jpg', '2006-10-05', '2006', 50, 'Code Geass: Lelouch of the Rebellion', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('4eb218dd-d2b2-4e04-b9e9-c930098e45dc', 848538, '{0,28,53,35}', '/uVAk2YliqInQfH4B4vzZ75rwcNB.jpg', '/xvk5AhfhgQcTuaCQyq3XqAnhEma.jpg', '2024-01-31', '2024', 135, 'Argylle', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a2495247-1c36-4312-9df9-dd1cd700af43', 383498, '{0,28,35,12}', '/ybjooZMNlRBaFNfs52XqONc4Xyw.jpg', '/3P52oz9HPQWxcwHOwxtyrVV1LKi.jpg', '2018-05-10', '2018', 120, 'Deadpool 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('36610054-f8e4-4ffc-8575-699cfb5316fa', 2734, '{0,80,18,9648}', '/npyBMCzTbjtUZmQ1imOygiw3AaG.jpg', '/hib8MpBPU7GdluS38htXCF4uw0c.jpg', '1999-09-20', '1999', 551, 'New York : Unité spéciale', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bceb30c9-bbd6-4d10-adff-22efd6ccbc63', 7445, '{0,18,53,10752}', '/sbvhc5t2fsfjUsebKAgXwP7cjfo.jpg', '/xERofiEyzGekTNi3oIppQvdLDZB.jpg', '2009-12-02', '2009', 105, 'Brothers', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('972811f2-a3ea-4d69-987f-600913b76d83', 1063879, '{0,27}', '/3IIUFhjZuz4dsE6M7rCpLeDyAFB.jpg', '/k0ucFBBgSDTXYU8fVHXJyjAuIIe.jpg', '2023-12-27', '2023', 106, 'Vermines', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('86e91f1a-123e-4fa3-86ef-613fccda48a7', 126308, '{0,18,10768}', '/7O4iVfOMQmdCSxhOg1WnzG1AgYT.jpg', '/5zmiBoMzeeVdQ62no55JOJMY498.jpg', '2024-02-27', '2024', 10, 'Shōgun', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('781c10ad-796d-4c03-9ada-cde738d69675', 929590, '{0,10752,28,18}', '/4V06xpCUesnzXvkQav1q3RRlwxh.jpg', '/en3GU5uGkKaYmSyetHV4csHHiH3.jpg', '2024-04-10', '2024', 109, 'Civil War', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b1b9e1ae-9f39-475a-b014-303f466d0d60', 746036, '{0,28,35}', '/4ImqV3s7SkdcgnuoZ6yKBfDV7wW.jpg', '/H5HjE7Xb9N09rbWn1zBfxgI8uz.jpg', '2024-04-24', '2024', 126, 'The Fall Guy', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('98763f76-6163-4911-b689-3f43f012d313', 385687, '{0,28,80,53}', '/piYNJlLvSlXYnXh6ZoKzhPdrMfV.jpg', '/4XM8DUTQb3lhLemJC51Jx4a2EuA.jpg', '2023-05-17', '2023', 141, 'Fast & Furious X', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('4a4550ed-d2eb-4143-bcfd-b27a8a452cf2', 7451, '{0,28,12,53,80}', '/o7GKHohhZ124UkTxP7mHyDnPpK6.jpg', '/qwK9soQmmJ7kRdjLZVXblw3g7AQ.jpg', '2002-08-09', '2002', 124, 'xXx', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7888ecd6-90aa-4b0b-a587-18306aac3892', 206647, '{0,28,12,53}', '/oFoq0vlnlCyKsaNo4UW5tyO8Tkl.jpg', '/8lBViysvNJBPkl6zG1LVAaW3qhj.jpg', '2015-10-26', '2015', 148, 'Spectre', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ae2e9aaf-f936-4562-9dce-26c17a355a81', 940721, '{0,878,27,28}', '/tBzOqSc51CiUeOlxW2unvYVBU8v.jpg', '/fY3lD0jM5AoHJMunjGWqJ0hRteI.jpg', '2023-11-03', '2023', 125, 'Godzilla Minus One', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b74a6fcc-2214-4a22-aa33-3fe39d26978c', 9804, '{0,12,28,878}', '/kx6ovgUw6xJFsScfNZvQIU6p52T.jpg', '/vHLyDk0uRb72xFeQjU1KJZ3g7hQ.jpg', '1995-07-28', '1995', 136, 'Waterworld', 'movie', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('870f8f0c-e9b8-4157-aa9d-7f2faa4026c9', 320, '{0,80,53}', '/6Vwc5vgioIXUhLQGAqmp3uDDKJJ.jpg', '/2tsmTWJsR81cwwZHLE85vPxSCoR.jpg', '2002-05-24', '2002', 119, 'Insomnia', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('dcf87af5-7f54-450e-bf43-547284c84a80', 360784, '{0,53,27}', '/w3gi01qo5OofthvPeLT7PD6QVbs.jpg', '/iXRxlRsBr0mGr9Wx3OPbVdbUJzl.jpg', '2015-09-15', '2015', 83, 'Hidden', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('91e85dd7-4da2-489f-a088-d2d17d223d6f', 533535, '{0,28,35,878}', '/5DM2wMt9nZUDnbE0zuGt2joigYd.jpg', '/9l1eZiJHmhr5jIlthMdJN5WYoff.jpg', '2024-07-24', '2024', 128, 'Deadpool & Wolverine', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('daa28600-4fe9-4ceb-a2a6-f5253ff30354', 49018, '{0,27,53}', '/mmyqYYJTMtCBlUNr0JAp5R59X8H.jpg', '/bylGn5OC2h3BWfGLYFtIcxlYxLy.jpg', '2011-03-31', '2011', 102, 'Insidious', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2961b9e4-db3b-4105-8429-bec7197f63ad', 10191, '{0,14,12,16,10751}', '/zXl41G6QVSAHzNNKsDUG9TOPJin.jpg', '/59vDC1BuEQvti24OMr0ZvtAK6R1.jpg', '2010-03-18', '2010', 86, 'Dragons', 'movie', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('eb05abfe-089a-4186-9967-096374ceb542', 50646, '{0,35,18,10749}', '/wYQ8LLOGoxqVtRTdKPmi1J59FWo.jpg', '/9J8dyrMfr0oK9awMjufLDY5L8v0.jpg', '2011-07-29', '2011', 118, 'Crazy, Stupid, Love.', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('73fdd284-7558-4a21-b677-5fbb0cd0102c', 1001311, '{0,28,18,27,53}', '/5LU8QqHOiWTELV7XzyRnpAJ2MHa.jpg', '/iwkWvcXcP8M4r9HLglhVEhgGyVu.jpg', '2024-06-04', '2024', 104, 'Sous la Seine', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9409228f-faab-4988-9912-eeddce24136b', 945961, '{0,27,878,28}', '/xmDypImhT0OOloQIj3JLslUrBw8.jpg', '/9SSEUrSqhljBMzRe4aBTh17rUaC.jpg', '2024-08-13', '2024', 119, 'Alien: Romulus', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1c46ed20-48d8-4f65-8617-074e673bf909', 10201, '{0,35,10749}', '/bLT6DdHf1LWSVIViBufpkSUOnEy.jpg', '/kueBMnoZVmagMfP6ortvkOVuWtI.jpg', '2008-12-09', '2008', 104, 'Yes Man', 'movie', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('e2917c00-2247-488c-b605-79be223ef80f', 236235, '{0,35,18,80}', '/wPBFN3r39ABf9amaCD0PB21TAlg.jpg', '/PqIW7PA74YBURz5slZkxc0K5Pl.jpg', '2024-03-07', '2024', 8, 'The Gentlemen', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b52ae66b-8cc9-4f86-a95f-eab1254fcfee', 451751, '{0,53,18,10402}', '/hM9dOYWPh5pcQ3ruFXDayXsqgHw.jpg', '/5otnOEk546lpoBza4otdmaVzKcL.jpg', '2017-10-13', '2017', 111, 'American Satan', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('124507a0-6cc6-4e7a-a5e9-ff2778603bd1', 136311, '{0,35}', '/fcSYTzvh8DpGAILjZKNdipccQZ5.jpg', '/hI9z1UuNhBthvkm3iJ8m3zv43Pf.jpg', '2023-01-26', '2023', 22, 'Shrinking', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9a69759e-2d0b-4544-a3e1-93b337d53afa', 131041, '{0,16,10759,18}', '/9aICTTHECyRwB2pBHm3rAj1SgGg.jpg', '/seMRyWVwIVBWbC9xaMzDMZJ8fUH.jpg', '2022-10-09', '2022', 38, 'Blue Lock', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('022d6b0b-3771-41f9-b3d2-153529c22eb7', 154526, '{0,16,10759}', '/vMnd8iqPwOOoIZ9a2RcqAHppDoq.jpg', '/qEqLerjgjX9BL1fsqRc4MoWzqIU.jpg', '2023-10-02', '2023', 24, 'MF GHOST', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('23f81d1a-5431-4b85-bcfb-15ab0a7877c8', 73245, '{0,28,16,14,12}', '/AiLSarzGTF2r5XEIvn1lLtlOahq.jpg', '/rUYPBaQqtpt2IdvzHdIrsYn29mk.jpg', '2010-12-04', '2010', 94, 'Bleach : Hell Verse', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9b795850-95df-4c9a-b4f9-b742ee06577e', 17165, '{0,28,16,14,18}', '/q0fsnf6rJ6RCTFR09erNvvjCXMs.jpg', '/4RnhZgXAwvPR1P3MYj3rLfW3kts.jpg', '2008-12-13', '2008', 94, 'Bleach : Fade to Black', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('777b7516-5b1f-49b6-acd0-2f31bd923936', 17101, '{0,28,16,53}', '/A0zUWBtPIt7ppzmYzdaPNed2B6X.jpg', '/vmuvk8DSUyk6IUyrvgyxZAAITmP.jpg', '2007-12-22', '2007', 95, 'Bleach : The DiamondDust Rebellion', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d36e3216-7794-4079-9c0e-c81b91c80483', 15575, '{0,14,16,878}', '/u27PwYQNJGfcwTqwq4wJaCeeUvy.jpg', '/5VhdliaIS5Y4QQRDT0jpxfJQdfM.jpg', '2006-12-16', '2006', 87, 'Bleach : Memories of Nobody', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3e8a769c-a440-4883-8f9d-bc22c8aeadb9', 48891, '{0,35,80}', '/qYjAdP0n62dJ9WLl8WGeQj7CGPH.jpg', '/wyspZaGs7CXceV3Ct7NJhcKNDkn.jpg', '2013-09-17', '2013', 152, 'Brooklyn Nine-Nine', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('01b35d04-9080-41e4-8bbc-2d7d3d9dfbdf', 125988, '{0,10765,18}', '/dxktdopZCOlff10ocoEdn2TXBzl.jpg', '/n5FPNMJ0eRoiQrKGfUQQRAZeaxg.jpg', '2023-05-04', '2023', 20, 'Silo', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('de55b297-e8d7-4fcc-99a3-97c4730a0ff4', 211684, '{0,10765,10759,18}', '/kdM24KINoAVK9wjCtDJCkdffEpc.jpg', '/vanNED66ty4Kc45IMcGI7edQBwH.jpg', '2023-09-10', '2023', 12, 'The Walking Dead : Daryl Dixon', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('94207933-6501-462a-8e9b-5a3808a384d0', 1420, '{0,35}', '/8oCqMlKKomCArVtyOjRzMN6g40Z.jpg', '/7v8kOF9xXdNboYQHucBcAAVz9Ek.jpg', '2011-09-20', '2011', 146, 'New Girl', 'tv', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('e20f526f-986b-434d-967d-db7f992be764', 106379, '{0,10765,10759,18}', '/AnsSKR9LuK0T9bAOcPVA3PUvyWj.jpg', '/5C3UcPKVcg3rwGBYPE18wXpZMw8.jpg', '2024-04-10', '2024', 8, 'Fallout', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('90f32f6f-1c54-4949-962c-5cb89306a1c2', 15097, '{0,35}', '/xaTVWUrPbGM4SgrLOaaWLeUEafI.jpg', '/jMT2nS6ou3xwzp1XX40v8rJKl7U.jpg', '1994-03-09', '1994', 99, 'La cité de la peur', 'movie', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('fe843c51-a469-4fe5-91a6-ba9965c84942', 1138194, '{0,27,53}', '/61YrcFVQPO4h15SJiLe0vjiWbjk.jpg', '/ag66gJCiZ06q1GSJuQlhGLi3Udx.jpg', '2024-10-31', '2024', 110, 'Heretic', 'movie', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('ca572052-bd02-4bec-b602-06dd9ec83588', 1138194, '{0,27,53}', '/61YrcFVQPO4h15SJiLe0vjiWbjk.jpg', '/ag66gJCiZ06q1GSJuQlhGLi3Udx.jpg', '2024-10-31', '2024', 110, 'Heretic', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8d94a57c-4079-46a6-b8de-a863cd53a6a4', 5768, '{0,10765,18}', '/fSWXCeTS80yR1vHTLVRRagyQmjQ.jpg', '/sfOqq7YR75DOdUS3SbaK9fkmO01.jpg', '2021-03-25', '2021', 8, 'Paradise City', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('becdd676-078d-4c4b-95b1-89a353ed14de', 9323, '{0,28,16,878}', '/f4RuGi7MO7GcEtnEpQO4wqaBBUk.jpg', '/gTRXgigmgKpeJjW07iq686HZyBD.jpg', '1995-11-18', '1995', 82, 'Ghost in the Shell', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('37197aa1-d322-438d-a871-654874bbf6cf', 426063, '{0,14,27}', '/8qCijVB6gYi25UbsEPuutbBIfD.jpg', '/h7r6LZ32dgLwtwSW3CxoWIYD9pr.jpg', '2024-12-25', '2024', 133, 'Nosferatu', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b527747b-c5cc-44d5-879a-711f3c0d1c1b', 60715, '{0,35,18}', '/alaRcixeZ1lLVb5NuvmJnAsfbyA.jpg', '/fcIlUK2WJYyqI9AvDWDyYeElZyV.jpg', '2011-08-29', '2011', 88, 'Bref', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a749e3d3-453d-4677-b8af-a1ca9adad623', 586810, '{0,16,878,28,9648}', '/JEPbbxkFtRASU1WzeQGRvKqjuO.jpg', '/e2w2GtS1IBy9wgmfGg6726XlkK.jpg', '2023-11-22', '2023', 85, 'Mars Express', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('89f8974f-e368-4d99-98c7-899c68893657', 776797, '{0,27,53}', '/bC34TLKRjg7OHhADXhUaSORaARf.jpg', '/xm8h3tkzYL3cCy4o3luNEe0WVyE.jpg', '2021-01-22', '2021', 100, 'The Sadness', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('eb98322e-c4f6-42ce-9ae4-74c914153c8f', 1005331, '{0,53,28}', '/tqudmLEboBKhAIpusqZKio58VE0.jpg', '/6RcBQkC2PZJwwbFugqzgvN3moYL.jpg', '2024-12-05', '2024', 120, 'Carry-On', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c387e20e-f8a6-42df-8602-2b66f3e13c9b', 1114513, '{0,27,53}', '/ueffCcq485jkEQMY30yCDmGEksQ.jpg', '/1fL2S8LKxCVE9KoPRBXeagmBtex.jpg', '2024-09-11', '2024', 110, 'Speak No Evil', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2ed88f60-424f-4b53-94f9-e36eb31fe604', 1114513, '{0,27,53}', '/ueffCcq485jkEQMY30yCDmGEksQ.jpg', '/1fL2S8LKxCVE9KoPRBXeagmBtex.jpg', '2024-09-11', '2024', 110, 'Speak No Evil', 'movie', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('8bdb53ab-d0c7-4f26-b6cc-5553299b6341', 1824, '{0,35,10749}', '/4Odr5SZBvY6gMQaxmlg72nqVHhI.jpg', '/vUuMauTTlsp7LB9dN9phXA0i9Nd.jpg', '2004-02-13', '2004', 99, 'Amour & Amnésie', 'movie', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('8690f4d4-f94c-47eb-9b4c-afdbd2a97203', 60670, '{0,80,9648,53}', '/l9SQFzGWvTuP3WszpY8HeDYoNqd.jpg', '/3VFQo8gTKXDUx3Jy6xw022KBRA6.jpg', '2000-09-27', '2000', 105, 'Les Rivières pourpres', 'movie', '1e00d23c-47e4-465e-8dae-8650a9440c29'),
+	('8657dd1c-cd17-45f3-a21d-0025961f2de8', 1420, '{0,35}', '/8oCqMlKKomCArVtyOjRzMN6g40Z.jpg', '/vOFctaslez1TrMTkdiqgo9YUf4e.jpg', '2011-09-20', '2011', 146, 'New Girl', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b54d0e22-951f-4452-8db5-18ba09c25334', 10191, '{0,14,12,16,10751}', '/ygGmAO60t8GyqUo9xYeYxSZAR3b.jpg', '/59vDC1BuEQvti24OMr0ZvtAK6R1.jpg', '2010-03-18', '2010', 98, 'How to Train Your Dragon', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c922d074-8675-470b-bd54-e803d058bcfd', 202555, '{0,18,80}', '/9lLuhV703HGCbnz6FxnqCwIwzAZ.jpg', '/qHCpG49qxs4owLgmhh0T62ErUZv.jpg', '2025-03-04', '2025', 9, 'Daredevil: Born Again', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d384df17-2ab8-4363-bc7e-c755e04dd601', 574475, '{0,27,9648}', '/6WxhEvFsauuACfv8HyoVX6mZKFj.jpg', '/uIpJPDNFoeX0TVml9smPrs9KUVx.jpg', '2025-05-14', '2025', 110, 'Final Destination Bloodlines', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('4693ffd9-f2bc-4735-953e-0480f9cca24e', 9532, '{0,27}', '/1mXhlQMnlfvJ2frxTjZSQNnA9Vp.jpg', '/7isarjYDEKZ5t1CgcvbuqEUby8P.jpg', '2000-03-17', '2000', 98, 'Final Destination', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7540f242-c69d-4a2b-b519-57f5f2282f26', 9358, '{0,27,9648}', '/dg6Tf98InieJSClSKQJTQevYWmB.jpg', '/tKnmfO5lAyu8hpTZMyMaI4lhZpJ.jpg', '2003-01-31', '2003', 90, 'Final Destination 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('edd2b830-0590-46d4-84a7-17bcd02a8d2e', 157239, '{0,10765,18}', '/yueXS3q8BtoWekcHOATFHicLl3e.jpg', '/25g7mthXoJFcNZhAKz0evk17Bsx.jpg', '2025-08-12', '2025', 8, 'Alien: Earth', 'tv', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('253288b2-29b0-4b1d-8a02-e1f923a40e14', 744, '{0,28,18}', '/xUuHj3CgmZQ9P2cMaqQs4J0d4Zc.jpg', '/jILeJ60zPpIjjJHGSmIeY4eO30t.jpg', '1986-05-16', '1986', 110, 'Top Gun', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0cab90c2-449a-4b0b-9d34-9e8020bd6e9e', 954, '{0,12,28,53}', '/l5uxY5m5OInWpcExIpKG6AR3rgL.jpg', '/sra8XnL96OyLHENcglmZJg6HA8z.jpg', '1996-05-22', '1996', 110, 'Mission: Impossible', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6d9b0cc2-5b56-41ec-b1e4-c815a74a5b33', 348, '{0,27,878}', '/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg', '/AmR3JG1VQVxU8TfAvljUhfSFUOx.jpg', '1979-05-25', '1979', 117, 'Alien', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a2514871-febe-408e-bd24-0f27d6ac3c78', 679, '{0,28,53,878}', '/r1x5JGpyqZU8PYhbs4UcrO1Xb6x.jpg', '/jMBpJFRtrtIXymer93XLavPwI3P.jpg', '1986-07-18', '1986', 137, 'Aliens', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('71e80049-e78f-49fd-b016-afa308dfc4bd', 245891, '{0,28,53}', '/fZPSd91yGE9fCcCe6OoQr6E3Bev.jpg', '/7dzngS8pLkGJpyeskCFcjPO9qLF.jpg', '2014-10-22', '2014', 101, 'John Wick', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('61b93887-1d2d-49f6-af92-e471061a963c', 346364, '{0,27,53}', '/9E2y5Q7WlCVNEhP5GiVTjhEhx1o.jpg', '/rAQcPrEaPzDRVNX7XX5TWyxCGFN.jpg', '2017-09-06', '2017', 135, 'It', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f2feebff-96db-4a23-9b9d-178a5becaf55', 474350, '{0,27,53}', '/zfE0R94v1E8cuKAerbskfD3VfUt.jpg', '/6LVSrgm83UYWlrLTCVGmWhFKYO0.jpg', '2019-09-04', '2019', 169, 'It Chapter Two', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f6cc0e95-b119-4cb3-972b-181869e00e06', 475557, '{0,80,53,18}', '/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg', '/gZWl93sf8AxavYpVT1Un6EF3oCj.jpg', '2019-10-01', '2019', 122, 'Joker', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('574f8ab5-f8f0-42c2-a6ad-c950d4b9fa03', 209112, '{0,28,12,14}', '/5UsK3grJvtQrtzEgqNlDljJW96w.jpg', '/doiUtOHzcxXFl0GVQ2n8Ay6Pirx.jpg', '2016-03-23', '2016', 152, 'Batman v Superman: Dawn of Justice', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7747d5aa-49d2-45b0-b3c9-e7ca62ea6e2b', 639720, '{0,35,14,10751}', '/xbKFv4KF3sVYuWKllLlwWDmuZP7.jpg', '/nxxCPRGTzxUH8SFMrIsvMmdxHti.jpg', '2024-05-08', '2024', 104, 'IF', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('193bf056-b8a0-4e35-92ed-72792101ee3c', 920, '{0,16,12,35,10751}', '/2Touk3m5gzsqr1VsvxypdyHY5ci.jpg', '/sd4xN5xi8tKRPrJOWwNiZEile7f.jpg', '2006-06-08', '2006', 117, 'Cars', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('75be2119-a896-4e8f-94c6-ac8c88c050fd', 396535, '{0,27,53,28,12}', '/vNVFt6dtcqnI7hqa6LFBUibuFiw.jpg', '/fVpFOcQyHJM2di9upgSIwWD5wac.jpg', '2016-07-20', '2016', 118, 'Train to Busan', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('408873bf-9d08-456f-a6d3-d406d5bc8867', 493529, '{0,12,14,35}', '/v7UF7ypAqjsFZFdjksjQ7IUpXdn.jpg', '/oblUNeHlwV3VsjB5ITMlco5ZSOF.jpg', '2023-03-23', '2023', 134, 'Dungeons & Dragons: Honor Among Thieves', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('fc7e9505-2433-4383-b5cf-2cd65d15db1a', 438631, '{0,878,12}', '/d5NXSklXo0qyIYkgV94XAgMIckC.jpg', '/wYMbnrdRCREjNLwFlG5SLWzBjui.jpg', '2021-09-15', '2021', 155, 'Dune', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0b59993c-cfc6-4ebb-9140-0ba2b54b76f0', 193756, '{0,10752,28,18}', '/zaBIrloyhGK7iNTZMb3f9SARsl8.jpg', '/g6QPI70Kzt91Q0lGyLfsVqZAwlJ.jpg', '2013-12-24', '2013', 121, 'Lone Survivor', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d9bd9d1d-3aa8-4d6c-b138-0dbf1e7c5b0b', 786892, '{0,28,878,12}', '/iADOJ8Zymht2JPMoy3R7xceZprc.jpg', '/wNAhuOZ3Zf84jCIlrcI6JhgmY5q.jpg', '2024-05-22', '2024', 149, 'Furiosa: A Mad Max Saga', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('027e6d2f-fee3-4d6d-83fa-2180af788bbc', 315011, '{0,28,878,27}', '/jPNShaWZMpVF0iQ7j1dvTuZLD20.jpg', '/tb0uo01w2kDHiQwTszsLlSusAm4.jpg', '2016-07-29', '2016', 120, 'Shin Godzilla', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d8144b1d-1b2e-4360-adff-aa6517d7a103', 373571, '{0,878,28}', '/mzOHg7Q5q9yUmY0b9Esu8Qe6Nnm.jpg', '/uovH5k4BAEPqXqxgwVrTtqH169g.jpg', '2019-05-29', '2019', 132, 'Godzilla: King of the Monsters', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c2c7a5c2-6b3f-4bf5-a35f-16647f30371e', 671, '{0,12,14}', '/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg', '/bfh9Z3Ghz4FOJAfLOAhmc3ccnHU.jpg', '2001-11-16', '2001', 152, 'Harry Potter and the Philosopher''s Stone', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('dca1876c-fdcb-4da3-9cf8-f9e80c6d4ab0', 675, '{0,12,14}', '/5aOyriWkPec0zUDxmHFP9qMmBaj.jpg', '/82a7AGF081PzFfoM8GAVGMvZNYK.jpg', '2007-07-08', '2007', 138, 'Harry Potter and the Order of the Phoenix', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bf869bc3-adeb-4999-a0a1-11132bae9454', 672, '{0,12,14}', '/sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg', '/xACx8htL9Ubz1qGe0gU2ggHonxV.jpg', '2002-11-13', '2002', 161, 'Harry Potter and the Chamber of Secrets', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('43d82e49-9ea9-4d91-9936-ef93a99ec4ef', 674, '{0,12,14}', '/fECBtHlr0RB3foNHDiCBXeg9Bv9.jpg', '/8f9dnOtpArDrOMEylpSN9Sc6fuz.jpg', '2005-11-16', '2005', 157, 'Harry Potter and the Goblet of Fire', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('45eeb851-ced5-45ac-a54e-3aed1bb7adcd', 767, '{0,12,14}', '/z7uo9zmQdQwU5ZJHFpv2Upl30i1.jpg', '/urDWNffjwmNi5IQaezw9GwqkUXa.jpg', '2009-07-15', '2009', 153, 'Harry Potter and the Half-Blood Prince', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c7c90541-1718-4044-957f-d9f57e09ca4a', 673, '{0,12,14}', '/aWxwnYoe8p2d2fcxOqtvAtJ72Rw.jpg', '/vbk5CfaAHOjQPSAcYm6AoRRz2Af.jpg', '2004-05-31', '2004', 141, 'Harry Potter and the Prisoner of Azkaban', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c0a4ade0-97c1-4785-b63a-a4d77827f683', 12444, '{0,12,14}', '/iGoXIpQb7Pot00EEdwpwPajheZ5.jpg', '/AqLcLsGGTzAjm3pCCq0CZCQrp6m.jpg', '2010-11-17', '2010', 146, 'Harry Potter and the Deathly Hallows: Part 1', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e2f3aa21-73b3-428b-8b0e-ea8485ff7ce3', 12445, '{0,14,12}', '/c54HpQmuwXjHq2C9wmoACjxoom3.jpg', '/n5A7brJCjejceZmHyujwUTVgQNC.jpg', '2011-07-12', '2011', 130, 'Harry Potter and the Deathly Hallows: Part 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d46967af-78fd-4e24-9771-1afb18965f7c', 695721, '{0,18,878,12,28}', '/lrkOYL5GBTFW9cgs9RlojxAcZZF.jpg', '/yfQXs8yXplCVXTLi9mxgvRf4ymE.jpg', '2023-11-15', '2023', 157, 'The Hunger Games: The Ballad of Songbirds & Snakes', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5ecd40c9-fd91-4deb-aece-6cf6b3182c5f', 131631, '{0,878,12,53}', '/2hTPkBiXoMmrdtYgHtB9WU5dg80.jpg', '/qvo0g1yeQnYoCcXctSHI4mkoFMc.jpg', '2014-11-19', '2014', 123, 'The Hunger Games: Mockingjay - Part 1', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('98980561-ba97-4ea1-97d9-7098205a2dea', 70160, '{0,878,12,28}', '/yXCbOiVDCxO71zI7cuwBRXdftq8.jpg', '/p2i9vE7mu2ZTmwYbEiimgHeKpq5.jpg', '2012-03-12', '2012', 142, 'The Hunger Games', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('214956d8-0feb-46ac-8954-839bbc696804', 101299, '{0,12,28,878}', '/qdXXEFGuLLfMWa1DGEkWFUo8Zwd.jpg', '/14FK4FjArsTdpmbqwlROrWA4Npl.jpg', '2013-11-15', '2013', 146, 'The Hunger Games: Catching Fire', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0ec458f6-00db-47d6-830d-3404c38a5747', 24, '{0,28,80}', '/v7TaX8kXMXs5yFFGR41guUDNcnB.jpg', '/p3WiF8qYS7Qp17YRYgrFh7gf9P9.jpg', '2003-10-10', '2003', 111, 'Kill Bill: Vol. 1', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('02bda34d-d735-4b5f-a7fd-c04bb60ce5cf', 680, '{0,53,80,35,18}', '/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg', '/suaEOtk1N1sgg2MTM7oZd2cfVp3.jpg', '1994-09-10', '1994', 154, 'Pulp Fiction', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('327aa983-466b-4d51-a002-c3f0732d5653', 19995, '{0,28,12,14,878}', '/gKY6q7SjCkAU6FqvqWybDYgUKIF.jpg', '/vL5LR6WdxWPjLPFRLe133jXWsh5.jpg', '2009-12-15', '2009', 162, 'Avatar', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a1f06cb8-77d7-43e2-a1e3-532b2a56c37b', 857, '{0,18,36,10752}', '/uqx37cS8cpHg8U35f9U5IBlrCV3.jpg', '/rW2xRFlJRbTnBJlQTSjQmjevIwb.jpg', '1998-07-24', '1998', 169, 'Saving Private Ryan', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ffbfaca7-b7ec-4a85-abac-c6632b926fba', 82507, '{0,27,53,9648}', '/nzx10sca3arCeYBAomHan4Q6wa1.jpg', '/jovIEk4cAxWmA2dBcPrfhn3jzYN.jpg', '2012-03-29', '2012', 110, 'Sinister', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0808cc77-15c8-41ad-8cfa-b413ced0a353', 565, '{0,27,9648}', '/AeRpUynJKDpJveklBJipOYrVxCS.jpg', '/6TBaTZCq0FdjrXcj9mKdHGpcr2D.jpg', '2002-10-18', '2002', 115, 'The Ring', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8d053dd8-1814-4516-92ec-ef5fce798bea', 1933, '{0,27,9648,53}', '/p8g1vlTvpM6nr2hMMiZ1fUlKF0D.jpg', '/y5hbHJbERDFurustaqcVamN84Y0.jpg', '2001-08-02', '2001', 104, 'The Others', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c1dcfb27-680c-439c-9381-be90213032fc', 37165, '{0,35,18}', '/vuza0WqY239yBXOadKlGwJsZJFE.jpg', '/rmiG2uwcNoGFmBKMoa1pIcf514L.jpg', '1998-06-04', '1998', 103, 'The Truman Show', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('cb01ef72-3df3-4451-af8e-412ac6b52c76', 68718, '{0,18,37}', '/7oWY8VDWW7thTzWh3OKYRkWUlD5.jpg', '/n2eUT4zQA2yYcKOgAFidgOyiFoH.jpg', '2012-12-25', '2012', 165, 'Django Unchained', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('027206ab-6844-4fbb-89f8-c0382bf17af3', 807, '{0,80,9648,53}', '/191nKfP0ehp3uIvWqgPbFmI4lv9.jpg', '/p1PLSI5Nw2krGxD7X4ulul1tDAk.jpg', '1995-09-22', '1995', 127, 'Se7en', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d7c23c8b-21f6-4185-9500-1c5930d1e127', 6479, '{0,18,878,53}', '/iPDkaSdKk2jRLTM65UOEoKtsIZ8.jpg', '/qg0OLFasb1kNrAhKjqh4zTW37pS.jpg', '2007-12-12', '2007', 101, 'I Am Legend', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5450f076-7d36-4997-8fd4-5dd368522dbc', 458156, '{0,28,53,80}', '/ziEuG1essDuWuC5lpWUaw1uXY2O.jpg', '/vVpEOvdxVBP2aV166j5Xlvb5Cdc.jpg', '2019-05-15', '2019', 131, 'John Wick: Chapter 3 - Parabellum', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8656a98a-cb70-406d-8888-fafb2ace457a', 745, '{0,9648,53,18}', '/vOyfUXNFSnaTk7Vk5AjpsKTUWsu.jpg', '/6TjllWT3cGrPFyqDXurVZ3L8bBi.jpg', '1999-08-06', '1999', 107, 'The Sixth Sense', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1fa8d7e5-6c71-4617-818e-96ca45ec9606', 106646, '{0,80,18,35}', '/kW9LmvYHAaS9iA0tHmZVq8hQYoq.jpg', '/7Nwnmyzrtd0FkcRyPqmdzTPppQa.jpg', '2013-12-25', '2013', 180, 'The Wolf of Wall Street', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('685868b3-9609-4749-9b74-7e9dbdf98732', 91586, '{0,27,53}', '/w5JjiB3O1CLDXbTJe1QpU5RHmlU.jpg', '/i9oyhCYxIYH2082J0Rc3a3jQjRB.jpg', '2013-09-12', '2013', 106, 'Insidious: Chapter 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('af3785fd-eaaa-4250-b174-053e35da5102', 823464, '{0,28,12,878}', '/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg', '/lLh39Th5plbrQgbQ4zyIULsd0Pp.jpg', '2024-03-27', '2024', 115, 'Godzilla x Kong: The New Empire', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c3b85063-9c17-417a-b2d3-c0d298aae2f5', 603692, '{0,28,53,80}', '/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg', '/7I6VUdPj6tQECNHdviJkUHD2u89.jpg', '2023-03-22', '2023', 170, 'John Wick: Chapter 4', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1288c7e1-50c3-4e9a-98c2-481e08463ada', 425, '{0,16,35,10751,12}', '/gLhHHZUzeseRXShoDyC4VqLgsNv.jpg', '/8pwIhymsxfAVjrAE7syDjQULn37.jpg', '2002-03-14', '2002', 81, 'Ice Age', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0497828f-2dcc-40c0-9936-dc5d1b831ad8', 2654, '{0,27,9648}', '/msh4tEUzbnEqlHcFOUH4O0Zti8r.jpg', '/y5cWfEOlJtWCnIHutE574FANhBm.jpg', '1995-02-03', '1995', 95, 'In the Mouth of Madness', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d792ca42-b1dc-4ec2-8e77-2c8c64be7a9c', 1954, '{0,878,53}', '/ea5iv7TWMh18fOKoRGgmtcg85Gx.jpg', '/yriYPLqyFqPW0QXaegT1KmWXk9a.jpg', '2004-01-17', '2004', 113, 'The Butterfly Effect', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b35c712d-e4eb-4455-8e91-9bd5f724a983', 321612, '{0,10751,14,10749}', '/hKegSKIDep2ewJWPUQD7u0KqFIp.jpg', '/uU1Mt4JWhDvl4vKb3AfxNsorkoM.jpg', '2017-03-16', '2017', 129, 'Beauty and the Beast', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('cb17aa62-8672-4952-8f41-8b93ce1a3c30', 855, '{0,28,10752,36}', '/imGygQbmuc7gC1JZiAVhJLsUWXq.jpg', '/7jaNOECZG8uS1tlq69HsY5xY8P9.jpg', '2001-12-28', '2001', 145, 'Black Hawk Down', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a7a23a9f-da27-485e-9c14-a966d802d9d0', 11, '{0,12,28,878}', '/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg', '/2w4xG178RpB4MDAIfTkqAuSJzec.jpg', '1977-05-25', '1977', 121, 'Star Wars', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d855155a-a8da-4d3e-bbe6-49453732b06a', 74, '{0,12,53,878}', '/6Biy7R9LfumYshur3YKhpj56MpB.jpg', '/bInicBgSHfQiWLbnRT5jxw9Grvm.jpg', '2005-06-28', '2005', 117, 'War of the Worlds', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6c18ac2e-8cc2-48f5-9cc5-77928d8e25e3', 497, '{0,14,18,80}', '/8VG8fDNiy50H4FedGwdSVUPoaJe.jpg', '/vxJ08SvwomfKbpboCWynC3uqUg4.jpg', '1999-12-10', '1999', 189, 'The Green Mile', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('24e7d75d-5960-4ebb-b50a-025ce71c6118', 424, '{0,18,36,10752}', '/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg', '/zb6fM1CX41D9rF9hdgclu0peUmy.jpg', '1993-12-15', '1993', 195, 'Schindler''s List', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a3aa42d9-f384-459b-a3f6-da9a46ac4aa1', 393, '{0,28,80,53}', '/2yhg0mZQMhDyvUQ4rG1IZ4oIA8L.jpg', '/pgG6tzJzC8mjGqhaT8IWwEk00xf.jpg', '2004-04-16', '2004', 136, 'Kill Bill: Vol. 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d8f61e3e-1cc0-4d24-a7e1-8304b0b32ded', 1008042, '{0,27}', '/kdPMUMJzyYAc4roD52qavX0nLIC.jpg', '/46Os8U0DEPmI0OnvKDxucl6SLVZ.jpg', '2023-07-26', '2023', 95, 'Talk to Me', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1b7c885c-9cd5-4fdf-bee2-f5be680774fb', 1593, '{0,28,12,35,10751,14}', '/pDsAAYf6Zn0yiAGJ6lYGs6hoZ4E.jpg', '/1ZVlzOBYCggLzvVYHK7Im6LohjC.jpg', '2006-12-20', '2006', 108, 'Night at the Museum', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('920aa4ee-0cc5-4e6b-b505-759a30a42d05', 181533, '{0,12,35,14,10751}', '/xwgy305K6qDs3D20xUO4OZu1HPY.jpg', '/taC97dzVlFBl0vWzmp6PCBWOQtM.jpg', '2014-12-17', '2014', 98, 'Night at the Museum: Secret of the Tomb', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0680c7af-5849-4f79-8732-ae0418c93caa', 18360, '{0,12,14,28,35,10751}', '/l9yAQn6TyrA3gv5xZZkiMMoZsiw.jpg', '/kwTfPnP9f8ZyXmSniDcwonJWixY.jpg', '2009-05-20', '2009', 105, 'Night at the Museum: Battle of the Smithsonian', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5db12c93-5e1f-4c81-b879-f3c9ea34c3ae', 119450, '{0,878,28,18,53}', '/kScdQEwS9jPEdnO23XjGAtaoRcT.jpg', '/zlU8BIkgY7E6SMfD3USTWC6bchL.jpg', '2014-07-08', '2014', 130, 'Dawn of the Planet of the Apes', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c91746e1-3a8a-491b-b96f-66df8e67deb7', 653346, '{0,878,12,28,18,53}', '/gKkl37BQuKTanygYQG1pyYgLVgf.jpg', '/fypydCipcWDKDTTCoPucBsdGYXW.jpg', '2024-05-08', '2024', 145, 'Kingdom of the Planet of the Apes', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('be825f5b-93b5-4ee2-8aaa-d3ffe8af2f22', 61791, '{0,53,28,18,878}', '/cjLsuP75UDlRdJVMXzXg3TJ4umX.jpg', '/dENLz9Np9EV5Ro8UIBhbKC8BmSS.jpg', '2011-08-03', '2011', 105, 'Rise of the Planet of the Apes', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('dc590705-b26f-4cef-93b7-5b7b32bdb7f0', 281338, '{0,18,878,10752}', '/mMA1qhBFgZX8O36qPPTC016kQl1.jpg', '/ulMscezy9YX0bhknvJbZoUgQxO5.jpg', '2017-07-11', '2017', 140, 'War for the Planet of the Apes', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('72172a56-14d5-43b8-946a-78d3dc9e3845', 14160, '{0,16,35,10751,12}', '/mFvoEwSfLqbcWwFsDjQebn9bzFe.jpg', '/hGGC9gKo7CFE3fW07RA587e5kol.jpg', '2009-05-28', '2009', 96, 'Up', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8480028b-d650-41bd-b035-e01bd7bc79d0', 906126, '{0,18,36}', '/2e853FDVSIso600RqAMunPxiZjq.jpg', '/md848EEPm3dHZOqwGxxTVwH2vu5.jpg', '2023-12-15', '2023', 144, 'Society of the Snow', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5b91fa82-3625-4c88-88d1-524c325f7483', 4935, '{0,14,16,12}', '/TkTPELv4kC3u1lkloush8skOjE.jpg', '/nv5wwZou159v5OC61i4ElR7OqyY.jpg', '2004-09-09', '2004', 119, 'Howl''s Moving Castle', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('215a39bb-fcbb-46ed-8e37-ec883b069d38', 616, '{0,18,28,10752}', '/lsasOSgYI85EHygtT5SvcxtZVYT.jpg', '/lm15lu2jt3I3Syxsb90UJzUzMRV.jpg', '2003-12-05', '2003', 154, 'The Last Samurai', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5bf24679-58dc-4fb4-9008-389c4b0e4294', 10386, '{0,16,10751,878,12}', '/ct04FCFLPImNG5thcPLRnVsZlmS.jpg', '/wfClZdRb1x4LZ8B73Y9RSn8XAPa.jpg', '1999-08-06', '1999', 86, 'The Iron Giant', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d4d76a5e-24ee-4323-8a92-53bfa27ef545', 122917, '{0,28,12,14}', '/xT98tLqatZPQApyRmlPL12LtiWp.jpg', '/zn13a7U9eMTJq8sHthe3bCgsVm4.jpg', '2014-12-10', '2014', 144, 'The Hobbit: The Battle of the Five Armies', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d53b72fb-d170-4e1a-a035-39c99537c4a5', 49051, '{0,12,14,28}', '/yHA9Fc37VmpUA5UncTxxo3rTGVA.jpg', '/xyXmtuvsoM5J3yNad0nvcetpBdY.jpg', '2012-12-12', '2012', 169, 'The Hobbit: An Unexpected Journey', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d64aa8d4-621d-47be-b9b8-44878d289236', 1417, '{0,14,18,10752}', '/s8C4whhKtDaJvMDcyiMvx3BIF5F.jpg', '/6G6nqSW9S7EHA9HrYl0Z8uo2H7f.jpg', '2006-10-11', '2006', 118, 'Pan''s Labyrinth', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1728ee93-2363-4c14-9ea5-f7158ad8e966', 120, '{0,12,14,28}', '/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg', '/x2RS3uTcsJJ9IfjNPcgDmukoEcQ.jpg', '2001-12-18', '2001', 179, 'The Lord of the Rings: The Fellowship of the Ring', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('92d69c17-5254-431c-abfd-ccf91c324803', 121, '{0,12,14,28}', '/5VTN0pR8gcqV3EPUHHfMGnJYN9L.jpg', '/mshaKLtPUxcDBhzau6qiObEblhL.jpg', '2002-12-18', '2002', 179, 'The Lord of the Rings: The Two Towers', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b67bc371-6572-4ee6-9e72-d5a917b8cb44', 60670, '{0,80,9648,53}', '/npvDhiKkpQBuTaQ8cbWRT2iEfkE.jpg', '/3VFQo8gTKXDUx3Jy6xw022KBRA6.jpg', '2000-09-27', '2000', 106, 'The Crimson Rivers', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('00dd9a2e-9249-413c-8b89-ee95d4253580', 384018, '{0,28,12,35}', '/qRyy2UmjC5ur9bDi3kpNNRCc5nc.jpg', '/hpgda6P9GutvdkDX5MUJ92QG9aj.jpg', '2019-07-31', '2019', 137, 'Fast & Furious Presents: Hobbs & Shaw', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0c11cb32-d7f4-45e3-be7c-03ac324d02a2', 593643, '{0,35,27,53}', '/fPtUgMcLIboqlTlPrq0bQpKK8eq.jpg', '/mSyQoValhBsJdq3JNGXJww2Q5yL.jpg', '2022-11-17', '2022', 107, 'The Menu', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('90820181-7dc9-4c70-a65c-29ae90b9e347', 726209, '{0,18,9648,53}', '/29rhl1xopxA7JlGVVsf1UHfYPvN.jpg', '/5cRw2QHQz5bp7W2KLdSpZoFoTTw.jpg', '2023-11-22', '2023', 142, 'Leave the World Behind', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5cff7df3-c0c8-42af-a181-29e12c3444fd', 238, '{0,18,80}', '/3bhkrj58Vtu7enYsRolD1fZdja1.jpg', '/htuuuEwAvDVECMpb0ltLLyZyDDt.jpg', '1972-03-14', '1972', 175, 'The Godfather', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e1185275-7e34-4f1e-9f72-2b3a0974b25f', 1892, '{0,12,28,878}', '/jQYlydvHm3kUix1f8prMucrplhm.jpg', '/r2IOBOeg5wLfLtyOnT5Pur6Tl4q.jpg', '1983-05-25', '1983', 132, 'Return of the Jedi', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7ed875ca-9805-4bc7-9a11-f791e557b1ef', 1891, '{0,12,28,878}', '/nNAeTmF4CtdSgMDplXTDPOpYzsX.jpg', '/kgjvZgs6cV2v5bigzzzWqJ9EMGs.jpg', '1980-05-20', '1980', 124, 'The Empire Strikes Back', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('43b37310-53c3-47cb-8c47-ac6216fedfe0', 49519, '{0,16,12,10751,14,35,28}', '/27zvjVOtOi5ped1HSlJKNsKXkFH.jpg', '/wFN8llYh215M8i2fqWAcPV8CSyL.jpg', '2013-03-15', '2013', 98, 'The Croods', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d5a16eb7-59d3-4c55-8b53-66adce04d572', 8587, '{0,10751,16,18,14,12}', '/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg', '/wXsQvli6tWqja51pYxXNG1LFIGV.jpg', '1994-06-15', '1994', 89, 'The Lion King', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5839c4b9-03ca-4cd9-bb02-9cca59150ef6', 122, '{0,12,14,28}', '/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg', '/2u7zbn8EudG6kLlBzUYqP8RyFU4.jpg', '2003-12-17', '2003', 201, 'The Lord of the Rings: The Return of the King', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('85bb0b6a-a136-4562-977b-ba0449f77595', 105864, '{0,12,16,10751}', '/8RSkxOO80btfKjyiC5ZiTaCHIT8.jpg', '/nRPe93Yw5yK29JFKGf0eqCCeM2a.jpg', '2015-11-14', '2015', 93, 'The Good Dinosaur', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7cef7e1c-a330-497a-89d8-22e6468c4646', 129, '{0,16,10751,14}', '/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg', '/6oaL4DP75yABrd5EbC4H2zq5ghc.jpg', '2001-07-20', '2001', 125, 'Spirited Away', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5d5c583f-6704-48cc-93a7-632ef02d33b4', 278, '{0,18,80}', '/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg', '/pNjh59JSxChQktamG3LMp9ZoQzp.jpg', '1994-09-23', '1994', 142, 'The Shawshank Redemption', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0a467b30-d7d2-4921-8fc9-7931930ebc0f', 447365, '{0,878,12,28,35}', '/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg', '/5YZbUmjbMa3ClvSW1Wj3D6XGolb.jpg', '2023-05-03', '2023', 150, 'Guardians of the Galaxy Vol. 3', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c87871f9-c2d0-459f-a6dc-5e7957b50363', 6415, '{0,28,35,10752}', '/fClJQW8xn8wHOFqoA4jUn0PZh1f.jpg', '/gysZn2XnFlDDQROXdBPiku4Aujg.jpg', '1999-09-27', '1999', 114, 'Three Kings', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3fcd1968-adc1-4552-8952-cd410d2bae71', 99861, '{0,28,12,878}', '/4ssDuvEDkSArWEdyBl2X5EHvYKU.jpg', '/kIBK5SKwgqIIuRKhhWrJn3XkbPq.jpg', '2015-04-22', '2015', 141, 'Avengers: Age of Ultron', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('76bba51a-809c-42e5-9538-adad6ee58b7b', 118340, '{0,28,878,12}', '/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg', '/uLtVbjvS1O7gXL8lUOwsFOH4man.jpg', '2014-07-30', '2014', 121, 'Guardians of the Galaxy', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('45a361d9-d491-4c31-b9c4-13390eba085d', 283995, '{0,878,12,28}', '/y4MBh0EjBlMuOzv9axM4qJlmhzz.jpg', '/bW93ycPSSi3Hxx1NvlMX5qm2mQu.jpg', '2017-04-19', '2017', 137, 'Guardians of the Galaxy Vol. 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('04ed5d94-d3e3-4e33-9dc7-9172d4ad8028', 333484, '{0,12,28,37}', '/ezcS78TIjgr85pVdaPDd2rSPVNs.jpg', '/8GXri7UnwE7dVNfUAZVDn7Z8UBZ.jpg', '2016-09-14', '2016', 132, 'The Magnificent Seven', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3e496987-7a46-46f5-93aa-7e638c5fe989', 603, '{0,28,878}', '/p96dm7sCMn4VYAStA6siNz30G1r.jpg', '/8K9qHeM6G6QjQN0C5XKFGvK5lzM.jpg', '1999-03-31', '1999', 136, 'The Matrix', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ad0c909b-de8a-4547-be8d-cf1523c79ec1', 575264, '{0,28,12,53}', '/NNxYkU70HPurnNCSiCjYAmacwm.jpg', '/x1ZKRyvB7QAXfYVgf5mUJzjPqfH.jpg', '2023-07-08', '2023', 164, 'Mission: Impossible - Dead Reckoning Part One', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8d4a91e4-3ec1-4228-9642-2cb4e95e1299', 370172, '{0,28,53,12}', '/iUgygt3fscRoKWCV1d0C7FbM9TP.jpg', '/bz7pwNGCbV576COsDcYN9MbEACC.jpg', '2021-09-29', '2021', 163, 'No Time to Die', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bc845f8a-f33c-4519-a7a0-489117dd987d', 945729, '{0,9648,53,80}', '/l6iwxT0NbVw6QiF08YTIuTnXS82.jpg', '/qB9wshRySHgN2MibLOlsW6YalqD.jpg', '2023-09-13', '2023', 104, 'A Haunting in Venice', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('106b33bf-261a-4aaa-84fa-462602b56afa', 392044, '{0,9648,18,80}', '/7GtdJU6iAg6fjQu3E3zta3bIAQh.jpg', '/2J283YNxKhxAqHeVegUJ5mzLfGb.jpg', '2017-11-03', '2017', 114, 'Murder on the Orient Express', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0017f179-785c-46fe-91de-f5760d73d15a', 374720, '{0,10752,28,18}', '/b4Oe15CGLL61Ped0RAS9JpqdmCt.jpg', '/ddIkmH3TpR6XSc47jj0BrGK5Rbz.jpg', '2017-07-19', '2017', 107, 'Dunkirk', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('fddb3660-a990-49f1-ac83-292453ee6c8a', 315635, '{0,28,12,878}', '/c24sv2weTHPsmDa7jEMN0m2P3RT.jpg', '/fn4n6uOYcB6Uh89nbNPoU2w80RV.jpg', '2017-07-05', '2017', 133, 'Spider-Man: Homecoming', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('317b1e8e-3094-4689-a45e-c5065a1895cb', 297761, '{0,28,12,14}', '/sk3FZgh3sRrmr8vyhaitNobMcfh.jpg', '/wAk0yKrhAmvsoMvlKs4QImhvK5X.jpg', '2016-08-03', '2016', 122, 'Suicide Squad', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d8e3cae9-1bdb-4664-8b63-940eba48fcf1', 291805, '{0,53,80}', '/A81kDB6a1K86YLlcOtZB27jriJh.jpg', '/oFQilRMEq6yQbtMPxIYWpXeQ5ZN.jpg', '2016-06-02', '2016', 129, 'Now You See Me 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9c69ab98-ac4e-41bb-865e-7779ecc95160', 75656, '{0,53,80}', '/tWsNYbrqy1p1w6K9zRk0mSchztT.jpg', '/xEY0MV2jSQBz9iOJfCFvLTiPGMA.jpg', '2013-05-29', '2013', 116, 'Now You See Me', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3ab3df20-12d0-41f0-b631-c21d09ab019c', 72190, '{0,28,27,878,53}', '/aCnVdvExw6UWSeQfr0tUH3jr4qG.jpg', '/kg2FOT2Oe5PSCgs3L4vLel6B7ck.jpg', '2013-06-19', '2013', 116, 'World War Z', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('febe48b9-c66e-43bb-914b-50fac70f3749', 848326, '{0,878,28,12}', '/ui4DrH1cKk2vkHshcUcGt2lKxCm.jpg', '/sRLC052ieEzkQs9dEtPMfFxYkej.jpg', '2023-12-15', '2023', 134, 'Rebel Moon - Part One: A Child of Fire', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('671dad4d-4af4-4d15-8ff9-10f614c8ea99', 447332, '{0,27,18,878}', '/nAU74GmpUk7t5iklEp3bufwDq4n.jpg', '/nIrDm42dy5PaXtUAzUfPmxM4mQm.jpg', '2018-04-03', '2018', 91, 'A Quiet Place', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('4bf0a3b1-238c-4839-ace2-65a05152c817', 634649, '{0,28,12,878}', '/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg', '/zD5v1E4joAzFvmAEytt7fM3ivyT.jpg', '2021-12-15', '2021', 148, 'Spider-Man: No Way Home', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('551bd865-b1fd-400e-a24a-6978bcb70bdc', 429617, '{0,28,12,878}', '/4q2NNj4S5dG2RLF9CpXsej7yXl.jpg', '/vamhMTvh9m9zFHDoR0v1nRtf6T4.jpg', '2019-06-28', '2019', 129, 'Spider-Man: Far From Home', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('204a1ba0-e0a7-4a1f-83a0-73faaeebc2b2', 1930, '{0,28,12,878}', '/jexoNYnPd6vVrmygwF6QZmWPFdu.jpg', '/HVcza6tJtWFrLriuh3Ano4Vt46.jpg', '2012-06-23', '2012', 136, 'The Amazing Spider-Man', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('30c62018-8f7c-46d7-a688-0a2090a8e9cc', 569094, '{0,16,28,12,878}', '/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg', '/kVd3a9YeLGkoeR50jGEXM6EqseS.jpg', '2023-05-31', '2023', 140, 'Spider-Man: Across the Spider-Verse', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e19e87d9-c4c0-41fe-b723-b173e647d1df', 1893, '{0,12,28,878}', '/6wkfovpn7Eq8dYNKaG5PY3q2oq6.jpg', '/qKnCpQl6ARxbSjw3CLqPlfm43vb.jpg', '1999-05-19', '1999', 136, 'Star Wars: Episode I - The Phantom Menace', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c8249be4-5b52-4d17-bb2c-016e900d1fc9', 218, '{0,28,53,878}', '/hzXSE66v6KthZ8nPoLZmsi2G05j.jpg', '/ffdqHMWkh1h9MABwIfbfRJhgFW6.jpg', '1984-10-26', '1984', 108, 'The Terminator', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('4fda2e8b-4795-431d-bc42-e7047e0c3411', 87101, '{0,878,28,53,12}', '/oZRVDpNtmHk8M1VYy1aeOWUXgbC.jpg', '/wvlIoof1FnKPLv9jAYanuP31V0C.jpg', '2015-06-23', '2015', 126, 'Terminator Genisys', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5cf9426e-dc21-4c35-9b2f-7771f7691c91', 102382, '{0,28,12,878}', '/dGjoPttcbKR5VWg1jQuNFB247KL.jpg', '/k0hlAzTryCYX1O1LyC6P8tAa8s0.jpg', '2014-04-16', '2014', 141, 'The Amazing Spider-Man 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f24b7743-b18a-4833-98e2-ad417374eb4e', 882598, '{0,27,9648}', '/aPqcQwu4VGEewPhagWNncDbJ9Xp.jpg', '/kMZIMqEXO5MFd5Y1Ha2jZZF4pvF.jpg', '2022-09-23', '2022', 115, 'Smile', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e7a98139-2109-46ca-9fc6-691918603982', 100402, '{0,28,12,878}', '/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg', '/1RWLMyC9KcFfcaoViMiJGSSZzzr.jpg', '2014-03-20', '2014', 136, 'Captain America: The Winter Soldier', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('68db31a5-60fa-4ad5-96d9-2260c82fbdec', 1771, '{0,28,12,878}', '/vSNxAJTlD0r02V9sPYpOjqDZXUK.jpg', '/yFuKvT4Vm3sKHdFY4eG6I4ldAnn.jpg', '2011-07-22', '2011', 124, 'Captain America: The First Avenger', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b0a194c8-6ba6-4038-9759-6621246fd8ba', 131634, '{0,28,12,878}', '/7uLJCuK0ufoDklUdOORC8XanOKw.jpg', '/9zWWAL8LciOBXvAArLn9mtGvRzQ.jpg', '2015-11-18', '2015', 137, 'The Hunger Games: Mockingjay - Part 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6ff8a698-7528-476d-9cac-23a7a9e739bd', 286217, '{0,18,12,878}', '/3ndAx3weG6KDkJIRMCi5vXX6Dyb.jpg', '/9pubUbDX3eKB6ZuKxbFgv4cBZrz.jpg', '2015-09-30', '2015', 141, 'The Martian', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7cbd1061-7690-48bb-9d28-6583b0e7ff93', 520763, '{0,878,53,27}', '/4q2hz2m8hubgvijz8Ez0T2Os2Yv.jpg', '/am782sUaTOGcEPEdUUjybwUZP1f.jpg', '2021-05-21', '2021', 96, 'A Quiet Place Part II', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('01bf3ac5-4679-4762-b83b-6f6177288c9e', 762441, '{0,27,878,53}', '/hU42CRk14JuPEdqZG3AWmagiPAP.jpg', '/6XjMwQTvnICBz6TguiDKkDVHvgS.jpg', '2024-06-26', '2024', 100, 'A Quiet Place: Day One', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('fd23d9f8-f614-45ad-bda3-a31efb4ccf61', 324857, '{0,16,28,12,878}', '/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg', '/8mnXR9rey5uQ08rZAvzojKWbDQS.jpg', '2018-12-06', '2018', 117, 'Spider-Man: Into the Spider-Verse', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d233a900-a07f-447c-821a-f41c9b82dde0', 557, '{0,28,878}', '/gh4cZbhZxyTbgxQPxD0dOudNPTn.jpg', '/qJzloL8O9YHhiWBrhlPfKAtZu2I.jpg', '2002-05-01', '2002', 121, 'Spider-Man', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('93e1ba4f-fe18-4385-bdfb-6ee2fc26732f', 9023, '{0,16,12,10751,18,37,10749}', '/cUgYrz4twiJ3QgVGpRfey984NIB.jpg', '/b8hPBW0NJmiIVzvQjT3CwIpAdzl.jpg', '2002-05-24', '2002', 83, 'Spirit: Stallion of the Cimarron', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0dc071e7-08c9-4851-9033-2e94fc3ea42d', 1894, '{0,12,28,878}', '/oZNPzxqM2s5DyVWab09NTQScDQt.jpg', '/msYmRFJfXy0zsFd73PAEqdetKpO.jpg', '2002-05-15', '2002', 142, 'Star Wars: Episode II - Attack of the Clones', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('edf146da-e434-46a9-9c67-3270dd1276fe', 1895, '{0,12,28,878}', '/xfSAoBEm9MNBjmlNcDYLvLSMlnq.jpg', '/jniabJVBSW3EqLlyhjxWCZjVkiE.jpg', '2005-05-17', '2005', 140, 'Star Wars: Episode III - Revenge of the Sith', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('76a4a382-9127-48eb-92b0-43667ad4b65c', 2270, '{0,12,14,10749,10751}', '/7zbFmxy3DqKYL2M8Hop6uylp2Uy.jpg', '/x2LTysjFSpeK0d40zHw6Lqd4oAH.jpg', '2007-08-10', '2007', 127, 'Stardust', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('216cd4b7-69a2-41ac-96c4-c5a2bfcd7924', 280, '{0,28,53,878}', '/5M0j0B18abtBI5gi2RhfjjurTqb.jpg', '/vINgGecnz95iDL6fjQMARDsocgG.jpg', '1991-07-03', '1991', 137, 'Terminator 2: Judgment Day', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e9ef0cc0-d9e4-49b4-80e7-cdac16e126de', 500, '{0,80,53}', '/xi8Iu6qyTfyZVDVy60raIOYJJmk.jpg', '/eohMDv8x1XRSkPdjWv5xsFct4Dj.jpg', '1992-09-02', '1992', 99, 'Reservoir Dogs', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c2d2b9f2-b964-4035-a690-df0aa86d58e5', 155, '{0,18,28,80,53}', '/qJ2tW6WMUDux911r6m7haRef0WH.jpg', '/enNubozHn9pXi0ycTVYUWfpHZm.jpg', '2008-07-16', '2008', 152, 'The Dark Knight', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d7420ab9-79c3-4964-9355-3f1f46a747d5', 948713, '{0,28,12,10752}', '/qcNDxDzd5OW9wE3c8nWxCBQoBrM.jpg', '/kEhCztSTP4ixu7R0AIWg8vvcvbb.jpg', '2023-04-14', '2023', 111, 'The Last Kingdom: Seven Kings Must Die', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f4826a14-fdb8-4391-9a15-08137ff38e35', 324786, '{0,18,36,10752}', '/wuz8TjCIWR2EVVMuEfBnQ1vuGS3.jpg', '/vDKRMZGFTKP9nQolzeSB1rB1w6p.jpg', '2016-10-07', '2016', 139, 'Hacksaw Ridge', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('43e79522-b86c-4994-9af2-3bb524363d48', 127585, '{0,28,12,878}', '/tYfijzolzgoMOtegh1Y7j2Enorg.jpg', '/hUPgIibqZlwbhs4N08cPzzc4f5K.jpg', '2014-05-15', '2014', 132, 'X-Men: Days of Future Past', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('448f4b28-0dd3-4230-9ddb-183a178f5505', 24428, '{0,878,28,12}', '/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg', '/9BBTo63ANSmhC4e6r62OJFuK2GL.jpg', '2012-04-25', '2012', 143, 'The Avengers', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('915aa080-2263-4aa2-9ec8-8754ee2d3135', 102899, '{0,878,28,12}', '/rQRnQfUl3kfp78nCWq8Ks04vnq1.jpg', '/1K3JmSNUN8OpjYsCjc0Hy0SYxAb.jpg', '2015-07-14', '2015', 117, 'Ant-Man', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('94260ede-733e-44a9-afdf-01f7a840bb45', 290859, '{0,878,28,12,53}', '/vqzNJRH4YyquRiWxCCOH0aXggHI.jpg', '/a6cDxdwaQIFjSkXf7uskg78ZyTq.jpg', '2019-10-23', '2019', 128, 'Terminator: Dark Fate', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bdeba81c-fc44-4e9b-b3d9-4eed3650acc7', 296, '{0,28,53,878}', '/vvevzdYIrk2636maNW4qeWmlPFG.jpg', '/kbXMOnz2RhTSAbLtHX5hy5AXtwv.jpg', '2003-07-02', '2003', 109, 'Terminator 3: Rise of the Machines', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('81b14be1-47d8-47e5-a5e4-791add09e299', 534, '{0,28,878,53}', '/gw6JhlekZgtKUFlDTezq3j5JEPK.jpg', '/m9yHpYz4GcEtmHJW4rvQIrF891h.jpg', '2009-05-20', '2009', 115, 'Terminator Salvation', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c2357b2c-5d3b-45b7-be94-cf03291672f4', 58, '{0,12,14,28}', '/lAhcKRt0ggTFkeFL95jrGQYaRXs.jpg', '/vr6n6ZFUZvedvIlhfYcbCWcaKyW.jpg', '2006-07-06', '2006', 151, 'Pirates of the Caribbean: Dead Man''s Chest', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('285470da-ac47-4676-92d4-cdf1b5a43754', 22, '{0,12,14,28}', '/z8onk7LV9Mmw6zKz4hT6pzzvmvl.jpg', '/rrCc7dONpjAt8N8VO0dGpdIXCVU.jpg', '2003-07-09', '2003', 143, 'Pirates of the Caribbean: The Curse of the Black Pearl', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('12082c47-a862-45c8-884c-f33beaaae805', 285, '{0,12,14,28}', '/jGWpG4YhpQwVmjyHEGkxEkeRf0S.jpg', '/1jHxkVXMI5s3vRiyiZooUy1shB5.jpg', '2007-05-19', '2007', 169, 'Pirates of the Caribbean: At World''s End', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9ac41ce1-9413-4624-b93b-205ac65f9b54', 1865, '{0,12,28,14}', '/keGfSvCmYj7CvdRx36OdVrAEibE.jpg', '/uzIGtyS6bbnJzGsPL93WCF1FWm8.jpg', '2011-05-15', '2011', 136, 'Pirates of the Caribbean: On Stranger Tides', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3973add2-b692-4062-bf45-a94e0dc608c6', 272, '{0,18,80,28}', '/sPX89Td70IDDjVr85jdSBb4rWGr.jpg', '/ew5FcYiRhTYNJAkxoVPMNlCOdVn.jpg', '2005-06-10', '2005', 140, 'Batman Begins', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b64d2c73-b9ba-4efc-90c6-daf22510b846', 49026, '{0,28,80,18,53}', '/hr0L2aueqlP2BYUblTTjmtn0hw4.jpg', '/y2DB71C4nyIdMrANijz8mzvQtk6.jpg', '2012-07-17', '2012', 165, 'The Dark Knight Rises', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ec826a2c-30c9-4c53-9695-fce6fe2922d0', 8077, '{0,878,28,27}', '/xh5wI0UoW7DfS1IyLy3d2CgrCEP.jpg', '/owiT3FUjdQ2LEj4YxiT6vjPVcS4.jpg', '1992-05-22', '1992', 114, 'Alien³', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('beded151-cfcb-48ab-b2d4-bc69da5be1e0', 70981, '{0,878,12,9648}', '/m7nZCtHJyDLncBUarfM5h5mrppx.jpg', '/hO97RyNjBIMfzfFpUjNhsm4zImh.jpg', '2012-05-30', '2012', 124, 'Prometheus', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('84299b34-11f5-4667-a049-6de994f4229f', 59967, '{0,28,53,878}', '/sNjL6SqErDBE8OUZlrDLkexfsCj.jpg', '/4GPCnwvTbsDleH5QIOyDLMsK8a2.jpg', '2012-09-26', '2012', 118, 'Looper', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8ef7dcb4-09fb-4da5-92b1-43ac3853ad3d', 126889, '{0,27,878,53}', '/zecMELPbU5YMQpC81Z8ImaaXuf9.jpg', '/2qluV8y79LnBBHaMpwewCjQ1Htk.jpg', '2017-05-09', '2017', 122, 'Alien: Covenant', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8c752d89-89ae-4233-89b2-dd2fa003ab42', 297762, '{0,28,12,14}', '/v4ncgZjG2Zu8ZW5al1vIZTsSjqX.jpg', '/AaABt75ZzfMGrscUR2seabz4PEX.jpg', '2017-05-30', '2017', 141, 'Wonder Woman', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b47dd48b-b3a9-4577-ac64-6a8caa7d478b', 339403, '{0,28,80}', '/tYzFuYXmT8LOYASlFCkaPiAFAl0.jpg', '/oVD3ClJBoomSQHtnJPAlMfes8YD.jpg', '2017-06-28', '2017', 113, 'Baby Driver', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('184b00bd-9c95-4c45-a7e9-4462d2af8a28', 49521, '{0,28,12,878}', '/8GFtkImmK0K1VaUChR0n9O61CFU.jpg', '/gXEwpePVhDKpuD81tmFdfbtbTfZ.jpg', '2013-06-12', '2013', 143, 'Man of Steel', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('11f24876-b768-474c-b926-1a1352db66bd', 464052, '{0,28,12,14}', '/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg', '/XSTGtPVegdHD1xy5GPuK0tURTQ.jpg', '2020-12-16', '2020', 151, 'Wonder Woman 1984', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('15b32d92-d24c-41c5-b988-b6585f7fb838', 8681, '{0,28,53}', '/y5Va1WXDX6nZElVirPrGxf6w99B.jpg', '/d9ISNkCasZmkvL7YFw2J4ddQv3j.jpg', '2008-02-18', '2008', 94, 'Taken', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8b94a9ae-7b0a-4337-ab1e-c222dcd84a8f', 170, '{0,27,53,878}', '/sQckQRt17VaWbo39GIu0TMOiszq.jpg', '/x085XrfEmU31QeXgMFttmuoGr0Y.jpg', '2002-10-31', '2002', 113, '28 Days Later', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('07e8b307-871e-4eb7-9b7c-cd23f008d5b2', 180, '{0,878,28,53}', '/ccqpHq5tk5W4ymbSbuoy4uYOxFI.jpg', '/r1gLQFbpkWWLrOEPmpqzzMIUxxj.jpg', '2002-06-20', '2002', 145, 'Minority Report', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3d0fb672-54a0-493d-be2d-50fa3fa02528', 640, '{0,18,80}', '/ctjEj2xM32OvBXCq8zAdK3ZrsAj.jpg', '/Ag6qhzsJd3k1NKuNrG9RmhZDMh7.jpg', '2002-12-16', '2002', 141, 'Catch Me If You Can', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7272a930-ce9a-4218-895a-b08ce3156ac0', 177572, '{0,12,10751,16,28,35}', '/2mxS4wUimwlLmI1xp6QW6NSU361.jpg', '/4s2d3xdyqotiVNHTlTlJjrr3q0H.jpg', '2014-10-24', '2014', 102, 'Big Hero 6', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('29b24557-e4a7-4863-9ad7-41442eb62378', 381288, '{0,27,53}', '/lli31lYTFpvxVBeFHWoe5PMfW5s.jpg', '/9pkZesKMnblFfKxEhQx45YQ2kIe.jpg', '2017-01-19', '2017', 117, 'Split', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('df4a9dd0-4487-4901-bd7b-ccfa8c33b855', 1724, '{0,878,28,12}', '/gKzYx79y0AQTL4UAk1cBQJ3nvrm.jpg', '/jPu8yiadqgzwFPGKJmGo637ASVP.jpg', '2008-06-12', '2008', 114, 'The Incredible Hulk', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9f6ecfd5-9c56-4f14-9294-1181bb9e2b9e', 105, '{0,12,35,878}', '/vN5B5WgYscRGcQpVhHl6p9DDTP0.jpg', '/yz8QL8WFD8yj0LA5zIlNOgcHvZK.jpg', '1985-07-03', '1985', 116, 'Back to the Future', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3d211ba2-fa2d-46f1-8392-138e4f46fa9a', 10681, '{0,16,10751,878}', '/hbhFnRzzg6ZDmm8YAmxBnQpQIPh.jpg', '/3CvNc04vTwTir5q3LBDuvUb8Ng6.jpg', '2008-06-22', '2008', 98, 'WALL·E', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7d9cbfaa-654c-4782-8f3a-c4ee96983ec1', 77, '{0,9648,53}', '/fKTPH2WvH8nHTXeBYBVhawtRqtR.jpg', '/7Wev9JMo6R5XAfz2KDvXb7oPMmy.jpg', '2000-10-11', '2000', 113, 'Memento', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e698f4fb-3ec1-4b1e-948e-962de501b1a4', 141, '{0,14,18,9648}', '/fhQoQfejY1hUcwyuLgpBrYs6uFt.jpg', '/msCHK5Kh1YbdZ0zPJ2nzPUhhSN9.jpg', '2001-01-19', '2001', 114, 'Donnie Darko', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a9bfaa39-e8fa-4d30-a079-1d45cf049811', 185, '{0,878,80}', '/4sHeTAp65WrSSuc05nRBKddhBxO.jpg', '/3hwKS7e21hzEnXZaOs2FE6e97bc.jpg', '1971-12-19', '1971', 137, 'A Clockwork Orange', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d4d89a89-d19e-4b4b-b4bc-bc3c92c52e59', 62, '{0,878,9648,12}', '/ve72VxNqjGM69Uky4WTo2bK6rfq.jpg', '/w5IDXtifKntw0ajv2co7jFlTQDM.jpg', '1968-04-02', '1968', 149, '2001: A Space Odyssey', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e1e4f8d3-1b77-4176-8ea6-358f87e9d61f', 1562, '{0,27,53,878}', '/oix0aNv1lvW3nUGspUyvSIBlpbs.jpg', '/83ownpZPvBHJD5UVNShzQfa3LaW.jpg', '2007-04-26', '2007', 100, '28 Weeks Later', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b42bcf92-5741-46dd-af24-4c2203a1a9b9', 83542, '{0,18,878}', '/8naVv2Xu3rWI5JKHz0vCujx6GaJ.jpg', '/sFDntG0Z0Wjrsz26TVptfs5OSLT.jpg', '2012-10-26', '2012', 172, 'Cloud Atlas', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3bf2ceeb-b4eb-4a66-b3e0-8ae48661b3b4', 911430, '{0,28,18}', '/9PXZIUsSDh4alB80jheWX4fhZmy.jpg', '/ZtcGMc204JsNqfjS9lU6udRgpo.jpg', '2025-06-25', '2025', 156, 'F1', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d9337c0d-d7d1-4715-a6f0-3b3e99f716a8', 617126, '{0,878,12}', '/x26MtUlwtWD26d0G0FXcppxCJio.jpg', '/3IgJReIyunq95ta86CTSOs9vAht.jpg', '2025-07-23', '2025', 115, 'The Fantastic 4: First Steps', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('69f82c02-15b3-415f-9af8-09219b1504ad', 986056, '{0,28,878,12}', '/hqcexYHbiTBfDIdDWxrxPtVndBX.jpg', '/rthMuZfFv4fqEU4JVbgSW9wQ8rs.jpg', '2025-04-30', '2025', 127, 'Thunderbolts*', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f8c70a89-176c-4369-bd76-2f032bcf6cc6', 140300, '{0,16,28,12,35,10751}', '/oajNi4Su39WAByHI6EONu8G8HYn.jpg', '/A6shbaUPorZatoVbDdJgknxe3CZ.jpg', '2016-01-23', '2016', 95, 'Kung Fu Panda 3', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e8bedcaf-1437-4356-b910-4b1ed88e7b79', 1100782, '{0,27,9648}', '/ht8Uv9QPv9y7K0RvUyJIaXOZTfd.jpg', '/iR79ciqhtaZ9BE7YFA1HpCHQgX4.jpg', '2024-10-16', '2024', 127, 'Smile 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1a1418b7-ddd7-4c14-99e2-9f3a38cf0294', 933260, '{0,18,27,878}', '/evdF1vmLzuzH8EFblqAXBXWRGSi.jpg', '/bVSOgrxasVJF6V71T7v2KfBRSzu.jpg', '2024-09-07', '2024', 141, 'The Substance', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c3e3e588-cb96-4868-be23-07eeee849377', 8078, '{0,878,27,28}', '/9aRDMlU5Zwpysilm0WCWzU2PCFv.jpg', '/zQI8yxl61JTpjCB3MrTbcQBOT82.jpg', '1997-11-12', '1997', 109, 'Alien Resurrection', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('db3f2458-92cc-43a2-ba7f-5b851a190476', 646385, '{0,27,9648}', '/1m3W6cpgwuIyjtg5nSnPx7yFkXW.jpg', '/ifUfE79O1raUwbaQRIB7XnFz5ZC.jpg', '2022-01-12', '2022', 114, 'Scream', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('89709915-3993-4add-af70-f28cefb52ad2', 4233, '{0,27,9648}', '/dORlVasiaDkJXTqt9bdH7nFNs6C.jpg', '/rNqfOqFYpSCeSq2YC5pY8F80Yz4.jpg', '1997-12-12', '1997', 120, 'Scream 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('fe3acbe7-ec60-4892-8944-7321cae66363', 4234, '{0,27,9648}', '/qpH8ToZVlFD1bakL04LkEKodyDI.jpg', '/AbFWty0o5nKGo4iLJaGRgqFtC8W.jpg', '2000-02-04', '2000', 116, 'Scream 3', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2136c4be-a26a-4922-be6e-e78b08ea3f3b', 41446, '{0,27,9648}', '/tcrI37K98TVopLbcZBa55mWhLT1.jpg', '/c5EmNhLQsTTKAyUHULnKYQjlloz.jpg', '2011-04-13', '2011', 111, 'Scream 4', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a2c1aaf3-5fd5-4455-a967-208343c39b7c', 283445, '{0,27}', '/hF6ORyihtAWHqKkIQI8BSpLQyON.jpg', '/iQY3kJ2oqHqmcSm32xPfkFF4xW9.jpg', '2015-08-19', '2015', 97, 'Sinister 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('dcce8bfc-ec01-4576-98b6-e4e6e8e0e4bb', 693134, '{0,878,12}', '/6izwz7rsy95ARzTR3poZ8H6c5pp.jpg', '/o869RihWTdTyBcEZBjz0izvEsVf.jpg', '2024-02-27', '2024', 167, 'Dune: Part Two', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c8f49506-6210-460e-b79d-d1b19a73d922', 497698, '{0,28,12,878}', '/7JPpIjhD2V0sKyFvhB9khUMa30d.jpg', '/dq18nCTTLpy9PmtzZI6Y2yAgdw5.jpg', '2021-07-07', '2021', 134, 'Black Widow', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5e6ea510-4d69-44d2-8721-c38e68b0e86a', 10195, '{0,12,14,28}', '/prSfAi1xGrhLQNxVSUFh61xQ4Qy.jpg', '/cDJ61O1STtbWNBwefuqVrRe3d7l.jpg', '2011-04-21', '2011', 115, 'Thor', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d1bdf086-b752-4cd0-a727-f813e5a07451', 284053, '{0,28,12,878}', '/rzRwTcFvttcN1ZpX2xv4j3tSdJu.jpg', '/6G2fLCVm9fiLyHvBrccq6GSe2ih.jpg', '2017-10-02', '2017', 131, 'Thor: Ragnarok', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8d242bab-5fa3-4628-9b6c-890c1833b4b5', 76338, '{0,28,12,14}', '/wp6OxE4poJ4G7c0U2ZIXasTSMR7.jpg', '/4zTsF0RtO0av3YX1NaKDqGKPxYF.jpg', '2013-10-30', '2013', 112, 'Thor: The Dark World', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bc7f0d45-d48b-463d-8a02-50434da527ee', 616037, '{0,14,28,35}', '/pIkRyD18kl4FhoCNQuWxWu5cBLM.jpg', '/vvObT0eIWGlArLQx3K5wZ0uT812.jpg', '2022-07-06', '2022', 119, 'Thor: Love and Thunder', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d1e8bb9a-feda-4ca6-9844-a5d52602cb9a', 2330, '{0,28,35,80,12}', '/egBxj3ude84theXc3cLbBHrWOkQ.jpg', '/nmGgqRzbb0OHJloknzlorUzUVQo.jpg', '1998-04-08', '1998', 86, 'Taxi', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('dc5d367b-cebf-4542-9680-2fd40a1a9798', 2332, '{0,28,35,12,80}', '/z0js1eYtKxfw4RBxiTukO7q66Rf.jpg', '/xSnKDHTk79wu2UJqI0RDm4tiBvj.jpg', '2000-03-25', '2000', 82, 'Taxi 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c3fd2cad-2c0f-4243-acb9-ee1d6802c9cd', 2334, '{0,28,35}', '/6Yk3O5mNIYpIKIKaB2l4TJBDdlS.jpg', '/bubZ2cNoCiRo6kibQl8N0Sb6Ywd.jpg', '2003-01-29', '2003', 87, 'Taxi 3', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('31252599-6b66-4e6b-b143-da3618f0b27e', 2335, '{0,28,35}', '/8OoVXQo23kgMw4ooLfi2mDGVfUE.jpg', '/xaqRnNe81o1vJGg75Im16pfbEZk.jpg', '2007-02-10', '2007', 91, 'Taxi 4', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e5cdcabd-47e0-459d-960d-7d7d3ac2a1c7', 434355, '{0,28,35,12}', '/cRY6NShGF0FFDnRHEDTj0spUGHU.jpg', '/gO9KdIja23K3Dtg6T1U4vwMEaLA.jpg', '2018-04-07', '2018', 102, 'Taxi 5', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7c44e477-d141-4635-b335-ee2a343f6e13', 82675, '{0,28,80,53}', '/mGRtQS39DYIu6gXu5mXQsXFGZPO.jpg', '/dvz4VvkSb3nA0hY6coyNsatXsZ4.jpg', '2012-09-27', '2012', 91, 'Taken 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('063cf251-c6c2-43a3-882c-ff3fac9c3318', 260346, '{0,53,28}', '/vzvMXMypMq7ieDofKThsxjHj9hn.jpg', '/vFm4pF0BgaWPj0i2zEiZO6TqEQ0.jpg', '2014-12-16', '2014', 109, 'Taken 3', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('63cfacda-27de-4bdc-aed0-6ebc208af4a0', 615457, '{0,28,53}', '/oBgWY00bEFeZ9N25wWVyuQddbAo.jpg', '/uWeffFhprUohUL5GO3YfQqdsVrI.jpg', '2021-03-18', '2021', 91, 'Nobody', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('360e97d6-50fa-4ebb-ae8f-7031c1a51e91', 157350, '{0,28,12,878}', '/aNh4Q3iuPKDMPi2SL7GgOpiLukX.jpg', '/bgkFOoXEQMRjKkCvgoj7smdGbuh.jpg', '2014-03-14', '2014', 139, 'Divergent', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('192324ba-c630-4d14-bcc3-faf25cb40bd5', 198663, '{0,28,9648,878,53}', '/ode14q7WtDugFDp78fo9lCsmay9.jpg', '/vHJlbhsXrZ5yrO2KqCbGSIU6fRX.jpg', '2014-09-10', '2014', 113, 'The Maze Runner', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('fb8340ed-8420-49e1-9599-7a986811e809', 522627, '{0,35,80}', '/jtrhTYB7xSrJxR1vusu99nvnZ1g.jpg', '/tintsaQ0WLzZsTMkTiqtMB3rfc8.jpg', '2020-01-01', '2020', 113, 'The Gentlemen', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('453e11b6-f757-4fc2-82c4-ed67a32de30d', 546554, '{0,35,80,9648}', '/pThyQovXQrw2m0s9x82twj48Jq4.jpg', '/4HWAQu28e2yaWrtupFPGFkdNU7V.jpg', '2019-11-27', '2019', 131, 'Knives Out', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2fd5cdf7-1493-4285-aeb0-1d5bac41eb24', 64682, '{0,18,10749}', '/nimh1rrDDLhgpG8XAYoUZXHYwb6.jpg', '/5mQZqk2qSJCsYmvw1cQJLEcLNYM.jpg', '2013-05-09', '2013', 143, 'The Great Gatsby', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b525146a-a58b-4e84-abc1-bebcb62cdf49', 281957, '{0,37,18,12}', '/ji3ecJphATlVgWNY0B0RVXZizdf.jpg', '/sGOw65ZmfgGfistCjuNsazjs6j9.jpg', '2015-12-25', '2015', 157, 'The Revenant', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('154dd013-a264-4ace-bfe5-72be7635ffe3', 264660, '{0,18,878}', '/dmJW8IAKHKxFNiUnoDR7JfsK7Rp.jpg', '/uqOuJ50EtTj7kkDIXP8LCg7G45D.jpg', '2015-01-21', '2015', 108, 'Ex Machina', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6d4526d6-17b8-435d-8d17-bb982a6ba252', 152601, '{0,10749,878,18}', '/eCOtqtfvn7mxGl6nfmq4b1exJRc.jpg', '/zxttikp0SNEtF4vWsg70Vs6McFi.jpg', '2013-12-18', '2013', 126, 'Her', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('69b07068-2c55-457a-aa1a-b9cb2e3e2082', 137113, '{0,28,878}', '/nBM9MMa2WCwvMG4IJ3eiGUdbPe6.jpg', '/4V1yIoAKPMRQwGBaSses8Bp2nsi.jpg', '2014-05-27', '2014', 114, 'Edge of Tomorrow', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e8e94e46-3df6-4bc4-917d-966963cdfc73', 242582, '{0,80,18,53}', '/j9HrX8f7GbZQm1BrBiR40uFQZSb.jpg', '/vabhkZ3vwf8u7yXCSi3zbVzAVRa.jpg', '2014-10-23', '2014', 118, 'Nightcrawler', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3d1a8e1f-6959-4612-a650-1836002244cc', 419430, '{0,9648,53,27}', '/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg', '/bBQHALHRAaaORlPNXv7fNcRXYdx.jpg', '2017-02-24', '2017', 104, 'Get Out', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('02be9669-5ca4-42dc-9462-fa2b4ce2894d', 329865, '{0,18,878,9648}', '/x2FJsf1ElAgr63Y3PNPtJrcmpoe.jpg', '/hNCqkXbWd40eftqSdjq8TmV7Mqr.jpg', '2016-11-10', '2016', 116, 'Arrival', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1ea477e8-35f2-4f32-963f-9e064215d9df', 284052, '{0,14,12,28}', '/uGBVj3bEbCoZbDjjl9wTxcygko1.jpg', '/aL53oMdZKZRJRH8txH07DLuleF9.jpg', '2016-10-25', '2016', 115, 'Doctor Strange', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2db74df3-9041-4d4a-b216-6e0c29ac8a8b', 1927, '{0,878,12,28}', '/UllIft2jLSBaay3zQyMV4GNdfy.jpg', '/gJws6mK1RxPVPeL0MpxUzahLFBf.jpg', '2003-06-19', '2003', 138, 'Hulk', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b241ffa9-b371-472a-ba86-c2982747f661', 559, '{0,28,12,878}', '/qFmwhVUoUSXjkKRmca5yGDEXBIj.jpg', '/w1oD1MzHjnBJc5snKupIQaSBLIh.jpg', '2007-05-01', '2007', 139, 'Spider-Man 3', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('be989fbe-fb4c-4f1b-a2fd-9a912b85f840', 558, '{0,28,12,878}', '/aGuvNAaaZuWXYQQ6N2v7DeuP6mB.jpg', '/8G6HCS82vNxgg5wp7oBDSk32XpF.jpg', '2004-06-25', '2004', 127, 'Spider-Man 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('eaa1509f-89db-47ac-8eff-b88ed50ba742', 1271, '{0,28,12,10752}', '/h7Lcio0c9ohxPhSZg42eTlKIVVY.jpg', '/lgBZlJ1LHQel5nneNQMoesmvc7l.jpg', '2007-03-07', '2007', 116, '300', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('77bf2859-c6d9-4bf7-805c-c4d444898506', 2062, '{0,16,35,10751,14}', '/t3vaWRPSf6WjDSamIkKDs1iQWna.jpg', '/xgDj56UWyeWQcxQ44f5A3RTWuSs.jpg', '2007-06-28', '2007', 111, 'Ratatouille', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a3325c0f-a229-404d-b9a4-9295c0ff98d3', 808, '{0,16,35,14,12,10751}', '/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg', '/sRvXNDItGlWCqtO3j6wks52FmbD.jpg', '2001-05-18', '2001', 90, 'Shrek', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('adb4f80d-1539-4db4-9fb5-8e619c2bb1dc', 98, '{0,28,18,12}', '/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg', '/jhk6D8pim3yaByu1801kMoxXFaX.jpg', '2000-05-04', '2000', 155, 'Gladiator', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6599daac-16aa-41cb-b9a3-df330af8fdbe', 1124, '{0,18,9648,878}', '/2ZOzyhoW08neG27DVySMCcq2emd.jpg', '/yCnJT53HMXAK87xzPAdjdYhZ3JE.jpg', '2006-10-17', '2006', 130, 'The Prestige', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('191e01e1-d993-48d4-9057-81ef9e71b285', 694, '{0,27,53}', '/xazWoLealQwEgqZ89MLZklLZD3k.jpg', '/mmd1HnuvAzFc4iuVJcnBrhDNEKr.jpg', '1980-05-23', '1980', 144, 'The Shining', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8261bcb3-ea6d-4ad8-a9a3-c98a6cdf420e', 82654, '{0,27,35,10749}', '/8XAX6KaqNGcLXcwoDwxyU0bxhxm.jpg', '/d2nWERbNIKA9dBDWbRReK0cRBD4.jpg', '2013-01-31', '2013', 97, 'Warm Bodies', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8a612936-68ed-41dd-8238-c90f8efe7be4', 54138, '{0,28,12,878}', '/7XrRkhMa9lQ71RszzSyVrJVvhyS.jpg', '/k3PqsPLkKLDyjZupZ6gqZHPxMv3.jpg', '2013-05-05', '2013', 132, 'Star Trek Into Darkness', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('868dec5a-a230-47b8-ab54-29db50a84faf', 1100988, '{0,27,53,878}', '/mIg1qCkVxnAlM2TK3RUF0tdEXlE.jpg', '/zav0v7gLWMu6pVwgsIAwt11GJ4C.jpg', '2025-06-18', '2025', 115, '28 Years Later', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('4670fd6f-4a59-404c-81fd-c363c6931b01', 4232, '{0,80,27,9648}', '/lr9ZIrmuwVmZhpZuTCW8D9g0ZJe.jpg', '/4PPC7fKClu0u7NTbo5xgV4vb5VD.jpg', '1996-12-20', '1996', 112, 'Scream', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('628a9327-334a-4d20-98db-f7a97f8fd714', 2300, '{0,10751,35,16,878}', '/4RN5El3Pj2W4gpwgiAGLVfSJv2g.jpg', '/7zS8Sl9ngsO7nTDJgdPtso7pBYK.jpg', '1996-11-15', '1996', 87, 'Space Jam', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6ff77dca-c868-4552-8fd8-8d9aac68eea3', 1858, '{0,12,878,28}', '/1P7w3AImoEOWJX7nn3fdaKDfEQA.jpg', '/iq6oCC769VhakJubpAeJNFCgvff.jpg', '2007-06-27', '2007', 144, 'Transformers', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b789c262-d441-4f06-86e5-c86d93a9f218', 8373, '{0,878,28,12}', '/pLBb0whOzVDtJvyD4DPeQyQNOqp.jpg', '/1BsGNqNhPcxyCsSRKvM4Qku1UJ0.jpg', '2009-06-19', '2009', 150, 'Transformers: Revenge of the Fallen', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('71e850f8-73f7-4a1e-b450-acbd70d06ea4', 38356, '{0,28,878,12}', '/28YlCLrFhONteYSs9hKjD1Km0Cj.jpg', '/c9SDd0yIb5gyqiOw9iTB87LEfP7.jpg', '2011-06-28', '2011', 154, 'Transformers: Dark of the Moon', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2ad87db8-95b3-4e08-b96c-f918bba1e284', 91314, '{0,878,28,12}', '/jyzrfx2WaeY60kYZpPYepSjGz4S.jpg', '/ojwiCGkC7Bv7Ol7jDSkQbTGBY3I.jpg', '2014-06-25', '2014', 165, 'Transformers: Age of Extinction', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bb7e278f-edf3-45dc-a44e-9f0c003d9916', 335988, '{0,28,12,878}', '/s5HQf2Gb3lIO2cRcFwNL9sn1o1o.jpg', '/1n00NlOGRFZVs8coBxyZLm5l4EC.jpg', '2017-06-16', '2017', 154, 'Transformers: The Last Knight', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e8f9e8ec-1c38-4abe-8bce-cc076319df42', 424783, '{0,28,12,878}', '/fw02ONlDhrYjTSZV8XO6hhU3ds3.jpg', '/hMANgfPHR1tRObNp2oPiOi9mMlz.jpg', '2018-11-22', '2018', 113, 'Bumblebee', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('783a5f02-1704-4c7e-9b28-3d644ab96f8a', 9286, '{0,27,9648}', '/p7ARuNKUGPGvkBiDtIDvAzYzonX.jpg', '/nSV1NIAK0Sp5dM1oiobtqbJ8Jrv.jpg', '2006-02-09', '2006', 92, 'Final Destination 3', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('82d80b0c-a9ea-4d87-991b-cab6b8bc5e6e', 55779, '{0,27,9648}', '/Akx1Po4ZLetOWfYJhQf75tbhTtK.jpg', '/5cG2XcylxUIclQsGPBKTtfoqcBV.jpg', '2011-08-12', '2011', 91, 'Final Destination 5', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('fd934ffc-837a-4dba-9ee5-71589fccf60b', 19912, '{0,27,9648}', '/5vxXrr1MqGsT4NNeRITpfDnl4Rq.jpg', '/6LGX6bPhMEsuwi8CsfSBqnB1qnN.jpg', '2009-08-26', '2009', 82, 'The Final Destination', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e6e16874-bb59-400e-ae84-21f54b34e03c', 13648, '{0,16,27,28,878}', '/1x5OaFOo38JAwR5yXxeuvQg3VWH.jpg', '/3JgfNUCoN6pyXlO7wZOJ4PgQgW3.jpg', '2008-02-13', '2008', 97, 'Resident Evil: Degeneration', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0322c895-3697-4b42-bd88-38c1554fb180', 647, '{0,16,28,12,14,878}', '/pTIXM2yu8McSlcQVs1VjVSNC45x.jpg', '/8xhgpYyNSX5sJi0P35hwL73QYOV.jpg', '2005-07-14', '2005', 101, 'Final Fantasy VII: Advent Children', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('14fb4e76-0d09-4fc7-bc24-22cea51768c0', 390734, '{0,16,878,28}', '/xGMgspge6uYoypRiasAmlluDlXH.jpg', '/eTfik9sRZTcaWIMJGVhmUqrbL0Q.jpg', '2016-07-09', '2016', 115, 'Kingsglaive: Final Fantasy XV', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1547545d-40c2-4567-83f0-faa474f7578a', 1577, '{0,27,28,878}', '/yzNQSLlZb7NAkA4C5uADfNDJ7hm.jpg', '/5PJP3NaiH9ZJRzrEHLeqSY5rNxb.jpg', '2004-09-10', '2004', 94, 'Resident Evil: Apocalypse', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d0b56c42-6b0f-4bfd-bc27-5877123dd2a2', 7737, '{0,27,28,878}', '/6yaLr7Ymg5cvbtSVi5hHwBKx35I.jpg', '/u8QUvrq24pWB2x1DxCy4ulbKJG5.jpg', '2007-09-20', '2007', 94, 'Resident Evil: Extinction', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d560e78f-491c-44e5-a12a-2b79930bc6ba', 35791, '{0,28,12,27,878}', '/xaEHOuIkoTzHQIiex0Ys306Ky05.jpg', '/lalUb4dtLbUhSOUxz4OfS8NRheW.jpg', '2010-09-01', '2010', 97, 'Resident Evil: Afterlife', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a7336f6e-893d-40b7-a55c-a6f1cfbf3daa', 71679, '{0,28,27,878}', '/ohdUDWVlcbuWphaLu6wS91xdJ73.jpg', '/qV8rVyw7tsNzJkmvgFvQa2mWRDQ.jpg', '2012-09-12', '2012', 95, 'Resident Evil: Retribution', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('975e8186-688d-4d05-ac0e-1e25b1fa8a71', 173897, '{0,28,27,878}', '/7glPlA0xPpxPxBu0TnY4ulQVCV1.jpg', '/sQRfWdDxH53Vk7ZJ1UqzcaBHocO.jpg', '2016-12-23', '2016', 107, 'Resident Evil: The Final Chapter', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('340a85e7-42e8-4f29-a502-de810f44860f', 133121, '{0,16,27,28,878}', '/zkHSURVCrt7rpvDDgUXO75CV1v4.jpg', '/xbjOkrAaT4CAIrNJ38oQSBomHvg.jpg', '2012-09-25', '2012', 100, 'Resident Evil: Damnation', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9087a66b-3a27-442d-8a94-9ebfc9bfefe2', 177677, '{0,28,12}', '/jwqL7croP7JMVfz0l9o7V4yJsJO.jpg', '/ki5RnA0xNOEd3R0RohXqJt9R6Om.jpg', '2015-07-28', '2015', 131, 'Mission: Impossible - Rogue Nation', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('21fb4796-9924-4ebb-b1a7-747c671de9d1', 353081, '{0,28,12}', '/AkJQpZp9WoNdj7pLYSj1L0RcMMN.jpg', '/3IzR3VhZAyhxVnuRRUHFLkfK4hT.jpg', '2018-07-25', '2018', 147, 'Mission: Impossible - Fallout', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f57f8451-c1f2-4fc5-a05d-16d9a361cfb0', 955, '{0,12,28,53}', '/hfnrual76gPeNFduhD4xzHWpfTw.jpg', '/24DZfupDlhXeTchmcOkoGRhP5Vg.jpg', '2000-05-24', '2000', 123, 'Mission: Impossible II', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('126b4874-a19f-4cca-bab0-614038360875', 956, '{0,12,28,53}', '/vKGYCpmQyV9uHybWDzXuII8Los5.jpg', '/5hizq0BiBHPAV9iD2qbp5RwStdT.jpg', '2006-04-25', '2006', 126, 'Mission: Impossible III', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('451465ed-1a4a-4cbb-aea7-9b3212dee431', 385128, '{0,28,12,80}', '/deEmLILTPejEb6OGsXRJ5MCvyDW.jpg', '/xXHZeb1yhJvnSHPzZDqee0zfMb6.jpg', '2021-05-19', '2021', 143, 'F9', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('598a5877-1e9b-4dba-b66d-ac1767f15635', 337339, '{0,28,80,53}', '/dImWM7GJqryWJO9LHa3XQ8DD5NH.jpg', '/awuUwOAGCPqC4mIDQmeKdPiiLR5.jpg', '2017-04-12', '2017', 136, 'The Fate of the Furious', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e27c45da-5d45-4d51-af00-4738b1f16c35', 82992, '{0,28,53,80}', '/thSmnRdrzPBBospIOJjLZBReqzo.jpg', '/oqxCzAO8sn1rSco2Pc19DlitgEn.jpg', '2013-05-21', '2013', 130, 'Fast & Furious 6', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('85715627-8a77-4d71-8ba0-e5fd843e6c7e', 51497, '{0,28,53,80}', '/gEfQjjQwY7fh5bI4GlG0RrBu7Pz.jpg', '/krtWl2iNKAzoZZnVCgApBsH30sb.jpg', '2011-04-20', '2011', 131, 'Fast Five', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a2ced47e-fe1a-4a03-849b-8c9e1fa8e18b', 9799, '{0,28,80,53}', '/gqY0ITBgT7A82poL9jv851qdnIb.jpg', '/gH8pdqF9H3xzYjtSrz4xZt1rLpJ.jpg', '2001-06-22', '2001', 106, 'The Fast and the Furious', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8d864493-68d6-4ec1-a9cf-9aed270a5725', 68734, '{0,18,53}', '/m5gPWFZFIp4UJFABgWyLkbXv8GX.jpg', '/iVk4mVKwNE66JbBcoDwcYFvuUXM.jpg', '2012-10-11', '2012', 120, 'Argo', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f8eb1ae9-df25-4b24-b2b5-d435db65da87', 13804, '{0,28,80,18,53}', '/lUtVoRukW7WNtUySwd8hWlByBds.jpg', '/acktCBsLJcgEJsjTuyiQhJipCD6.jpg', '2009-04-02', '2009', 107, 'Fast & Furious', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('4786853e-dba2-48e0-8510-ec0f6790532c', 363088, '{0,28,12,878}', '/cFQEO687n1K6umXbInzocxcnAQz.jpg', '/2tcTm5oRlRN5fKFvY4Gbrwp8h38.jpg', '2018-07-04', '2018', 119, 'Ant-Man and the Wasp', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('4318c543-2422-4833-87af-af0055f4ce66', 299537, '{0,28,12,878}', '/AtsgWhDnHTq68L0lLsUrCnM7TjG.jpg', '/qAzYK4YPSWDc7aa4R43LcwRIAyb.jpg', '2019-03-06', '2019', 124, 'Captain Marvel', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('19a2d6b4-d3af-47b3-b916-82b0693d9ffa', 566525, '{0,28,12,14}', '/d08HqqeBQSwN8i8MEvpsZ8Cb438.jpg', '/rAksPS6LjBONzY84szQBz5gGej6.jpg', '2021-09-01', '2021', 132, 'Shang-Chi and the Legend of the Ten Rings', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d5c687ca-56ff-4ff7-b020-617c97219ee9', 524434, '{0,878,28,12}', '/lFByFSLV5WDJEv3KabbdAF959F2.jpg', '/c6H7Z4u73ir3cIoCteuhJh7UCAR.jpg', '2021-11-03', '2021', 156, 'Eternals', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bf54bec4-073e-4e01-a1ab-17bb6e22f308', 505642, '{0,28,12,878}', '/sv1xJUazXeYqALzczSZ3O6nkH75.jpg', '/1GU0jS5ZG5MhfdDrpj8s9XxbgJJ.jpg', '2022-11-09', '2022', 162, 'Black Panther: Wakanda Forever', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ed98c9f1-73a8-438b-844b-d64ba152e429', 572802, '{0,28,12,14}', '/jcA2QFJ4wuFcG79P97wA7OBLQoL.jpg', '/bckxSN9ueOgm0gJpVJmPQrecWul.jpg', '2023-12-20', '2023', 124, 'Aquaman and the Lost Kingdom', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f704ecad-7fe9-481f-a5c8-2f91bcd5a2d8', 287947, '{0,28,35,14}', '/xnopI5Xtky18MPhK40cZAGAOVeV.jpg', '/o7JVhqMmrex1TPbmuxl8YXVlcfl.jpg', '2019-03-29', '2019', 132, 'Shazam!', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3bc4c686-7fa3-474c-aae0-85482f2baa5a', 246655, '{0,28,12,878,14}', '/wWwJHNloq8d4ZRwnJWEzdOkEjOo.jpg', '/2ex2beZ4ssMeOduLD0ILzXKCiep.jpg', '2016-05-18', '2016', 144, 'X-Men: Apocalypse', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('560cdfca-d234-46d8-8991-0c96357d3299', 36657, '{0,12,28,878}', '/bRDAc4GogyS9ci3ow7UnInOcriN.jpg', '/a6MwSrIKmMjs5b8os7eEgQk05yx.jpg', '2000-07-13', '2000', 104, 'X-Men', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a7f5f4a2-ec1b-4ce9-857f-45c41b780395', 49538, '{0,28,878,12}', '/hNEokmUke0dazoBhttFN0o3L7Xv.jpg', '/7kURId6slyHNujYpCFm0Z1M3kRt.jpg', '2011-06-01', '2011', 132, 'X-Men: First Class', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1f0c6d87-b1d4-46e7-a188-750c57606964', 36658, '{0,12,28,878}', '/bWMw0FMsY8DICgrQnrTSWbzEgtr.jpg', '/s8ftvFvafWWEhApISamHx32bx6h.jpg', '2003-04-27', '2003', 133, 'X2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6a58db67-6499-448f-b7d6-ae059f32a63d', 9615, '{0,28,80,18,53}', '/46xqGOwHbh2TH2avWSw3SMXph4E.jpg', '/dMARcKLrv0T7kVJ4iQR3vqTTdtT.jpg', '2006-06-03', '2006', 104, 'The Fast and the Furious: Tokyo Drift', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6e24bdea-05eb-4178-bbb0-3749ad0073d8', 36668, '{0,12,28,878,53}', '/a2xicU8DpKtRizOHjQLC1JyCSRS.jpg', '/sBl1n4Oi2wX81EtXIb8NsPqJf3W.jpg', '2006-05-24', '2006', 104, 'X-Men: The Last Stand', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6655d0bc-8e6e-43ac-81d1-c9df2d6d58ce', 76170, '{0,28,878,12}', '/8lzmovtARDXnE7kTDOum02i6fXv.jpg', '/7D2PgX369YYePs4m44IQvROWM42.jpg', '2013-07-21', '2013', 126, 'The Wolverine', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3b9beed7-e6de-4bee-97f6-1c84a1994060', 75612, '{0,28,878,12,9648}', '/eO3r38fwnhb58M1YgcjQBd3VNcp.jpg', '/sbkYWB5QcfT00gLUkbNE5LTdhIX.jpg', '2013-04-10', '2013', 124, 'Oblivion', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('535a05cf-992a-42c6-a92d-14409af86186', 2080, '{0,12,28,878}', '/yj8LbTju1p7CUJg7US2unSBk33s.jpg', '/wvqdJLVh0mSblly7UnYFPEk04Wd.jpg', '2009-04-28', '2009', 107, 'X-Men Origins: Wolverine', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c0018d79-20b2-4e0b-9ac8-4a848ab472e7', 14161, '{0,28,12,878}', '/zaqam2RNscH5ooYFWInV6hjx6y5.jpg', '/pvxmYJcgrLiYC6G2IQTn1PPNems.jpg', '2009-10-10', '2009', 158, '2012', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1e21e751-ac59-406e-9276-3524c7002871', 10528, '{0,28,12,80,9648}', '/fvnu6QHyR0gSV1JI6lMyXCny21a.jpg', '/veXdzn7LL0bFIDGmE7tTkvRg0qV.jpg', '2009-12-23', '2009', 129, 'Sherlock Holmes', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e6afca92-e18a-44cf-a6c7-69673c12fd54', 58574, '{0,12,28,80,9648}', '/y1MYZkwhZK6L0Jy4YMuPktzDOfn.jpg', '/nVMalJRUsOeGP5xPx9ULmirZ4cJ.jpg', '2011-11-22', '2011', 129, 'Sherlock Holmes: A Game of Shadows', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d087248b-f45a-4765-83e4-60bc8dbc32cc', 161, '{0,53,80}', '/hQQCdZrsHtZyR6NbKH2YyCqd2fR.jpg', '/43BEez1EGdmNpg8rcPUFToujlii.jpg', '2001-12-07', '2001', 116, 'Ocean''s Eleven', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ee6aa67b-b863-4648-a00e-46ec92e23848', 604, '{0,12,28,53,878}', '/9TGHDvWrqKBzwDxDodHYXEmOE6J.jpg', '/96WHK0TiIslmM8rGVIejMtMtaPG.jpg', '2003-05-15', '2003', 138, 'The Matrix Reloaded', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('397246a3-8432-4074-8b67-05c34edc755a', 605, '{0,12,28,53,878}', '/t1wm4PgOQ8e4z1C6tk1yDNrps4T.jpg', '/533xAMhhVyjTy8hwMUFEt5TuDfR.jpg', '2003-11-05', '2003', 129, 'The Matrix Revolutions', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('85963378-84ec-43e7-92f5-01c70f6b2451', 624860, '{0,878,28,12}', '/8c4a8kE7PizaGQQnditMmI1xbRp.jpg', '/k0Cuybu9ECuc47ODlHcIP8TJCZi.jpg', '2021-12-16', '2021', 147, 'The Matrix Resurrections', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('706aac95-583d-4bff-9396-a128277217f9', 512195, '{0,28,35,80}', '/lAXONuqg41NwUMuzMiFvicDET9Y.jpg', '/dK12GIdhGP6NPGFssK2Fh265jyr.jpg', '2021-11-04', '2021', 118, 'Red Notice', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('de96bbeb-b995-4ff3-be87-dcc87edfe735', 550988, '{0,35,12,878}', '/6PFJrMvoQwBxQITLYHj09VeJ37q.jpg', '/rOJb0yQOCny0bPjg8bCLw8DyAD7.jpg', '2021-08-11', '2021', 115, 'Free Guy', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9ffac1ba-fe11-4031-9d64-3b227e754e6e', 580489, '{0,878,28,12}', '/1MJNcPZy46hIy2CmSqOeru0yr5C.jpg', '/vIgyYkXkg6NC2whRbYjBD7eb3Er.jpg', '2021-09-30', '2021', 97, 'Venom: Let There Be Carnage', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bfef2558-86d7-43ac-b422-c07c7687f2d6', 335983, '{0,878,28}', '/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg', '/VuukZLgaCrho2Ar8Scl9HtV3yD.jpg', '2018-09-28', '2018', 112, 'Venom', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b23f7713-66ca-48a2-ade5-5ade2458b1d2', 240, '{0,18,80}', '/hek3koDUyRQk7FIhPXsa6mT2Zc3.jpg', '/kGzFbGhp99zva6oZODW5atUtnqi.jpg', '1974-12-20', '1974', 202, 'The Godfather Part II', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('7975ff07-5af6-4a18-a00a-f2009375827c', 13, '{0,35,18,10749}', '/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg', '/67HggiWaP9ZLv5sPYmyRV37yAJM.jpg', '1994-06-23', '1994', 142, 'Forrest Gump', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('16f0efa0-ef1b-48e6-beeb-768d09c566db', 429, '{0,37}', '/bX2xnavhMYjWDoZp1VM6VnU1xwe.jpg', '/x4biAVdPVCghBlsVIzB6NmbghIz.jpg', '1966-12-22', '1966', 161, 'The Good, the Bad and the Ugly', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a9731d40-cb89-409b-b835-03f566f51c14', 274, '{0,80,53,18}', '/uS9m8OBk1A8eM9I042bx8XXpqAq.jpg', '/aYcnDyLMnpKce1FOYUpZrXtgUye.jpg', '1991-02-14', '1991', 119, 'The Silence of the Lambs', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b4d5a2e1-5b8e-4845-b91c-e9375bd3c042', 10494, '{0,16,53}', '/6WTiOCfDPP8XV4jqfloiVWf7KHq.jpg', '/1YRtgjLb5xxUb2rsNRnr54Oc0B2.jpg', '1998-02-28', '1998', 82, 'Perfect Blue', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('9f0e9216-8e6a-4656-b1a9-a267d1a3edd6', 77338, '{0,18,35}', '/1QU7HKgsQbGpzsJbJK4pAVQV9F5.jpg', '/q6OGlZ1KMEb14AC8KbPCxyNOal6.jpg', '2011-11-02', '2011', 113, 'The Intouchables', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('5a28dc7a-4cea-4843-846e-c6be9dfaeabc', 18491, '{0,16,878,28,18}', '/j6G24dqI4WgUtChhWjfnI4lnmiK.jpg', '/xLMJCCSatxENpHO9rLW9yD8A12C.jpg', '1997-07-19', '1997', 87, 'Neon Genesis Evangelion: The End of Evangelion', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2639ba5e-e419-49bf-af2e-38fb21f47b2c', 315162, '{0,16,12,14,35,10751}', '/kuf6dutpsT0vSVehic3EZIqkOBt.jpg', '/jr8tSoJGj33XLgFBy6lmZhpGQNu.jpg', '2022-12-07', '2022', 103, 'Puss in Boots: The Last Wish', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('d0066de7-8d06-4741-b0ae-d2d2ecebaab8', 111, '{0,28,80,18}', '/iQ5ztdjvteGeboxtmRdXEChJOHh.jpg', '/sctvs9cUwJD15qlTlrsh2BXsK75.jpg', '1983-12-09', '1983', 170, 'Scarface', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6bb3bb16-d91f-40c0-94a2-4c22c08353bf', 489, '{0,18}', '/z2FnLKpFi1HPO7BEJxdkv6hpJSU.jpg', '/oLsts7ct0NVkdYpx5rZg10MG6zh.jpg', '1997-12-05', '1997', 127, 'Good Will Hunting', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e5c812fb-1f5d-4456-acd5-d944525e917e', 103, '{0,80,18}', '/ekstpH614fwDX8DUln1a2Opz0N8.jpg', '/6aoyUbvu0419XLKLIMoH0TkEicH.jpg', '1976-02-09', '1976', 114, 'Taxi Driver', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f182abf5-661f-4c14-ad6c-a4d49dc6cfaf', 146233, '{0,18,53,80}', '/jsS3a3ep2KyBVmmiwaz3LvK49b1.jpg', '/3RFmTz5h2UuFWEV4oH00XICBR9y.jpg', '2013-09-19', '2013', 153, 'Prisoners', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3f777d7e-7d69-47b8-b597-c3c9b3f1659f', 406, '{0,18}', '/fFVWBMKLwwPh9K0hkrKwPUf8mwn.jpg', '/k61xLJgPo7ScxHLLiBzTM9IDaB7.jpg', '1995-05-31', '1995', 98, 'La Haine', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('25207080-9247-4a23-9764-4bbc8cd5a82e', 329, '{0,12,878}', '/63viWuPfYQjRYLSZSZNq7dglJP5.jpg', '/jzt9HuhIAdH9qp0K2MA1m5V8sgq.jpg', '1993-06-11', '1993', 127, 'Jurassic Park', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8c5519f4-b8ea-4b45-b4c2-71c91857d58e', 5925, '{0,12,18,10752}', '/gBH4H8UMFxl139HaLz6lRuvsel8.jpg', '/ih30cG9OGlJ7zyzhG3G5Bd3YGa9.jpg', '1963-07-03', '1963', 173, 'The Great Escape', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('b356e30c-bbb4-47bf-b275-6e3d06c9b16c', 85, '{0,12,28}', '/ceG9VzoRAVGwivFU403Wc3AHRys.jpg', '/ueDw7djPgKPZfph0vC43aD2EMyF.jpg', '1981-06-12', '1981', 115, 'Raiders of the Lost Ark', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8f38ba31-3529-43e3-94f5-23542af63a8c', 87, '{0,12,28}', '/gpdVNUaa4LhRMLfJOPj1AZdhAZ3.jpg', '/f133nWlU6yUkZqqwcCXCbTEJWHr.jpg', '1984-05-23', '1984', 118, 'Indiana Jones and the Temple of Doom', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('3d5235b9-e6be-4e24-9483-9e747177555d', 310, '{0,14,35}', '/f0QqG14SZYYZcV4VWykVc5w13dz.jpg', '/vZh2ZoBMyAiH8vYGqadyMBX50Gc.jpg', '2003-05-23', '2003', 101, 'Bruce Almighty', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('460ef388-c377-426c-809a-8a0511620a9d', 602, '{0,28,12,878}', '/p0BPQGSPoSa8Ml0DAf2mB2kCU0R.jpg', '/uw4SnKFZ453Gxmj5XR5Susj8TNo.jpg', '1996-06-25', '1996', 145, 'Independence Day', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8d23d7b9-8430-4de8-926b-168ed1c8de19', 8844, '{0,12,14,10751}', '/vgpXmVaVyUL7GGiDeiK1mKEKzcX.jpg', '/qSxeCfWUUyht9hZgaaYmtPtTkw2.jpg', '1995-12-15', '1995', 104, 'Jumanji', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('385fe2fc-f1bd-4f3b-af6e-232b4f3108d7', 353486, '{0,12,35,14,28,10751}', '/pSgXKPU5h6U89ipF7HBYajvYt7j.jpg', '/rz3TAyd5kmiJmozp3GUbYeB5Kep.jpg', '2017-12-09', '2017', 119, 'Jumanji: Welcome to the Jungle', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('dac3105a-61f9-443f-b6dd-1957605b0069', 399055, '{0,18,14,10749}', '/9zfwPffUXpBrEP26yp0q1ckXDcj.jpg', '/abirSHwWgKajV3hXhaIR5lcCIXe.jpg', '2017-12-01', '2017', 123, 'The Shape of Water', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('824b43e7-6a63-41ad-bd3f-d32c4282d606', 268896, '{0,28,14,878,12}', '/nFWhttU8PM50t25NPdy7PE7rv3G.jpg', '/oMaj75G2WFw66xI1TREg1hrToSg.jpg', '2018-03-21', '2018', 111, 'Pacific Rim: Uprising', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('096dd8b5-49ef-4eea-8083-035b29bc3f4a', 512200, '{0,12,35,14}', '/4kh9dxAiClS2GMUpkRyzGwpNWWX.jpg', '/zTxHf9iIOCqRbxvl8W5QYKrsMLq.jpg', '2019-12-04', '2019', 123, 'Jumanji: The Next Level', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f0cefbb5-4cdc-4f01-b97e-77a6e842ac61', 165, '{0,12,35,878}', '/YBawEsTkUZBDajKbd5LiHkmMGf.jpg', '/skQN2UMQKQnOTmwplcYMx6ZF4jS.jpg', '1989-11-22', '1989', 108, 'Back to the Future Part II', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ad83bc7d-9c69-497a-949a-495ac54c4ab6', 95, '{0,28,53,878,12}', '/eTM3qtGhDU8cvjpoa6KEt5E2auU.jpg', '/1cO6OQJxz7YhTZ4V1OlkYfebeJa.jpg', '1998-07-01', '1998', 151, 'Armageddon', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('cb296b3d-7d75-426c-88e0-d2b338ea47be', 18, '{0,878,28,12}', '/fPtlCO1yQtnoLHOwKtWz7db6RGU.jpg', '/dwN0kPGrLbFRxyL3F3J3t4ShQx.jpg', '1997-05-02', '1997', 126, 'The Fifth Element', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('36be78d5-7d36-4b9f-be09-b19c09999e69', 562, '{0,28,53}', '/aJCpHDC6RoGz7d1Fzayl019xnxX.jpg', '/rahJyvdMruvqUmSLWRQKYS57mx8.jpg', '1988-07-15', '1988', 132, 'Die Hard', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0ca17d48-0d69-40f1-8bd0-69e947f7c640', 861, '{0,28,12,878}', '/wVbeL6fkbTKSmNfalj4VoAUUqJv.jpg', '/e9zfOyNd3YaViIGadiqWg9x8pAq.jpg', '1990-06-01', '1990', 113, 'Total Recall', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('206bb606-0bd8-468a-bc1a-aebfa71cbac9', 539, '{0,27,53,9648}', '/yz4QVqPx3h1hD1DfqqQkCq3rmxW.jpg', '/uif5fUshJrXyyDzfpzp1DLw3N0S.jpg', '1960-06-22', '1960', 109, 'Psycho', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('358f36a3-5bfb-48a1-b370-ff2d1726e53c', 423, '{0,18,10752}', '/2hFvxCCWrTmCYwfy7yum0GKRi3Y.jpg', '/1XqIhsqnAozznGhxlGdI0GPcCro.jpg', '2002-09-17', '2002', 150, 'The Pianist', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1d1c4d48-1067-452c-ab34-5eb4766cc916', 101, '{0,80,18,28}', '/bxB2q91nKYp8JNzqE7t7TWBVupB.jpg', '/jynfI114q3kOAbIiVjVfFFmttU2.jpg', '1994-09-14', '1994', 111, 'Léon: The Professional', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f4bd4797-d13c-4296-8894-e93fb09cfc43', 128, '{0,12,14,16}', '/cMYCDADoLKLbB83g4WnJegaZimC.jpg', '/gl0jzn4BupSbL2qMVeqrjKkF9Js.jpg', '1997-07-12', '1997', 134, 'Princess Mononoke', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('814dbf86-2a77-44f6-9788-dafd2df27c01', 28, '{0,18,10752}', '/gQB8Y5RCMkv2zwzFHbUJX3kAhvA.jpg', '/9Qs9oyn4iE8QtQjGZ0Hp2WyYNXT.jpg', '1979-05-19', '1979', 147, 'Apocalypse Now', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('8dc9d686-e143-46ed-9fd4-02ec6d00b16d', 508965, '{0,16,10751,12,35,14}', '/q125RHUDgR4gjwh1QkfYuJLYkL.jpg', '/mlxKite1x1PgmIhJgAxNS9eHmH8.jpg', '2019-11-08', '2019', 96, 'Klaus', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('deee8af0-0cf8-48de-a9ac-40307d5ae29f', 1091, '{0,27,9648,878}', '/tzGY49kseSE9QAKk47uuDGwnSCu.jpg', '/jaO8WurWoUBE55nskqtFqPZFFaO.jpg', '1982-06-25', '1982', 109, 'The Thing', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1f310e1b-7165-4a1c-9a2d-39b8ee006f02', 120467, '{0,35,18}', '/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg', '/xHDynIimfsgj0ZOs0j5ma8v1vmM.jpg', '2014-02-26', '2014', 100, 'The Grand Budapest Hotel', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('a1eca6f1-f562-4b47-975c-9ab6130353c9', 641, '{0,80,18}', '/nOd6vjEmzCT0k4VYqsA2hwyi87C.jpg', '/7tZt3PA948fvSTFx0699YF44Tdt.jpg', '2000-10-06', '2000', 102, 'Requiem for a Dream', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c5bf1f27-617e-4fe1-bcc4-eae4c4679783', 359724, '{0,18,28,36}', '/dR1Ju50iudrOh3YgfwkAU1g2HZe.jpg', '/2vq5GTJOahE03mNYZGxIynlHcWr.jpg', '2019-11-13', '2019', 153, 'Ford v Ferrari', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('0791f0c2-5074-4bd8-81c7-0dac81c69efd', 205596, '{0,36,18,53,10752}', '/zSqJ1qFq8NXFfi7JeIYMlzyR0dx.jpg', '/gLQoJ9P79g501oEEtrN8zMlCPpx.jpg', '2014-11-14', '2014', 113, 'The Imitation Game', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('847f8a9b-5a8a-4123-a464-debe0c0dcbe1', 13223, '{0,18}', '/zUybYvxWdAJy5hhYovsXtHSWI1l.jpg', '/wmsePXV2z1b6ecXuKKrFbG0Q92P.jpg', '2008-12-12', '2008', 116, 'Gran Torino', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('be0019f4-571b-49c2-9075-ed191b522b9c', 424694, '{0,10402,18}', '/lHu1wtNaczFPGFDTrjCSzeLPTKN.jpg', '/7mmXWuBeNJiBO0NIOUWOuFve4Tb.jpg', '2018-10-24', '2018', 135, 'Bohemian Rhapsody', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('2d21f9ad-424e-4607-9c7b-664950ba3f7a', 70, '{0,18}', '/jcfEqKdWF1zeyvECPqp3mkWLct2.jpg', '/oGMomeS7bE43eN8SGJUaKvQnmud.jpg', '2004-12-05', '2004', 132, 'Million Dollar Baby', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('60990590-e48b-448a-90ae-70066a85e467', 152532, '{0,18,36}', '/7Fdh7gUq3plvQqxRbNYhWvDABXA.jpg', '/sbVKj98cq0FztCukzu47bu0H8o7.jpg', '2013-11-01', '2013', 117, 'Dallas Buyers Club', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('23317df9-efba-4998-b93a-d55d56226261', 949, '{0,80,18,28}', '/umSVjVdbVwtx5ryCA2QXL44Durm.jpg', '/5JaR6UEoCJJLtLpqFOVMY4O4R7P.jpg', '1995-12-15', '1995', 170, 'Heat', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1d1ef2af-3b92-49b5-a75f-e93fb02bd100', 89, '{0,12,28}', '/sizg1AU8f8JDZX4QIgE4pjUMBvx.jpg', '/12fvZHskx57kQfNEUXJ3v0flWYQ.jpg', '1989-05-24', '1989', 127, 'Indiana Jones and the Last Crusade', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('1b19fdef-25d5-4643-91b1-be58e7ecdb5b', 331, '{0,12,28,53,878}', '/oQXj4NUfS3r3gHXtDOzcJgj1lLc.jpg', '/8v8x4vVbRgrsdU3M4drnD7HQbfe.jpg', '2001-07-18', '2001', 92, 'Jurassic Park III', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6517f65e-c76b-4061-b508-33523afa9325', 330, '{0,12,28,878}', '/6fSkhv35nPSw9hwPVCMINQFG1WD.jpg', '/A4rYaPdzgocCjQ0n9LUSYUxyvpS.jpg', '1997-05-23', '1997', 129, 'The Lost World: Jurassic Park', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e490d9e7-271a-4c68-bdf7-381037445d7f', 445571, '{0,9648,35,80}', '/85R8LMyn9f2Lev2YPBF8Nughrkv.jpg', '/aKPCZwkSZy2ASLo0QKeYmcoplfA.jpg', '2018-02-15', '2018', 100, 'Game Night', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('94cc6aba-69a9-45ed-8a50-329002bd540f', 196, '{0,12,35,878}', '/crzoVQnMzIrRfHtQw0tLBirNfVg.jpg', '/vKp3NvqBkcjHkCHSGi6EbcP7g4J.jpg', '1990-05-25', '1990', 119, 'Back to the Future Part III', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6a7636c6-64f8-4699-9f3e-0a691145146e', 564, '{0,12,28,14}', '/yhIsVvcUm7QxzLfT6HW2wLf5ajY.jpg', '/8zLS8p1tRyWFLRFfmgQq0j5WE6z.jpg', '1999-04-16', '1999', 124, 'The Mummy', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('aa76c757-e124-4153-8d66-ed6146744adf', 1572, '{0,28,53}', '/buqmCdFQEWwEpL3agGgg2GVjN2d.jpg', '/fBvSfLetWlAMevQVHa0nBDV1Fon.jpg', '1995-05-19', '1995', 128, 'Die Hard: With a Vengeance', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('ab53984a-baa8-4760-b4d8-bbefee27ea95', 1573, '{0,28,53}', '/lDFO7D4MdbhjOwaPwe18QG69Rt0.jpg', '/cDtefl7KGnKrDziEUXetMnztvqr.jpg', '1990-07-03', '1990', 124, 'Die Hard 2', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('bff0b731-9caf-4abc-9b75-0ab76de30fe5', 646, '{0,12,28,53}', '/9zCOLJmLNst0sCPZlkW1IRoH65E.jpg', '/ptcXbbxTyjHfEE4d4QocNP0YQct.jpg', '1962-10-07', '1962', 110, 'Dr. No', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('96e6a6ab-0b3b-484e-9fb6-81e867b554d1', 8698, '{0,14,28,53,878}', '/kdAuVFP63XXxnb983ry2pLCKd9S.jpg', '/tsUlDhS8jeaK6x65ZrEtvrkPVx4.jpg', '2003-07-11', '2003', 110, 'The League of Extraordinary Gentlemen', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('f315747b-438c-4709-bb33-c8b553d2d799', 658, '{0,12,28,53}', '/4CD9eftOlBcutoXak5C7L24X1Y2.jpg', '/mM4WeXqJd2tu1gCF5GYyAZf2Npl.jpg', '1964-09-20', '1964', 110, 'Goldfinger', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('64994861-4263-4fbb-9e28-f92f6733d149', 710, '{0,12,28,53}', '/z0ljRnNxIO7CRBhLEO0DvLgAFPR.jpg', '/vm7yMg7YiYisMSeO3mUC5NUKbSB.jpg', '1995-11-16', '1995', 130, 'GoldenEye', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e9e05363-c2dd-470c-9d19-17837af971bd', 714, '{0,12,28,53}', '/gZm002w7q9yLOkltxT76TWGfdZX.jpg', '/fesAgiKA0pc04vScDTAQe1f9nd4.jpg', '1997-12-11', '1997', 119, 'Tomorrow Never Dies', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('08986b70-70cb-402f-bcd4-ac7ecf0e62fa', 36643, '{0,12,28,53}', '/wCb2msgoZPK01WIqry24M4xsM73.jpg', '/n2jVDMcBEWsLFooO7W1ZkcMUtWS.jpg', '1999-11-17', '1999', 128, 'The World Is Not Enough', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('97f9667b-331b-4cc0-b3ee-3cd857da87a7', 36669, '{0,12,28,53}', '/bZmGqOhMhaLn8AoFMvFDct4tbrL.jpg', '/ibJEhfV4CudcL3iaUgvhkBrfMCO.jpg', '2002-11-17', '2002', 133, 'Die Another Day', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('10b640b1-6446-4491-a7be-1d637dcb0a58', 36557, '{0,12,28,53}', '/lMrxYKKhd4lqRzwUHAy5gcx9PSO.jpg', '/c2gcLDxniE0lNmT2a7CcQVuW6En.jpg', '2006-11-14', '2006', 144, 'Casino Royale', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('c7b55489-23e1-4c06-b2db-ffae6d3c0788', 10764, '{0,12,28,53,80}', '/e3DXXLJHGqMx9yYpXsql1XNljmM.jpg', '/1tW2fJCE6vb7lAbBMOs3eYMuA7X.jpg', '2008-10-29', '2008', 106, 'Quantum of Solace', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('46ee3aa4-0294-45af-a898-fa434775ec03', 37724, '{0,28,12,53}', '/d0IVecFQvsGdSbnMAHqiYsNYaJT.jpg', '/mgcbG1w3lgj9lajGBXVUjLQti8P.jpg', '2012-10-24', '2012', 143, 'Skyfall', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('4c21ab91-97fd-4b55-9145-7c57f9f31a29', 9740, '{0,80,18,53}', '/v5wAZwRqpGWmyAaaJ8BBHYuNXnj.jpg', '/1eMvglbY3wpl4nl09eYLtfstV2I.jpg', '2001-02-08', '2001', 131, 'Hannibal', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('405e565e-60ae-4913-885f-bf2576568d73', 9533, '{0,80,53,27}', '/ou9ZKA2cms02b7CdCdVqGkKu0O0.jpg', '/7c65xpnYlea6VITznLLRS9cTuwS.jpg', '2002-10-02', '2002', 124, 'Red Dragon', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('6f483a32-a881-4f57-b868-de8f6b35bb72', 65754, '{0,53,80,9648}', '/8bokS83zGdhaXgN9tjidUKmAftW.jpg', '/egKntJKzEL6HgalIyQ0Q5cMmDOA.jpg', '2011-12-14', '2011', 158, 'The Girl with the Dragon Tattoo', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('05f8eabb-aa43-45b5-a91d-73cfe66cf9bf', 15472, '{0,18,53,80,9648}', '/6w0TKhfR0Rzby5SXxgfuI99Jrva.jpg', '/4LRemkftqYK7OmmP88rJLTvGYHu.jpg', '2009-02-27', '2009', 152, 'The Girl with the Dragon Tattoo', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('974cf56e-1907-45de-b2ea-b5fc7c5c6a49', 24253, '{0,18,28,53,80,9648}', '/axR8YcQVUgWYhvN2UcZKhzexKsI.jpg', '/nra78PoXu2lQhdgFKJ8y8zL7HGN.jpg', '2009-09-18', '2009', 129, 'The Girl Who Played with Fire', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('993636e4-ede0-41d1-a88d-3a9dc24edaf2', 33613, '{0,28,53,80,9648}', '/92byRQBuuiLcfKnBi5NOuipSgV8.jpg', '/qhohCrCs4sv1M4H9NIRlhgl0lcE.jpg', '2009-11-27', '2009', 147, 'The Girl Who Kicked the Hornet''s Nest', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('e5a9b0ee-95ac-468e-b503-f6b5eb1708ee', 1061474, '{0,878,12,28}', '/ombsmhYUqR4qqOLOxAyr5V8hbyv.jpg', '/eU7IfdWq8KQy0oNd4kKXS0QUR08.jpg', '2025-07-09', '2025', 130, 'Superman', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041'),
+	('eb3a433d-bf4f-4694-b215-5274cefba8d8', 541671, '{0,28,53,80}', '/2VUmvqsHb6cEtdfscEA6fqqVzLg.jpg', '/sItIskd5xpiE64bBWYwZintkGf3.jpg', '2025-06-04', '2025', 125, 'Ballerina', 'movie', 'ad629edd-3bc1-4caf-81e0-b45284c65041');
+
+
+--
+-- Data for Name: buckets; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
+--
+
+
+
+--
+-- Data for Name: buckets_analytics; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
+--
+
+
+
+--
+-- Data for Name: objects; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
+--
+
+
+
+--
+-- Data for Name: prefixes; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
+--
+
+
+
+--
+-- Data for Name: s3_multipart_uploads; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
+--
+
+
+
+--
+-- Data for Name: s3_multipart_uploads_parts; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
+--
+
+
+
+--
+-- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
+--
+
+SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 1, false);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+RESET ALL;

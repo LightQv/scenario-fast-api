@@ -9,7 +9,12 @@ from app.models import User
 
 def get_database() -> Generator[Session, None, None]:
     """
-    Dépendance pour obtenir une session de base de données.
+    Database session dependency for FastAPI endpoints.
+
+    Provides a database session that is automatically closed after use.
+
+    Yields:
+        Session: SQLAlchemy database session
     """
     yield from get_database_session()
 
@@ -19,17 +24,20 @@ def get_current_user(
         database_session: Session = Depends(get_database)
 ) -> User:
     """
-    Dépendance pour obtenir l'utilisateur actuellement connecté depuis le cookie.
+    Dependency to get the currently authenticated user from cookie.
+
+    Retrieves and validates the JWT token from the access_token cookie,
+    then fetches the corresponding user from the database.
 
     Args:
-        access_token: Token JWT depuis le cookie
-        database_session: Session de base de données
+        access_token: JWT token from the HTTP-only cookie
+        database_session: Database session dependency
 
     Returns:
-        L'utilisateur connecté
+        User: The authenticated user object
 
     Raises:
-        HTTPException: Si le token est invalide ou l'utilisateur n'existe pas
+        HTTPException: 403 if token is missing or invalid, or if user doesn't exist
     """
     credentials_exception = HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
@@ -57,12 +65,15 @@ def get_current_user_id(
         current_user: User = Depends(get_current_user)
 ) -> str:
     """
-    Dépendance pour obtenir uniquement l'ID de l'utilisateur connecté.
+    Dependency to get only the ID of the currently authenticated user.
+
+    Convenience dependency that extracts just the user ID from the
+    authenticated user object.
 
     Args:
-        current_user: L'utilisateur connecté
+        current_user: The authenticated user from get_current_user dependency
 
     Returns:
-        L'ID de l'utilisateur sous forme de string
+        str: The user ID as a string
     """
     return str(current_user.id)

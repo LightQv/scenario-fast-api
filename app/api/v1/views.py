@@ -7,52 +7,76 @@ from app.api.dependencies import get_database, get_current_user
 from app.models import User, View
 from app.schemas import ViewCreate, ViewResponse
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/views",
+    tags=["Views"],
+    responses={
+        404: {"description": "View not found"},
+        403: {"description": "Access forbidden"}
+    }
+)
 
 
-@router.get("/{user_id}", response_model=List[ViewResponse])
+@router.get(
+    "/{user_id}",
+    response_model=List[ViewResponse],
+    summary="Get user viewing history",
+    description="Retrieve complete viewing history for a specific user"
+)
 def get_user_views(
         user_id: UUID,
         database_session: Session = Depends(get_database)
 ) -> List[ViewResponse]:
     """
-    Récupère toutes les vues d'un utilisateur.
+    Get all viewing history for a user.
+
+    Retrieves the complete viewing history for the specified user,
+    including all movies and TV shows they have marked as watched.
 
     Args:
-        user_id: ID de l'utilisateur
-        database_session: Session de base de données
+        user_id: UUID of the user whose viewing history to retrieve
+        database_session: Database session dependency
 
     Returns:
-        Liste des vues de l'utilisateur
+        List[ViewResponse]: Complete list of user's viewing history
     """
     views = database_session.query(View).filter(View.viewer_id == user_id).all()
     return [ViewResponse.model_validate(view) for view in views]
 
 
-@router.get("/{media_type}/{user_id}", response_model=List[ViewResponse])
+@router.get(
+    "/{media_type}/{user_id}",
+    response_model=List[ViewResponse],
+    summary="Get filtered viewing history",
+    description="Retrieve viewing history filtered by media type and optionally by genre"
+)
 def get_user_views_by_type(
         media_type: str,
         user_id: UUID,
-        genre: Optional[int] = Query(None, description="Filtrer par genre"),
+        genre: Optional[int] = Query(None, description="Filter by specific genre ID"),
         database_session: Session = Depends(get_database)
 ) -> List[ViewResponse]:
     """
-    Récupère les vues d'un utilisateur filtrées par type de média et optionnellement par genre.
+    Get user viewing history filtered by media type and genre.
+
+    Retrieves viewing history filtered by media type (movie/tv) and
+    optionally by a specific genre for more targeted results.
 
     Args:
-        media_type: Type de média (movie, tv)
-        user_id: ID de l'utilisateur
-        genre: ID du genre pour filtrer (optionnel)
-        database_session: Session de base de données
+        media_type: Type of media to filter by ('movie' or 'tv')
+        user_id: UUID of the user whose viewing history to retrieve
+        genre: Optional genre ID to filter results (e.g., 28 for Action)
+        database_session: Database session dependency
 
     Returns:
-        Liste des vues filtrées
+        List[ViewResponse]: Filtered list of user's viewing history
     """
     query = database_session.query(View).filter(
         View.viewer_id == user_id,
         View.media_type == media_type
     )
 
+    # Apply genre filter if specified
     if genre is not None:
         query = query.filter(View.genre_ids.any(genre))
 
@@ -60,27 +84,35 @@ def get_user_views_by_type(
     return [ViewResponse.model_validate(view) for view in views]
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/",
+    status_code=status.HTTP_201_CREATED,
+    summary="Mark media as watched",
+    description="Add a new viewing record for a movie or TV show"
+)
 def add_view(
         view_data: ViewCreate,
         current_user: User = Depends(get_current_user),
         database_session: Session = Depends(get_database)
 ) -> dict:
     """
-    Ajoute une nouvelle vue (média regardé).
+    Add a new viewing record (mark media as watched).
+
+    Records that a user has watched a specific movie or TV show.
+    Users can only add viewing records for themselves.
 
     Args:
-        view_data: Données de la vue à ajouter
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        view_data: Viewing record data including media information and viewer ID
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Returns:
-        Message de confirmation
+        dict: Success message confirming the viewing record was added
 
     Raises:
-        HTTPException: Si l'utilisateur n'a pas les droits
+        HTTPException: 403 if user tries to add viewing record for another user
     """
-    # Vérifier que l'utilisateur ajoute une vue pour lui-même
+    # Verify user is adding view for themselves
     if str(view_data.viewer_id) != str(current_user.id):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -106,22 +138,32 @@ def add_view(
     return {"message": "View added successfully"}
 
 
-@router.delete("/{view_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(
+    "/{view_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Remove viewing record",
+    description="Delete a viewing record from user's history"
+)
 def delete_view(
         view_id: UUID,
         current_user: User = Depends(get_current_user),
         database_session: Session = Depends(get_database)
 ):
     """
-    Supprime une vue.
+    Delete a viewing record from user's history.
+
+    Removes a viewing record from the user's watch history.
+    Users can only delete their own viewing records.
 
     Args:
-        view_id: ID de la vue à supprimer
-        current_user: Utilisateur connecté
-        database_session: Session de base de données
+        view_id: UUID of the viewing record to delete
+        current_user: Currently authenticated user
+        database_session: Database session dependency
 
     Raises:
-        HTTPException: Si la vue n'existe pas ou si l'utilisateur n'a pas les droits
+        HTTPException:
+            - 404 if viewing record doesn't exist
+            - 403 if user doesn't own the viewing record
     """
     view = database_session.query(View).filter(View.id == view_id).first()
 
@@ -131,7 +173,7 @@ def delete_view(
             detail="View not found"
         )
 
-    # Vérifier que l'utilisateur possède cette vue
+    # Verify user owns this viewing record
     if str(view.viewer_id) != str(current_user.id):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
