@@ -1,0 +1,19 @@
+meta {
+  name: Get watchlist details
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/v1/watchlists/watchlists/detail/:watchlist_id
+  body: none
+  auth: none
+}
+
+params:query {
+  ~genre: 
+}
+
+params:path {
+  watchlist_id: 
+}

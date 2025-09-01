@@ -1,0 +1,21 @@
+meta {
+  name: Update watchlist
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/v1/watchlists/watchlists/:watchlist_id
+  body: json
+  auth: none
+}
+
+params:path {
+  watchlist_id: 
+}
+
+body:json {
+  {
+    "title": ""
+  }
+}

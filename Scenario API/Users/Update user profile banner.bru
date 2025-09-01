@@ -1,0 +1,21 @@
+meta {
+  name: Update user profile banner
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{baseUrl}}/api/v1/users/users/banner/:user_id
+  body: json
+  auth: none
+}
+
+params:path {
+  user_id: 
+}
+
+body:json {
+  {
+    "banner_link": ""
+  }
+}

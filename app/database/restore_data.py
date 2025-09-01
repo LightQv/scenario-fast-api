@@ -1,199 +1,109 @@
 #!/usr/bin/env python3
 """
-Database restore script for Scenario API.
-
-This script restores the database from a SQL dump file, completely replacing
-the current database content. This operation is IRREVERSIBLE.
-
-Usage:
-    python app/database/restore_data.py [dump_file]
-
-Args:
-    dump_file (optional): Path to SQL dump file. Defaults to backup/scenario_dump.sql
+Import a pre-cleaned Supabase dump directly into the local database.
+No filtering or mapping needed (dump must already be ready).
 """
 
-import os
+import logging
 import sys
 import subprocess
 from pathlib import Path
-from urllib.parse import urlparse
+from typing import List
 
 from app.core.settings import settings
-from app.core.logger import log
 
+logger = logging.getLogger(__name__)
 
-def parse_database_url(database_url: str) -> dict:
-    """
-    Parse DATABASE_URL into connection parameters.
+def get_local_tables() -> List[str]:
+    """Return list of tables in local DB (public schema)."""
+    container_name = settings.DB_CONTAINER_NAME
+    try:
+        command = [
+            'docker', 'exec', container_name,
+            'psql', '-U', settings.POSTGRES_USER, '-d', settings.POSTGRES_DB,
+            '-t', '-c',
+            "SELECT tablename FROM pg_tables WHERE schemaname = 'public' ORDER BY tablename;"
+        ]
+        result = subprocess.run(command, capture_output=True, text=True, timeout=30)
+        if result.returncode != 0:
+            logger.error(f"Could not get table names: {result.stderr}")
+            return []
+        return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+    except Exception as e:
+        logger.error(f"Error getting table names: {e}")
+        return []
 
-    Args:
-        database_url: PostgreSQL connection URL
+def import_dump(dump_path: str) -> bool:
+    """Import the cleaned dump into the local DB."""
+    container_name = settings.DB_CONTAINER_NAME
+    dump_path = Path(dump_path)
 
-    Returns:
-        dict: Connection parameters (host, port, database, username, password)
-
-    Example:
-        >>> params = parse_database_url("postgresql://user:pass@localhost:5432/dbname")
-        >>> print(params['host'])  # localhost
-    """
-    parsed = urlparse(database_url)
-    return {
-        'host': parsed.hostname,
-        'port': parsed.port or 5432,
-        'database': parsed.path[1:],  # Remove leading slash
-        'username': parsed.username,
-        'password': parsed.password
-    }
-
-
-def confirm_restore_operation() -> bool:
-    """
-    Prompt user for confirmation before proceeding with restore.
-
-    Returns:
-        bool: True if user confirms, False otherwise
-    """
-    print("⚠️  WARNING: DATABASE RESTORE OPERATION")
-    print("=" * 50)
-    print("This operation will:")
-    print("• DROP all existing tables and data")
-    print("• RESTORE from the SQL dump file")
-    print("• This action is IRREVERSIBLE")
-    print("=" * 50)
-
-    while True:
-        response = input("Are you sure you want to continue? (y/N): ").strip().lower()
-        if response in ['y', 'yes']:
-            return True
-        elif response in ['n', 'no', '']:
-            return False
-        else:
-            print("Please enter 'y' for yes or 'n' for no.")
-
-
-def check_dump_file_exists(dump_file_path: Path) -> bool:
-    """
-    Check if the SQL dump file exists and is readable.
-
-    Args:
-        dump_file_path: Path to the SQL dump file
-
-    Returns:
-        bool: True if file exists and is readable
-    """
-    if not dump_file_path.exists():
-        log.error(f"Dump file not found: {dump_file_path}")
+    if not dump_path.exists():
+        logger.error(f"Dump file not found: {dump_path}")
         return False
 
-    if not dump_file_path.is_file():
-        log.error(f"Path is not a file: {dump_file_path}")
+    # Copy dump into container
+    temp_file = '/tmp/supabase_import.sql'
+    copy_cmd = ['docker', 'cp', str(dump_path), f'{container_name}:{temp_file}']
+    result = subprocess.run(copy_cmd, capture_output=True, text=True)
+    if result.returncode != 0:
+        logger.error(f"Failed to copy dump into container: {result.stderr}")
         return False
 
-    if not os.access(dump_file_path, os.R_OK):
-        log.error(f"Cannot read dump file: {dump_file_path}")
+    # Run import
+    import_cmd = [
+        'docker', 'exec', '-i', container_name,
+        'psql', '-U', settings.POSTGRES_USER, '-d', settings.POSTGRES_DB,
+        '-f', temp_file
+    ]
+    logger.info("📥 Importing dump into database...")
+    result = subprocess.run(import_cmd, capture_output=True, text=True)
+
+    # Cleanup
+    subprocess.run(['docker', 'exec', container_name, 'rm', '-f', temp_file])
+
+    if result.returncode != 0:
+        logger.error("Import failed:")
+        logger.error(result.stderr)
         return False
 
+    logger.info("✅ Import completed successfully")
     return True
 
-
-def restore_database(dump_file_path: Path) -> bool:
-    """
-    Restore database from SQL dump file using psql.
-
-    Args:
-        dump_file_path: Path to the SQL dump file
-
-    Returns:
-        bool: True if restoration successful, False otherwise
-    """
-    try:
-        # Parse database connection parameters
-        db_params = parse_database_url(settings.DATABASE_URL)
-
-        log.info(f"Starting database restore from: {dump_file_path}")
-        log.info(f"Target database: {db_params['database']} on {db_params['host']}")
-
-        # Set PGPASSWORD environment variable for psql
-        env = os.environ.copy()
-        env['PGPASSWORD'] = db_params['password']
-
-        # Build psql command
-        psql_cmd = [
-            'psql',
-            f"--host={db_params['host']}",
-            f"--port={db_params['port']}",
-            f"--username={db_params['username']}",
-            f"--dbname={db_params['database']}",
-            '--quiet',
-            '--file', str(dump_file_path)
-        ]
-
-        log.info("Executing database restore...")
-
-        # Execute psql command
-        result = subprocess.run(
-            psql_cmd,
-            env=env,
-            capture_output=True,
-            text=True,
-            check=True
-        )
-
-        log.info("Database restore completed successfully!")
-        return True
-
-    except subprocess.CalledProcessError as e:
-        log.error(f"Database restore failed with exit code {e.returncode}")
-        log.error(f"Error output: {e.stderr}")
-        return False
-
-    except Exception as e:
-        log.error(f"Unexpected error during database restore: {str(e)}")
-        return False
-
-
 def main():
-    """
-    Main function to orchestrate the database restore process.
+    print("🔄 Scenario API - Supabase Import (Cleaned)")
+    print("=" * 55)
 
-    Steps:
-    1. Parse command line arguments
-    2. Check if dump file exists
-    3. Get user confirmation
-    4. Restore database
-    """
-    print("🔄 Scenario API - Database Restore Tool")
-    print("=" * 40)
-
-    # Determine dump file path
     if len(sys.argv) > 1:
-        dump_file_path = Path(sys.argv[1])
+        dump_path = sys.argv[1]
     else:
-        # Default to backup directory
         project_root = Path(__file__).parent.parent.parent
-        dump_file_path = project_root / "app" / "database" / "backup" / "supabase_dump.sql"
+        dump_path = project_root / "app" / "database" / "backup" / "scenario_dump.sql"
 
-    log.info(f"Using dump file: {dump_file_path}")
+    logger.info(f"Using dump: {dump_path}")
 
-    # Check if dump file exists
-    if not check_dump_file_exists(dump_file_path):
-        log.error("Cannot proceed without a valid dump file")
+    # Check local tables
+    tables = get_local_tables()
+    logger.info(f"Local tables: {tables}")
+
+    if not tables:
+        print("❌ No local tables found. Did you run migrations? (alembic upgrade head)")
         sys.exit(1)
 
-    # Get user confirmation
-    if not confirm_restore_operation():
-        log.info("Database restore cancelled by user")
+    # Confirm
+    print("\nThis will import data into your existing tables:")
+    print(", ".join(tables))
+    if input("Continue? (y/N): ").strip().lower() not in ['y', 'yes']:
+        print("Cancelled.")
         sys.exit(0)
 
-    # Perform database restore
-    if restore_database(dump_file_path):
-        print("✅ Database restore completed successfully!")
-        log.info("Database restore operation finished")
+    # Import
+    if import_dump(str(dump_path)):
+        print("\n✅ Import successful!")
+        print("💡 Check with: make db-shell → SELECT COUNT(*) FROM user_model;")
     else:
-        print("❌ Database restore failed!")
-        log.error("Database restore operation failed")
+        print("\n❌ Import failed.")
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()

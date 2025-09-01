@@ -1,0 +1,17 @@
+meta {
+  name: Create new watchlist
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/v1/watchlists/watchlists/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": ""
+  }
+}

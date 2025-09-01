@@ -1,0 +1,26 @@
+meta {
+  name: Mark media as watched
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/v1/views/views/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "tmdb_id": 0,
+    "genre_ids": [],
+    "poster_path": "",
+    "backdrop_path": "",
+    "release_date": "",
+    "release_year": "",
+    "runtime": 0,
+    "title": "",
+    "media_type": "",
+    "viewer_id": ""
+  }
+}

@@ -1,0 +1,21 @@
+meta {
+  name: Update user email
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{baseUrl}}/api/v1/users/users/email/:user_id
+  body: json
+  auth: none
+}
+
+params:path {
+  user_id: 
+}
+
+body:json {
+  {
+    "email": ""
+  }
+}
