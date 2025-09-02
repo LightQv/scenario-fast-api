@@ -94,7 +94,7 @@ migrate-create:
 
 restore-db:
 	@echo "🔄 Starting database restore..."
-	python app/database/restore_data.py
+	python -m app.database.restore_data
 
 db-shell:
 	@echo "🐘 Opening PostgreSQL shell..."

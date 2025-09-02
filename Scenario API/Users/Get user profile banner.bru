@@ -1,0 +1,15 @@
+meta {
+  name: Get user profile banner
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/api/v1/users/users/banner/:user_id
+  body: none
+  auth: none
+}
+
+params:path {
+  user_id: 
+}

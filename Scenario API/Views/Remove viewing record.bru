@@ -1,0 +1,15 @@
+meta {
+  name: Remove viewing record
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/api/v1/views/views/:view_id
+  body: none
+  auth: none
+}
+
+params:path {
+  view_id: 
+}

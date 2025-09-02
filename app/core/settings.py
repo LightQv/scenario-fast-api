@@ -36,6 +36,9 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     POSTGRES_HOST: str
 
+    # Database restore
+    DB_CONTAINER_NAME: str
+
     # JWT authentication settings
     JWT_SECRET_KEY: str
     JWT_ALGORITHM: str = "HS256"

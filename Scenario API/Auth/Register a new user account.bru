@@ -1,0 +1,20 @@
+meta {
+  name: Register a new user account
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/v1/auth/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "SupaBin",
+    "email": "supa.bin@proton.me",
+    "password": "RandomPw123!",
+    "confirm_password": "RandomPw123!"
+  }
+}

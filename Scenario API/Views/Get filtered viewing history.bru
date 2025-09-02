@@ -1,0 +1,20 @@
+meta {
+  name: Get filtered viewing history
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/v1/views/views/:media_type/:user_id
+  body: none
+  auth: none
+}
+
+params:query {
+  ~genre: 
+}
+
+params:path {
+  media_type: 
+  user_id: 
+}
