@@ -16,16 +16,10 @@ main_router = APIRouter()
 
 package = importlib.import_module(route_package_name)
 
-# for _, module_name, _ in pkgutil.iter_modules(package.__path__):
-#     module = importlib.import_module(f"{route_package_name}.{module_name}")
-#     if hasattr(module, "router"):
-#         main_router.include_router(
-#             module.router,
-#             prefix=f"/{module_name.replace('_', '-')}",
-#             tags=[module_name.capitalize()]
-#         )
-
 for _, module_name, _ in pkgutil.iter_modules(package.__path__):
+    if module_name == "router":
+        continue
+        
     logger.info(f"Importing router module: {module_name}")
     module = importlib.import_module(f"{route_package_name}.{module_name}")
     if hasattr(module, "router"):
