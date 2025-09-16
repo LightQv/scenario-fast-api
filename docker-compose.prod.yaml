@@ -1,3 +1,5 @@
+name: "scenario-fast-api-prod"
+
 services:
   scenario-postgres:
     image: postgres:16-alpine
