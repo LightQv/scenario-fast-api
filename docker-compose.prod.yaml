@@ -20,7 +20,7 @@ services:
       retries: 5
 
   scenario-api:
-    image: vivianquerenet/scenario-api:latest
+    image: vivianquerenet/scenario:api-latest
     restart: always
     container_name: scenario-api
     volumes:
