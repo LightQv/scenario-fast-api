@@ -45,6 +45,7 @@ class Settings(BaseSettings):
     JWT_ACCESS_TOKEN_EXPIRES_IN: int
 
     # SMTP configuration for email notifications
+    MAIL_FROM: str
     SMTP_HOST: str
     SMTP_PORT: int = 587
     SMTP_USER: str
