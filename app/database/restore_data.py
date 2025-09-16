@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Import a pre-cleaned Supabase dump directly into the local database.
 No filtering or mapping needed (dump must already be ready).

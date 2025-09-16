@@ -1,4 +1,3 @@
--- Cleaned Supabase dump ready for import
 SET
 session_replication_role = replica;
 
