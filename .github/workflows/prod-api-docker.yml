@@ -28,4 +28,4 @@ jobs:
           context: ./
           file: ./Dockerfile.prod
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY_NAME }}-api:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY_NAME }}:api-latest
