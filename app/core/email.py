@@ -9,7 +9,7 @@ from app.core.settings import settings
 config = ConnectionConfig(
     MAIL_USERNAME=settings.SMTP_USER,
     MAIL_PASSWORD=settings.SMTP_PASSWORD,
-    MAIL_FROM=settings.SMTP_USER,
+    MAIL_FROM=settings.MAIL_FROM,
     MAIL_PORT=settings.SMTP_PORT,
     MAIL_SERVER=settings.SMTP_HOST,
     MAIL_STARTTLS=settings.SMTP_USE_TLS,
