@@ -82,7 +82,7 @@ def get_password_reset_template(username: str, reset_token: str) -> str:
         <p style="text-align: center; font-size: 1rem">
           If you did not initiate this request, please contact us immediately at
           <a
-            href="mailto:{settings.SMTP_USER}"
+            href="mailto:{settings.MAIL_FROM}"
             style="
               text-decoration-line: underline;
               text-underline-offset: 4px;
@@ -90,7 +90,7 @@ def get_password_reset_template(username: str, reset_token: str) -> str:
               text-decoration-color: #eab208;
               color: black;
             "
-            >{settings.SMTP_USER}</a
+            >{settings.MAIL_FROM}</a
           >.
         </p>
         <p style="text-align: center; font-size: 1rem">

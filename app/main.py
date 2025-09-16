@@ -38,7 +38,7 @@ app = FastAPI(
     contact={
         "name": "Scenario API Support",
         "url": "https://github.com/your-repo/scenario-api",
-        "email": settings.SMTP_USER,
+        "email": settings.MAIL_FROM,
     },
     license_info={
         "name": "ISC License",
